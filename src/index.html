@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+<body>
+
+
+<script>
+function loadScript(_src,cb){
+    var script = document.createElement('script');
+    script.type="text/javascript";
+    if(script.readyState){
+        script.onreadystatechange = function(){
+            if(script.readyState == 'loaded' || script.readyState == 'complete'){
+                script.onreadystatechange = null;cb && cb();
+            }
+        }
+    } else {
+        script.onload = function(){cb && cb()};
+    }
+    script.src=_src;document.getElementsByTagName('head')[0].appendChild(script);
+}
+var zeptoJsLoaded = false,
+    extJsLoad = false,
+    globalJsloaded = false,
+    mainJsLoaded = false,
+    allJsloaded = false;
+var checkAll = function(val){
+        console.log("check js this time ok:",val);
+        if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
+            indexPageReady();
+            allJsloaded = true;
+            checkAll = null;
+        }
+    };
+    loadScript('static/js/zepto.min.js',function(){
+        zeptoJsLoaded = true;
+        checkAll('zepto');
+    })
+    loadScript('static/js/global.js',function(){
+        globalJsloaded = true;
+        checkAll('global');
+    })
+    loadScript('static/js/ext.js',function(){
+        extJsLoad = true;
+        checkAll('ext');
+    })
+    loadScript('static/js/main.js',function(){
+        mainJsLoaded = true;
+        checkAll('main');
+    })
+
+</script>
+</body>
+</html>
