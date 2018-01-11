@@ -27,8 +27,8 @@
         </div>
     </div>
 
-    
-   
+
+
 
     <!-- 引导页 -->
     <div id="firstPage" class="flex" style="background-color:#ffe0ab;display:-none;">
@@ -50,11 +50,14 @@
                 <img src="./static/img/style1.png" style="width:100%;margin-top:.36rem">
             </div>
              <!-- 默认头像 -->
-            <div id="defaultPic" class="defaultPic p-a">
-                <div><img src="./static/img/test.jpg" style="width:100%"></div>
+            <div id="cropLayer" class="defaultPic p-a">
+
+                <canvas id="cropCanvas" class="p-a" width="420" height="420"></canvas>
+                <img id="cropImg" class="p-a" style="top:0" src="./static/img/test.jpg" style="width:100%">
             </div>
+            <div id="dropArea" class="defaultPic p-a"><span></span></div>
         </div>
-        
+
 
         <div class="styleChoose">
             <div class="wpr flex">

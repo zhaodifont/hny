@@ -6,14 +6,54 @@ function loadingStop(){
 	$('.loadingDiv').css('display','none');
 }
 
+
+
+var $upload = $('#upload'),
+    $defaultImgSet = $('#cropLayer img').get(0),
+    canvasDom,
+    canvasCtx,
+    cropGesture = null;
+
 window.indexPageReady = function(){
 	loadingStart();
     $('#firstPage .chooseBtn').on('click',cropChoose)
+
+
+    // 在页面初始化完 设置 滑动区域
+    // 让目标 arg2 在 容器 arg1 中 可以滑动 缩放的区域 arg3
+
+    window.setTimeout(function(){
+
+        cropGesture = new EZGesture($("#dropArea span")[0], $("#cropImg")[0], {
+            targetMinWidth: 420,
+            targetMinHeight: 420
+        })
+
+        var $canvas = $("#cropCanvas");
+        canvasDom = $canvas[0];
+        canvasCtx = canvasDom.getContext("2d");
+        // cropGesture.targetMinWidth = canvasDom.width;
+        // cropGesture.targetMinHeight = canvasDom.height;
+        $("#cropSection").css("visibility", "hidden");
+        $("#cropSection").css("display", "");
+
+        var cropLayerHeight = ($("#cropSection").width() * canvasDom.height * 100 / (canvasDom.width * $("#cropSection").height())).toFixed(2);
+        // $("#cropLayer").css("height", [cropLayerHeight, "%"].join(""));
+        //
+        $("#cropSection").css("display", "none");
+        $("#cropSection").css("visibility", "visible");
+
+    },0)
+
+
+
     loadingStop();
 }
 
-var $upload = $('#upload'),
-	$defaultImgSet = $('#defaultPic img').get(0);
+$("#defaultPic div").on('click',function(){
+    console.log("2222");
+})
+
 
 // 此处可以判断 此浏览器内核 是否支持
 function cropChoose(){
