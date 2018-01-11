@@ -3,9 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <title>Document</title>
+    <meta name= "author" content="lzd" >
+    <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css">
+
   </head>
 <body>
+<script type="text/javascript">
+!function(e,t){var n=e.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,function(){var t=n.clientWidth;t&&(t>=750?(t=750,e.body.style.width="750px"):e.body.style.width=t+"px",n.style.fontSize=100*(t/750)+"px",n.dataset.width=t,n.dataset.percent=100*(t/750))});d(),e.documentElement.classList.add("iosx"+t.devicePixelRatio),e.addEventListener&&t.addEventListener(i,d,!1)}(document,window)
+</script>
+<div id="app" class="p-r">
 
+    <!-- 默认上传input -->
+    <input id="upload" class="p-a" type="file" accept="image/*" />
+
+    <!-- loading -->
+    <div class="loadingDiv" style="display:none">
+        <div class="flex">
+            <span class="wpr">
+                loading...
+            </span>
+        </div>
+    </div>
+
+    
+   
+
+    <!-- 引导页 -->
+    <div id="firstPage" class="flex" style="background-color:#ffe0ab;display:-none;">
+        <div class="guide">
+            <img src="./static/img/defaultBg.jpg" style="width:84%;">
+        </div>
+        <div class="wpr">
+            发拜年自拍能赚钱  红包接到手软<br/>
+            <span class="chooseBtn">我也要做拜年自拍</span>
+        </div>
+    </div>
+
+
+    <div id="cropSection" style="display:none;" >
+
+        <!-- 选择各种主题style -->
+        <div class="theme p-a" style="background-color:#ffe0ab;">
+            <div id="bgStyle">
+                <img src="./static/img/style1.png" style="width:100%;margin-top:.36rem">
+            </div>
+             <!-- 默认头像 -->
+            <div id="defaultPic" class="defaultPic p-a">
+                <div><img src="./static/img/test.jpg" style="width:100%"></div>
+            </div>
+        </div>
+        
+
+        <div class="styleChoose">
+            <div class="wpr flex">
+                <div class="item">style1</div>
+                <div class="item">style2</div>
+                <div class="item">style3</div>
+                <div class="item">style4</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 function loadScript(_src,cb){
@@ -33,21 +93,21 @@ var checkAll = function(val){
             indexPageReady();
             allJsloaded = true;
             checkAll = null;
-        }
+        }else{return;}
     };
-    loadScript('static/js/zepto.min.js',function(){
+    loadScript('./static/js/zepto.min.js',function(){
         zeptoJsLoaded = true;
         checkAll('zepto');
     })
-    loadScript('static/js/global.js',function(){
+    loadScript('./static/js/global.js',function(){
         globalJsloaded = true;
         checkAll('global');
     })
-    loadScript('static/js/ext.js',function(){
+    loadScript('./static/js/ext.js',function(){
         extJsLoad = true;
         checkAll('ext');
     })
-    loadScript('static/js/main.js',function(){
+    loadScript('./static/js/main.js',function(){
         mainJsLoaded = true;
         checkAll('main');
     })
