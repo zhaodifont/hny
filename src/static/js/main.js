@@ -133,7 +133,7 @@ function cropLoaded(img){
     $cropSection.find('.item').each(function(index,item){
         $(item).on('click',function(){
             loadingStart();
-            var url = '/dist/static/img/style' + (index+1) + '.png';
+            var url = '../dist/static/img/style' + (index+1) + '.png';
             console.log($(this).index()+1,themeStlye);
             var a = new Image(),n = $(this).index();
             if(n+1 == themeStlye){loadingStop();return false;}
