@@ -1,25 +1,27 @@
 function loadingStart(){
-	$('.loadingDiv').css('display','');
+    $('.loadingDiv').css('display','');
 }
 
 function loadingStop(){
-	$('.loadingDiv').css('display','none');
+    $('.loadingDiv').css('display','none');
 }
 
 
 
 var $upload = $('#upload'), //原始上传按钮
-	$cropSection = $('#cropSection'), //第二步的section
+    $cropSection = $('#cropSection'), //第二步的section
     $defaultImgSet = $('#cropLayer img'), // 第二步的图片
     canvasDom,
     canvasCtx,
     $dropArea = $("#dropArea span"), // 可以触发拖动的区域
-    $reChoose = $('#reChoose'),
+    $reChoose = $('#reChoose,#reChooseb'),
     $toNext = $('#toNext'),
-    cropGesture = null;
+    $themeBgImg = $('#themeBgImg'),
+    cropGesture = null,
+    themeStlye = 1;
 
 window.indexPageReady = function(){
-	loadingStart();
+    loadingStart();
     $('#firstPage .chooseBtn').on('click',cropChoose)
 
 
@@ -28,12 +30,13 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
+        //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-            targetMinWidth: 420,
-            targetMinHeight: 420
+            targetMinWidth : 1420,
+            targetMinHeight: 1420
         })
 
-        
+
 
         var $canvas = $("#cropCanvas");
         canvasDom = $canvas[0];
@@ -67,28 +70,31 @@ $("#defaultPic div").on('click',function(){
 
 // 此处可以判断 此浏览器内核 是否支持
 function cropChoose(){
-	console.log('cropChoose');
-	cropStart($upload);
+    cropStart($upload);
+
 }
 
 // 触发 upload
 function cropStart(trigerBtn){
-	$upload.unbind('change');
-	$upload.one('change', cropChanged);
-	$upload.trigger('click');
+    $upload.unbind('change');
+    $upload.one('change', cropChanged);
+    $upload.trigger('click');
 }
 
 // 转换为可用的 img base64
 function cropChanged(evt){
-	console.log('cropChanged');
-	console.log(this.files);
-	if(this.files.length < 1){
-		cropStop();
-		return preventEventPropagation(evt);
-	}
-	var file = this.files[0];
+    $cropSection.css('visibility','visible');
+    $('#proSection').css('display','none')
+
+    console.log('cropChanged');
+    console.log(this.files);
+    if(this.files.length < 1){
+        cropStop();
+        return preventEventPropagation(evt);
+    }
+    var file = this.files[0];
     var reader = new FileReader();
-	reader.onload = function () {
+    reader.onload = function () {
         var binary = this.result;
         var binaryData = new BinaryFile(binary); // 转为二进制
         var imgExif = EXIF.readFromBinaryFile(binaryData); // false
@@ -96,14 +102,17 @@ function cropChanged(evt){
         var fullScreenImg = new Image();
         fullScreenImg.onload = function () {
             cropLoaded(this);
-            // console.log(this);
+
+            canvasDom.setAttribute('width',$themeBgImg[0].width)
+            canvasDom.setAttribute('height',$themeBgImg[0].height)
+            $('#megaPixImage').css({'width':this.width,'height':this.height})
             loadingStop();
         }
         var mpImg = new MegaPixImage(file);  // 将传入的图片调整为合理的大小
         // console.log('imgExif',imgExif.Orientation);
         mpImg.render(fullScreenImg, {
-            maxWidth: 960,
-            maxHeight: 960,
+            maxWidth: 750,
+            maxHeight: 750,
             orientation: imgExif.Orientation // false . undefined
         });
     }
@@ -114,25 +123,53 @@ function cropChanged(evt){
 
 // 安装给页面的 img 的src
 function cropLoaded(img){
-	var isSupportTouch = window.supportTouch;
-	$cropSection.css("display", "");
-	console.log('cropLoaded');
-	// $('#cropLayer .wpr').css('left',$('#cropLayer .wpr').offsetLeft)
+    var isSupportTouch = window.supportTouch;
+    $cropSection.css("display", "");
+
+    //  选择theme
+    $cropSection.find('.item').each(function(index,item){
+        $(item).unbind('click');
+    });
+    $cropSection.find('.item').each(function(index,item){
+        $(item).on('click',function(){
+            loadingStart();
+            var url = '../static/img/style' + (index+1) + '.png';
+            console.log($(this).index()+1,themeStlye);
+            var a = new Image(),n = $(this).index();
+            if(n+1 == themeStlye){loadingStop();return false;}
+            a.onload = function(){
+                console.log("loadimg");
+                $('#themeBgImg')[0].src = a.src;
+                loadingStop();
+                themeStlye = n+1;
+            }
+            a.src = url;
 
 
-	// 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
-	var imgWidth = img.width;
+        })
+    })
+
+    console.log('cropLoaded');
+    // $('#cropLayer .wpr').css('left',$('#cropLayer .wpr').offsetLeft)
+
+
+    // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
+    var imgWidth = img.width;
     var imgHeight = img.height;
-    var ratioWidth = $dropArea.width() / imgWidth;
-    var ratioHeight = $dropArea.height() / imgHeight;
+    var ratioWidth = $dropArea.width() / imgWidth; // 5 / 10
+    var ratioHeight = $dropArea.height() / imgHeight; // 5 / 20
     var ratio = ratioWidth > ratioHeight ? ratioWidth : ratioHeight;
     console.log('imgWidth',imgWidth);
     console.log('imgHeight',imgHeight);
     cropGesture.targetMinWidth = imgWidth * ratio;
     cropGesture.targetMinHeight = imgHeight * ratio;
 
+    console.log("ratio",ratio);
+
     var imgOriginX = ($dropArea.width() - cropGesture.targetMinWidth) * 0.5;
     var imgOriginY = ($dropArea.height() - cropGesture.targetMinHeight) * 0.5;
+
+    console.log('imgOriginX',imgOriginX,'imgOriginY',imgOriginY);
 
     $defaultImgSet.css("display", "");
     $defaultImgSet.width(cropGesture.targetMinWidth);
@@ -144,22 +181,28 @@ function cropLoaded(img){
     cropGesture.unbindEvents();
     cropGesture.bindEvents();
 
-	$reChoose.unbind(isSupportTouch ? "touchend" : "click");
-    $reChoose.on(isSupportTouch ? "touchend" : "click", cropStart());
+    $reChoose.unbind(isSupportTouch ? "touchend" : "click");
+    $reChoose.on(isSupportTouch ? "touchend" : "click", cropStart);
     $toNext.unbind(isSupportTouch ? "touchend" : "click");
     $toNext.on(isSupportTouch ? "touchend" : "click", cropConfirm);
 
 }
 
 function cropStop(){
-	console.log('cropStop');
+    console.log('cropStop');
+
+    // 取消选择 theme
+    // $cropSection.find('.item').each(function(index,item){
+    //     $(item).unbind('click');
+    // });
 }
 
 function cropConfirm(evt) {
     // pageRecordClick("sng.tu.christmas2015.nextbtn");
-    var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
-    var viewScale = $('#cropLayer .wpr').width() / $cropSection.width();
     var $cropImg = $defaultImgSet;
+    var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
+    var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
+
     var imgOrigin = {
         x: parseInt($cropImg.css('left')) || 0,
         y: parseInt($cropImg.css('top')) || 0
@@ -169,46 +212,43 @@ function cropConfirm(evt) {
         width: $cropImg.width(),
         height: $cropImg.height()
     };
-    console.log('imgSize ',imgOrigin.x,imgOrigin.y,$('#cropLayer .wpr').width(),$('#cropLayer .wpr').height());
+    console.log('imgSize width height',imgSize.width,imgSize.height);
+    canvasCtx.fillStyle = 'rgba(255, 255, 255, 0)';
     canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
-    // 画主题图片
-    // canvasCtx.drawImage($('#bgStyle img')[0],0,0,$('#bgStyle img').width(),$('#bgStyle img').height())
     // 画用户头像
-    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*canvasScale, Math.abs(imgOrigin.y)*canvasScale, $('#cropLayer .wpr').width(), $('#cropLayer .wpr').height(), 10,10,$('#cropLayer .wpr').width(),$('#cropLayer .wpr').width());
-    // canvasCtx.drawImage(canvasCtx, 20, 20, imgSize.width * canvasScale, imgSize.height * canvasScale);
-    // var dataURL = "";
-    // if (window.isAndroid) {
-    //     var imgEncoder = new JPEGEncoder();
-    //     dataURL = imgEncoder.encode(canvasCtx.getImageData(0, 0, canvasDom.width, canvasDom.height), 100, true);
-    // } else {
-    //     dataURL = canvasDom.toDataURL("image/jpeg", 1.0);
-    // }
-    // var dataComponent = dataURL.split(",");
-    // if (dataComponent.length >= 2) {
-    //     var dataBase64 = dataComponent[1];
-    //     if (dataBase64.length > 0) {
-    //         cropStop();
-    //         // hatStart(dataBase64);
-    //     }
-    // }
-    // $('#test img')[0].src=dataURL;
-    // 转出头像的img  然后继续 与主题 拼合
-    
+    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top,$dropArea.width(),$dropArea.height());
+    // 画主题图片
+    canvasCtx.drawImage($themeBgImg[0],0,0,$themeBgImg.width(),$themeBgImg.height())
 
-    // var userTheme = new Image();
-    // userTheme.onload = function(){
-    // 	userTheme.style.width = "100%";
-    // 	// canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
-    // 	// canvasCtx.fillStyle = '#000';
-    // 	// canvasCtx.fillRect(0,0,canvasDom.width,canvasDom.height);
-    // 	// canvasCtx.drawImage($('#bgStyle img')[0],0,0,$('#bgStyle img').width(),$('#bgStyle img').height())
-    // }
-    // userTheme.src = dataURL;
-    
+    setTimeout(function(){
+        proSave()
+
+        // 取消选择 theme
+        $cropSection.find('.item').each(function(index,item){
+            $(item).unbind('click');
+        });
+
+    },0)
+
     return preventEventPropagation(evt);
 }
 
-// 选择style
-$cropSection.find('.item').on('click',function(){
-	console.log('choose style');
-})
+function proSave(){
+
+    var dataURL = "";
+    if (window.isAndroid) {
+        var imgEncoder = new JPEGEncoder();
+        dataURL = imgEncoder.encode(canvasCtx.getImageData(0, 0, canvasDom.width, canvasDom.height), 100, true);
+    } else {
+        dataURL = canvasDom.toDataURL("image/jpeg", 1.0);
+    }
+
+    var img = new Image();
+    img.onload = function(){
+        $('#proSection img')[0].src = img.src;
+        $('#proSection').css('display','block')
+    }
+    img.src = dataURL
+}
+
+

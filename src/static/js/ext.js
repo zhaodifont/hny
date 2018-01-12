@@ -13,14 +13,14 @@ var BinaryFile = function(strData, iDataOffset, iDataLength) {
             this.getByteAt = function(iOffset) {
                     return data.charCodeAt(iOffset + dataOffset) & 0xFF;
             }
-            
+
             this.getBytesAt = function(iOffset, iLength) {
                     var aBytes = [];
-                    
+
                     for (var i = 0; i < iLength; i++) {
                             aBytes[i] = data.charCodeAt((iOffset + i) + dataOffset) & 0xFF
                     };
-                    
+
                     return aBytes;
             }
     } else if (typeof strData == "unknown") {
@@ -48,7 +48,7 @@ var BinaryFile = function(strData, iDataOffset, iDataLength) {
     }
 
     this.getShortAt = function(iOffset, bBigEndian) {
-            var iShort = bBigEndian ? 
+            var iShort = bBigEndian ?
                     (this.getByteAt(iOffset) << 8) + this.getByteAt(iOffset + 1)
                     : (this.getByteAt(iOffset + 1) << 8) + this.getByteAt(iOffset)
             if (iShort < 0) iShort += 65536;
@@ -67,7 +67,7 @@ var BinaryFile = function(strData, iDataOffset, iDataLength) {
                     iByte3 = this.getByteAt(iOffset + 2),
                     iByte4 = this.getByteAt(iOffset + 3);
 
-            var iLong = bBigEndian ? 
+            var iLong = bBigEndian ?
                     (((((iByte1 << 8) + iByte2) << 8) + iByte3) << 8) + iByte4
                     : (((((iByte4 << 8) + iByte3) << 8) + iByte2) << 8) + iByte1;
             if (iLong < 0) iLong += 4294967296;
@@ -83,14 +83,14 @@ var BinaryFile = function(strData, iDataOffset, iDataLength) {
 
     this.getStringAt = function(iOffset, iLength) {
             var aStr = [];
-            
+
             var aBytes = this.getBytesAt(iOffset, iLength);
             for (var j=0; j < iLength; j++) {
                     aStr[j] = String.fromCharCode(aBytes[j]);
             }
             return aStr.join("");
     }
-    
+
     this.getCharAt = function(iOffset) {
             return String.fromCharCode(this.getByteAt(iOffset));
     }
@@ -105,36 +105,36 @@ var BinaryFile = function(strData, iDataOffset, iDataLength) {
 var EXIF = {};
 (function() {
     var bDebug = false;
-     
+
     EXIF.Tags = {
-     
+
         // version tags
         0x9000 : "ExifVersion",         // EXIF version
         0xA000 : "FlashpixVersion",     // Flashpix format version
-     
+
         // colorspace tags
         0xA001 : "ColorSpace",          // Color space information tag
-     
+
         // image configuration
         0xA002 : "PixelXDimension",     // Valid width of meaningful image
         0xA003 : "PixelYDimension",     // Valid height of meaningful image
         0x9101 : "ComponentsConfiguration", // Information about channels
         0x9102 : "CompressedBitsPerPixel",  // Compressed bits per pixel
-     
+
         // user information
         0x927C : "MakerNote",           // Any desired information written by the manufacturer
         0x9286 : "UserComment",         // Comments by user
-     
+
         // related file
         0xA004 : "RelatedSoundFile",        // Name of related sound file
-     
+
         // date and time
         0x9003 : "DateTimeOriginal",        // Date and time when the original image was generated
         0x9004 : "DateTimeDigitized",       // Date and time when the image was stored digitally
         0x9290 : "SubsecTime",          // Fractions of seconds for DateTime
         0x9291 : "SubsecTimeOriginal",      // Fractions of seconds for DateTimeOriginal
         0x9292 : "SubsecTimeDigitized",     // Fractions of seconds for DateTimeDigitized
-     
+
         // picture-taking conditions
         0x829A : "ExposureTime",        // Exposure time (in seconds)
         0x829D : "FNumber",         // F number
@@ -154,7 +154,7 @@ var EXIF = {};
         0x9214 : "SubjectArea",         // Location and area of main subject
         0x920A : "FocalLength",         // Focal length of the lens in mm
         0xA20B : "FlashEnergy",         // Strobe energy in BCPS
-        0xA20C : "SpatialFrequencyResponse",    // 
+        0xA20C : "SpatialFrequencyResponse",    //
         0xA20E : "FocalPlaneXResolution",   // Number of pixels in width direction per FocalPlaneResolutionUnit
         0xA20F : "FocalPlaneYResolution",   // Number of pixels in height direction per FocalPlaneResolutionUnit
         0xA210 : "FocalPlaneResolutionUnit",    // Unit for measuring FocalPlaneXResolution and FocalPlaneYResolution
@@ -174,14 +174,14 @@ var EXIF = {};
         0xA408 : "Contrast",            // Direction of contrast processing applied by camera
         0xA409 : "Saturation",          // Direction of saturation processing applied by camera
         0xA40A : "Sharpness",           // Direction of sharpness processing applied by camera
-        0xA40B : "DeviceSettingDescription",    // 
+        0xA40B : "DeviceSettingDescription",    //
         0xA40C : "SubjectDistanceRange",    // Distance to subject
-     
+
         // other tags
         0xA005 : "InteroperabilityIFDPointer",
         0xA420 : "ImageUniqueID"        // Identifier assigned uniquely to each image
     };
-     
+
     EXIF.TiffTags = {
         0x0100 : "ImageWidth",
         0x0101 : "ImageHeight",
@@ -217,7 +217,7 @@ var EXIF = {};
         0x013B : "Artist",
         0x8298 : "Copyright"
     }
-     
+
     EXIF.GPSTags = {
         0x0000 : "GPSVersionID",
         0x0001 : "GPSLatitudeRef",
@@ -251,7 +251,7 @@ var EXIF = {};
         0x001D : "GPSDateStamp",
         0x001E : "GPSDifferential"
     }
-     
+
     EXIF.StringValues = {
         ExposureProgram : {
             0 : "Not defined",
@@ -378,7 +378,7 @@ var EXIF = {};
         FileSource : {
             3 : "DSC"
         },
-     
+
         Components : {
             0 : "",
             1 : "Y",
@@ -389,23 +389,23 @@ var EXIF = {};
             6 : "B"
         }
     }
-     
-    function addEvent(oElement, strEvent, fncHandler) 
+
+    function addEvent(oElement, strEvent, fncHandler)
     {
-        if (oElement.addEventListener) { 
-            oElement.addEventListener(strEvent, fncHandler, false); 
-        } else if (oElement.attachEvent) { 
-            oElement.attachEvent("on" + strEvent, fncHandler); 
+        if (oElement.addEventListener) {
+            oElement.addEventListener(strEvent, fncHandler, false);
+        } else if (oElement.attachEvent) {
+            oElement.attachEvent("on" + strEvent, fncHandler);
         }
     }
-     
-     
-    function imageHasData(oImg) 
+
+
+    function imageHasData(oImg)
     {
         return !!(oImg.exifdata);
     }
-     
-    function getImageData(oImg, fncCallback) 
+
+    function getImageData(oImg, fncCallback)
     {
         BinaryAjax(
             oImg.src,
@@ -416,14 +416,14 @@ var EXIF = {};
             }
         )
     }
-     
+
     function findEXIFinJPEG(oFile) {
         var aMarkers = [];
-     
+
         if (oFile.getByteAt(0) != 0xFF || oFile.getByteAt(1) != 0xD8) {
             return false; // not a valid jpeg
         }
-     
+
         var iOffset = 2;
         var iLength = oFile.getLength();
         while (iOffset < iLength) {
@@ -431,32 +431,32 @@ var EXIF = {};
                 if (bDebug) console.log("Not a valid marker at offset " + iOffset + ", found: " + oFile.getByteAt(iOffset));
                 return false; // not a valid marker, something is wrong
             }
-     
+
             var iMarker = oFile.getByteAt(iOffset+1);
-     
-            // we could implement handling for other markers here, 
+
+            // we could implement handling for other markers here,
             // but we're only looking for 0xFFE1 for EXIF data
-     
+
             if (iMarker == 22400) {
                 if (bDebug) console.log("Found 0xFFE1 marker");
                 return readEXIFData(oFile, iOffset + 4, oFile.getShortAt(iOffset+2, true)-2);
                 iOffset += 2 + oFile.getShortAt(iOffset+2, true);
-     
+
             } else if (iMarker == 225) {
                 // 0xE1 = Application-specific 1 (for EXIF)
                 if (bDebug) console.log("Found 0xFFE1 marker");
                 return readEXIFData(oFile, iOffset + 4, oFile.getShortAt(iOffset+2, true)-2);
-     
+
             } else {
                 iOffset += 2 + oFile.getShortAt(iOffset+2, true);
             }
-     
+
         }
-     
+
     }
-     
-     
-    function readTags(oFile, iTIFFStart, iDirStart, oStrings, bBigEnd) 
+
+
+    function readTags(oFile, iTIFFStart, iDirStart, oStrings, bBigEnd)
     {
         var iEntries = oFile.getShortAt(iDirStart, bBigEnd);
         var oTags = {};
@@ -468,14 +468,14 @@ var EXIF = {};
         }
         return oTags;
     }
-     
-     
+
+
     function readTagValue(oFile, iEntryOffset, iTIFFStart, iDirStart, bBigEnd)
     {
         var iType = oFile.getShortAt(iEntryOffset+2, bBigEnd);
         var iNumValues = oFile.getLongAt(iEntryOffset+4, bBigEnd);
         var iValueOffset = oFile.getLongAt(iEntryOffset+8, bBigEnd) + iTIFFStart;
-     
+
         switch (iType) {
             case 1: // byte, 8-bit unsigned int
             case 7: // undefined, 8-bit byte, value depending on field
@@ -490,12 +490,12 @@ var EXIF = {};
                     return aVals;
                 }
                 break;
-     
+
             case 2: // ascii, 8-bit byte
                 var iStringOffset = iNumValues > 4 ? iValueOffset : (iEntryOffset + 8);
                 return oFile.getStringAt(iStringOffset, iNumValues-1);
                 break;
-     
+
             case 3: // short, 16 bit int
                 if (iNumValues == 1) {
                     return oFile.getShortAt(iEntryOffset + 8, bBigEnd);
@@ -508,7 +508,7 @@ var EXIF = {};
                     return aVals;
                 }
                 break;
-     
+
             case 4: // long, 32 bit int
                 if (iNumValues == 1) {
                     return oFile.getLongAt(iEntryOffset + 8, bBigEnd);
@@ -555,19 +555,19 @@ var EXIF = {};
                 break;
         }
     }
-     
-     
-    function readEXIFData(oFile, iStart, iLength) 
+
+
+    function readEXIFData(oFile, iStart, iLength)
     {
         if (oFile.getStringAt(iStart, 4) != "Exif") {
             if (bDebug) console.log("Not valid EXIF data! " + oFile.getStringAt(iStart, 4));
             return false;
         }
-     
+
         var bBigEnd;
-     
+
         var iTIFFOffset = iStart + 6;
-     
+
         // test for TIFF validity and endianness
         if (oFile.getShortAt(iTIFFOffset) == 0x4949) {
             bBigEnd = false;
@@ -577,19 +577,19 @@ var EXIF = {};
             if (bDebug) console.log("Not valid TIFF data! (no 0x4949 or 0x4D4D)");
             return false;
         }
-     
+
         if (oFile.getShortAt(iTIFFOffset+2, bBigEnd) != 0x002A) {
             if (bDebug) console.log("Not valid TIFF data! (no 0x002A)");
             return false;
         }
-     
+
         if (oFile.getLongAt(iTIFFOffset+4, bBigEnd) != 0x00000008) {
             if (bDebug) console.log("Not valid TIFF data! (First offset not 8)", oFile.getShortAt(iTIFFOffset+4, bBigEnd));
             return false;
         }
-     
+
         var oTags = readTags(oFile, iTIFFOffset, iTIFFOffset+8, EXIF.TiffTags, bBigEnd);
-     
+
         if (oTags.ExifIFDPointer) {
             var oEXIFTags = readTags(oFile, iTIFFOffset, iTIFFOffset + oTags.ExifIFDPointer, EXIF.Tags, bBigEnd);
             for (var strTag in oEXIFTags) {
@@ -602,23 +602,23 @@ var EXIF = {};
                     case "SceneCaptureType" :
                     case "SceneType" :
                     case "CustomRendered" :
-                    case "WhiteBalance" : 
-                    case "GainControl" : 
+                    case "WhiteBalance" :
+                    case "GainControl" :
                     case "Contrast" :
                     case "Saturation" :
-                    case "Sharpness" : 
+                    case "Sharpness" :
                     case "SubjectDistanceRange" :
                     case "FileSource" :
                         oEXIFTags[strTag] = EXIF.StringValues[strTag][oEXIFTags[strTag]];
                         break;
-        
+
                     case "ExifVersion" :
                     case "FlashpixVersion" :
                         oEXIFTags[strTag] = String.fromCharCode(oEXIFTags[strTag][0], oEXIFTags[strTag][1], oEXIFTags[strTag][2], oEXIFTags[strTag][3]);
                         break;
-        
-                    case "ComponentsConfiguration" : 
-                        oEXIFTags[strTag] = 
+
+                    case "ComponentsConfiguration" :
+                        oEXIFTags[strTag] =
                             EXIF.StringValues.Components[oEXIFTags[strTag][0]]
                             + EXIF.StringValues.Components[oEXIFTags[strTag][1]]
                             + EXIF.StringValues.Components[oEXIFTags[strTag][2]]
@@ -628,27 +628,27 @@ var EXIF = {};
                 oTags[strTag] = oEXIFTags[strTag];
             }
         }
-     
+
         if (oTags.GPSInfoIFDPointer) {
             var oGPSTags = readTags(oFile, iTIFFOffset, iTIFFOffset + oTags.GPSInfoIFDPointer, EXIF.GPSTags, bBigEnd);
             for (var strTag in oGPSTags) {
                 switch (strTag) {
-                    case "GPSVersionID" : 
-                        oGPSTags[strTag] = oGPSTags[strTag][0] 
-                            + "." + oGPSTags[strTag][1] 
-                            + "." + oGPSTags[strTag][2] 
+                    case "GPSVersionID" :
+                        oGPSTags[strTag] = oGPSTags[strTag][0]
+                            + "." + oGPSTags[strTag][1]
+                            + "." + oGPSTags[strTag][2]
                             + "." + oGPSTags[strTag][3];
                         break;
                 }
                 oTags[strTag] = oGPSTags[strTag];
             }
         }
-     
+
         return oTags;
     }
-     
-     
-    EXIF.getData = function(oImg, fncCallback) 
+
+
+    EXIF.getData = function(oImg, fncCallback)
     {
         if (!oImg.complete) return false;
         if (!imageHasData(oImg)) {
@@ -658,14 +658,14 @@ var EXIF = {};
         }
         return true;
     }
-     
-    EXIF.getTag = function(oImg, strTag) 
+
+    EXIF.getTag = function(oImg, strTag)
     {
         if (!imageHasData(oImg)) return;
         return oImg.exifdata[strTag];
     }
-     
-    EXIF.getAllTags = function(oImg) 
+
+    EXIF.getAllTags = function(oImg)
     {
         if (!imageHasData(oImg)) return {};
         var oData = oImg.exifdata;
@@ -677,9 +677,9 @@ var EXIF = {};
         }
         return oAllTags;
     }
-     
-     
-    EXIF.pretty = function(oImg) 
+
+
+    EXIF.pretty = function(oImg)
     {
         if (!imageHasData(oImg)) return "";
         var oData = oImg.exifdata;
@@ -695,29 +695,29 @@ var EXIF = {};
         }
         return strPretty;
     }
-     
+
     EXIF.readFromBinaryFile = function(oFile) {
         return findEXIFinJPEG(oFile);
     }
-     
-    function loadAllImages() 
+
+    function loadAllImages()
     {
         var aImages = document.getElementsByTagName("img");
         for (var i=0;i<aImages.length;i++) {
             if (aImages[i].getAttribute("exif") == "true") {
                 if (!aImages[i].complete) {
-                    addEvent(aImages[i], "load", 
+                    addEvent(aImages[i], "load",
                         function() {
                             EXIF.getData(this);
                         }
-                    ); 
+                    );
                 } else {
                     EXIF.getData(aImages[i]);
                 }
             }
         }
     }
-     
+
     addEvent(window, "load", loadAllImages);
 })();
 
@@ -948,7 +948,7 @@ var EXIF = {};
     for (var k in options) opt[k] = options[k];
     opt.width = width;
     opt.height = height;
-    
+
 
     var tagName = target.tagName.toLowerCase();
     if (tagName === 'img') {
@@ -1788,11 +1788,10 @@ function JPEGEncoder(quality) {
         return false;
     }
     function gesturePanEnd() {
-
         if (this.gesturePanEnabled) {
             var targetOriginX = this.targetDom.offsetLeft;
             var targetOriginY = this.targetDom.offsetTop;
-            // console.log('targetOriginX',this.targetDom.offsetLeft);
+
             if (targetOriginX > 0) {
                 targetOriginX = 0;
             } else {

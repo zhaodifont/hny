@@ -2,7 +2,7 @@
     width:100%;max-width: 750px;position: fixed;
     bottom:0;top:0;left:50%;right:0;transform: translate(-50%,0);
 }
-.loadingDiv,.loadingDiv .flex,#firstPage,#bgStyle,#cropSection,.theme{
+.loadingDiv,.loadingDiv .flex,#firstPage,#bgStyle,#cropSection,.theme,#proSection{
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
 .loadingDiv{
@@ -29,15 +29,15 @@
 	z-index:66;
 }
 .theme{}
-.defaultPic{width:100%;height:4.84rem;z-index:22;top:3rem;}
+.defaultPic{width:100%;height:4.84rem;z-index:22;top:2.95rem;}
 .defaultPic .wpr{
 	width:4.84rem;height:4.84rem;
 	position: relative;margin:auto;/*overflow:hidden;*/
 }
 .defaultPic .background{background-color: transparent;opacity: 0;position: absolute;left: 0;top: 0;z-index: 215;width:100%;height:100%;}
-#dropArea.defaultPic{z-index:99;border:2px red solid;box-sizing: border-box;}
+#dropArea.defaultPic{z-index:99;box-sizing: border-box;}
 #dropArea.defaultPic span{
-	display:block;width:4.84rem;background-color:green;opacity:.4;height:4.84rem;
+	display:block;width:4.84rem;height:4.84rem;
 	margin:auto;
 }
 .chooseBtn{
@@ -60,4 +60,9 @@
 
 #cropCanvas{left:80%;top:0;}
 
+.ecode{display:block;width:1.22rem;height:1.22rem;border-radius:.1rem;background-color:#fff;position:relative;z-index:222;margin: -1.9rem auto 0;}
+.ecode:before{content:"别往了添加二维码收款";font-size:.22rem;line-height:1.6;}
 
+
+#proSection{z-index:444;background-color:#fff;}
+#proSection .txt{text-align:center;margin-top:.6rem;font-size:.28rem;}
