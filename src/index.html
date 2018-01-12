@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Document</title>
+    <title>恭喜发财</title>
     <meta name= "author" content="lzd" >
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
@@ -60,7 +60,7 @@
                 <div class="wpr">
 
                      <!-- <canvas id="cropCanvasHead" class="p-a" style="left:2rem;z-index:1999;border:1px #000 solid;" width="420" height="420"></canvas> -->
-                    <img id="cropImg" class="p-a" style="top:0" src="./static/img/test1.jpg">
+                    <img id="cropImg" class="p-a" style="top:0" src="">
                 </div>
             </div>
             <div id="dropArea" class="defaultPic p-a"><span></span></div>
@@ -122,6 +122,12 @@ var checkAll = function(val){
     loadScript('./static/js/zepto.min.js',function(){
         zeptoJsLoaded = true;
         checkAll('zepto');
+        loadScript('./static/js/main.js',function(){
+        if(zeptoJsLoaded){
+            checkAll('main');
+            mainJsLoaded = true;
+        }
+    })
     })
     loadScript('./static/js/global.js',function(){
         globalJsloaded = true;
@@ -132,8 +138,10 @@ var checkAll = function(val){
         checkAll('ext');
     })
     loadScript('./static/js/main.js',function(){
-        mainJsLoaded = true;
-        checkAll('main');
+        if(zeptoJsLoaded){
+            checkAll('main');
+            mainJsLoaded = true;
+        }
     })
 
 </script>
