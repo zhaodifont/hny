@@ -1788,10 +1788,11 @@ function JPEGEncoder(quality) {
         return false;
     }
     function gesturePanEnd() {
+
         if (this.gesturePanEnabled) {
             var targetOriginX = this.targetDom.offsetLeft;
             var targetOriginY = this.targetDom.offsetTop;
-
+            // console.log('targetOriginX',this.targetDom.offsetLeft);
             if (targetOriginX > 0) {
                 targetOriginX = 0;
             } else {

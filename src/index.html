@@ -41,25 +41,33 @@
         </div>
     </div>
 
+    <!-- <div id="test" style="box-sizing:border-box;border:2px green solid;z-index:99999999;position:absolute;left:0;top:0;">
+    <img src="">123
+    </div> -->
+    <canvas id="cropCanvas" class="p-a" style="left:.2rem;z-index:1;border:1px blue solid;" width="420" height="420"></canvas>
 
     <div id="cropSection" style="display:none;" >
 
         <!-- 选择各种主题style -->
-        <div class="theme p-a" style="background-color:#ffe0ab;">
+        <div class="theme" style="background-color:#ffe0ab;z-index:2;">
             <div id="bgStyle">
                 <img src="./static/img/style1.png" style="width:100%;margin-top:.36rem">
             </div>
              <!-- 默认头像 -->
             <div id="cropLayer" class="defaultPic p-a">
-
-                <canvas id="cropCanvas" class="p-a" width="420" height="420"></canvas>
-                <img id="cropImg" class="p-a" style="top:0" src="./static/img/test.jpg" style="width:100%">
+                <div class="wpr">
+                     
+                     <!-- <canvas id="cropCanvasHead" class="p-a" style="left:2rem;z-index:1999;border:1px #000 solid;" width="420" height="420"></canvas> -->
+                    <img id="cropImg" class="p-a" style="top:0" src="./static/img/test1.jpg" style="width:100%">
+                </div>
             </div>
             <div id="dropArea" class="defaultPic p-a"><span></span></div>
         </div>
 
 
         <div class="styleChoose">
+            <a href="javascript:void(0)" id="reChoose">重新选择</a>
+            <a href="javascript:void(0)" id="toNext">下一步</a>
             <div class="wpr flex">
                 <div class="item">style1</div>
                 <div class="item">style2</div>
