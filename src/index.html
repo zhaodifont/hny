@@ -19,7 +19,7 @@
     <input id="upload" class="p-a" type="file" accept="image/*" />
 
     <!-- loading -->
-    <div class="loadingDiv" style="display:none">
+    <div class="loadingDiv">
         <div class="flex">
             <span class="wpr">
                 loading...
@@ -27,54 +27,64 @@
         </div>
     </div>
 
-
-
-
-    <!-- 引导页 -->
-    <div id="firstPage" class="flex" style="background-color:#ffe0ab;display:-none;">
-        <div class="guide">
-            <img src="./static/img/defaultBg.jpg" style="width:84%;">
+    <!-- 1 引导页 -->
+    <div id="firstPage" class="p-r" style="z-index:111;display:-none">
+        <div class="tit p-a">
+          <div class="t1_wpr">
+            <img src="./static/img/first_t1.png" class="t1 animated" alt="">
+          </div>
+          <div class="t2_wpr">
+            <img src="./static/img/first_t2.png" class="t2 animated" alt="">
+          </div>
         </div>
-        <div class="wpr">
-            发拜年自拍能赚钱  红包接到手软<br/>
+        <div class="guide">
+            <!-- <img src="./static/img/firstPic.jpg" width="100%"> -->
+        </div>
+        <div class="wpr p-a">
+            已有<var id="joinNum">0</var>人参加<br/>
+            收到红包总额已突破<var id="targetNum">0</var>
             <span class="chooseBtn">我也要做拜年自拍</span>
         </div>
     </div>
 
-    <!-- <div id="test" style="box-sizing:border-box;border:2px green solid;z-index:99999999;position:absolute;left:0;top:0;">
-    <img src="">123
-    </div> -->
+    <!--  转换图片时需要 -->
     <div id="megaPixImage"></div>
+    <!-- 生成器 -->
+    <canvas id="cropCanvas" class="p-a" style="z-index:1;left:-999rem;background-color:rgba(0,0,0,0)" width="420" height="420"></canvas>
 
-<canvas id="cropCanvas" class="p-a" style="z-index:1;left:0;background-color:rgba(0,0,0,0)" width="420" height="420"></canvas>
-    <div id="cropSection" style="display:none;" >
+    <div id="cropSection" style="display:none;z-index:222;overflow-y:scroll;background-color:#fff;" >
 
         <!-- 选择各种主题style -->
-        <div class="theme" style="background-color:#ffe0ab;z-index:2;">
-            <div id="bgStyle">
-                <img src="./static/img/style1.png" id="themeBgImg" style="width:100%;">
-                <div id="eCode" class="ecode"><img src="" alt=""></div>
+        <div class="theme" style="z-index:2;">
+          <!-- themebg -->
+            <div id="theme_bg" class="p-r">
+                <img src="" id="themeBgImg" style="width:100%;">
+                <div id="eCode" class="ecode p-a" style="right:15.06%;bottom:.6rem;"><img src="" alt=""></div>
             </div>
-             <!-- 默认头像 -->
-            <div id="cropLayer" class="defaultPic p-a">
-                <div class="wpr">
-
-                     <!-- <canvas id="cropCanvasHead" class="p-a" style="left:2rem;z-index:1999;border:1px #000 solid;" width="420" height="420"></canvas> -->
-                    <img id="cropImg" class="p-a" style="top:0" src="">
+             <!-- themehead -->
+            <div id="cropLayer" class="defaultPic p-a" style="">
+                <img src="" class="themeHead" alt="">
+                <div class="wpr p-a" style="">
+                    <img id="cropImg" class="p-a" style="top:0" src="./static/img/default.jpg">
                 </div>
             </div>
-            <div id="dropArea" class="defaultPic p-a"><span></span></div>
+            <div id="dropArea" class="defaultPic p-a"></div>
         </div>
 
 
-        <div class="styleChoose">
-            <a href="javascript:void(0)" id="reChoose">重新选择</a>
+        <div class="styleChoose p-r" id="theme_foot">
+          <img src="" alt="">
+            <!-- <a href="javascript:void(0)" id="reChoose">重新选择</a> -->
             <a href="javascript:void(0)" id="toNext">下一步</a>
-            <div class="wpr flex">
-                <div class="item">style1</div>
-                <div class="item">style2</div>
-                <div class="item">style3</div>
+            <div class="wpr p-a">
+              <div class="">
+                  <div class="item" id="reChoose">重新选择</div>
+                  <span>
+                    <!-- <div class="item"></div> -->
+                  </span>
+              </div>
             </div>
+
         </div>
     </div>
 
@@ -89,12 +99,20 @@
         </div>
     </div>
 
+    <!-- ./static/test.mp3 -->
+    <audio src="./test.mp3" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
+    <div id="audio_control" class='p-a'>
+      <img src="./static/img/audio_Icon.png" class="run" alt="">
+    </div>
+
 </div>
 
 <script>
+
 function loadScript(_src,cb){
     var script = document.createElement('script');
     script.type="text/javascript";
+    script.async = 'async';
     if(script.readyState){
         script.onreadystatechange = function(){
             if(script.readyState == 'loaded' || script.readyState == 'complete'){
@@ -106,43 +124,106 @@ function loadScript(_src,cb){
     }
     script.src=_src;document.getElementsByTagName('head')[0].appendChild(script);
 }
-var zeptoJsLoaded = false,
-    extJsLoad = false,
-    globalJsloaded = false,
-    mainJsLoaded = false,
-    allJsloaded = false;
-var checkAll = function(val){
-        console.log("check js this time ok:",val);
-        if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
-            indexPageReady();
-            allJsloaded = true;
-            checkAll = null;
-        }else{return;}
-    };
-    loadScript('./static/js/zepto.min.js',function(){
-        zeptoJsLoaded = true;
-        checkAll('zepto');
-        loadScript('./static/js/main.js',function(){
-        if(zeptoJsLoaded){
-            checkAll('main');
-            mainJsLoaded = true;
-        }
-    })
-    })
-    loadScript('./static/js/global.js',function(){
-        globalJsloaded = true;
-        checkAll('global');
-    })
-    loadScript('./static/js/ext.js',function(){
-        extJsLoad = true;
-        checkAll('ext');
-    })
-    loadScript('./static/js/main.js',function(){
-        if(zeptoJsLoaded){
-            checkAll('main');
-            mainJsLoaded = true;
-        }
-    })
+
+!function(){
+  var auBtn = document.querySelector('#audio_control'),
+      audio = document.querySelector('#audio'),
+      icon = document.querySelectorAll('#audio_control img')[0],
+      playStat = false;
+  auBtn.onclick=function(){
+    playStat = !playStat;
+    console.log(icon);
+    if(playStat){
+      audio.play()
+      icon.style.animationPlayState="running"
+    }else{
+      audio.pause()
+      icon.style.animationPlayState="paused"
+    }
+
+  }
+}()
+
+loadScript('./static/js/count.js',function(){
+  // 默认图片
+  var defaultbgStatue = false;
+  var img = new Image();
+  img.onload = function(){
+    loadOtherJs();
+    img.setAttribute('width','100%')
+    document.querySelectorAll('.guide')[0].appendChild(img);
+    defaultbgStatue = true;
+  }
+  img.src = './static/img/firstPic.jpg';
+  // number  开始运行
+  var targetNum = 499930002,
+      joinNum = 321343,
+      count = new CountUp('targetNum', 0, targetNum, 0, 1.5),
+      join = new CountUp('joinNum', 0, joinNum, 0, 1),
+      f_t1 = document.querySelector('#firstPage .t1'),
+      f_t2 = document.querySelector('#firstPage .t2');
+
+  var timer = setInterval(function(){
+    console.log(defaultbgStatue);
+    if(defaultbgStatue){
+      clearInterval(timer);
+
+      timer = null;
+      document.querySelectorAll('.loadingDiv')[0].style.display='none';
+      // 首屏 标题
+      f_t1.classList.add('bounceInDown');
+      f_t2.classList.add('fadeIn');
+      join.start()
+      count.start(function(){
+        join = count = null;
+      });
+    }
+  },0)
+})
+
+function loadOtherJs(){
+  var zeptoJsLoaded = false,
+      extJsLoad = false,
+      globalJsloaded = false,
+      mainJsLoaded = false,
+      allJsloaded = false;
+  var checkAll = function(val){
+          console.log("check js this time ok:",val,zeptoJsLoaded , extJsLoad , globalJsloaded , mainJsLoaded);
+          if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
+            console.log(123);
+              indexPageReady();
+              allJsloaded = true;
+              checkAll = null;
+          }else{return;}
+      };
+      loadScript('./static/js/zepto.min.js',function(){
+          zeptoJsLoaded = true;
+          checkAll('zepto');
+          loadScript('./static/js/main.js',function(){
+          if(zeptoJsLoaded){
+              checkAll('main');
+              mainJsLoaded = true;
+              // transNumber();
+          }
+      })
+      })
+      loadScript('./static/js/global.js',function(){
+          globalJsloaded = true;
+          checkAll('global');
+      })
+      loadScript('./static/js/ext.js',function(){
+          extJsLoad = true;
+          checkAll('ext');
+      })
+      loadScript('./static/js/main.js',function(){
+          if(zeptoJsLoaded){
+              checkAll('main');
+              mainJsLoaded = true;
+          }
+      })
+
+}
+
 
 </script>
 </body>

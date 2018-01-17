@@ -1,28 +1,67 @@
 function loadingStart(){
-    $('.loadingDiv').css('display','');
+    $('.loadingDiv').css('display','block');
 }
 
 function loadingStop(){
     $('.loadingDiv').css('display','none');
 }
 
-
-
 var $upload = $('#upload'), //原始上传按钮
     $cropSection = $('#cropSection'), //第二步的section
-    $defaultImgSet = $('#cropLayer img'), // 第二步的图片
+    $defaultImgSet = $('#cropImg'), // 第二步的图片
     canvasDom,
     canvasCtx,
-    $dropArea = $("#dropArea span"), // 可以触发拖动的区域
+    $dropArea = $("#dropArea"), // 可以触发拖动的区域
     $reChoose = $('#reChoose,#reChooseb'),
     $toNext = $('#toNext'),
     $themeBgImg = $('#themeBgImg'),
+    $themeFoot = $('#theme_foot'),
+    $themeSelectWpr = $('.styleChoose .wpr span'),
     cropGesture = null,
-    themeStlye = 1;
+    themeStlye = 1,
+    themes = [
+      {
+        bg:'./static/img/theme1-bg.jpg',
+        head:'./static/img/theme1-head.png',
+        foot:'./static/img/theme1-foot.jpg',
+        sm:'./static/img/theme1-sm.jpg',
+        heado:{width:'110',height:'135'},
+        cropLayerPos:{
+          top:'.46rem',left:'10.8%',width:'78.4%'
+        },
+        cropLayerWprPos:{
+          top:'2.24rem',left:'.58rem'
+        }
+      }
+    ],
+    changeTheme=function(obj){
+      console.log('changeThemechange');
+      $themeFoot.find('img')[0].style.width="100%";
+      $themeFoot.find('img')[0].src = obj.foot;
+      $('.themeHead')[0].src = obj.head;
+
+      // cropLayer
+      var posa = obj.cropLayerPos,
+          posb = obj.cropLayerWprPos
+      for (var key in posa) {
+        $('#cropLayer').css(key,posa[key])
+      }
+      for (var key in posb) {
+        $('#cropLayer .wpr').css(key,posb[key])
+      }
+
+      var img = new Image();
+      img.onload = function(){
+        themeBgImg.src = img.src;
+      };
+      img.src = obj.bg;
+    }
 
 window.indexPageReady = function(){
     loadingStart();
     $('#firstPage .chooseBtn').on('click',cropChoose)
+    // 调试
+    // changeTheme(themes[0]);
 
 
     // 在页面初始化完 设置 滑动区域
@@ -32,11 +71,9 @@ window.indexPageReady = function(){
 
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-            targetMinWidth : 1420,
-            targetMinHeight: 1420
+            targetMinWidth : 750,
+            targetMinHeight: 750
         })
-
-
 
         var $canvas = $("#cropCanvas");
         canvasDom = $canvas[0];
@@ -44,28 +81,16 @@ window.indexPageReady = function(){
         cropGesture.targetMinWidth = canvasDom.width;
         cropGesture.targetMinHeight = canvasDom.height;
 
-        // cropGesture.targetMinWidth = canvasDom.width;
-        // cropGesture.targetMinHeight = canvasDom.height;
-        // $(cropGesture).css({'border':'1px blue solid'})
         $cropSection.css("visibility", "hidden");
         $cropSection.css("display", "");
 
-        // var cropLayerHeight = ($("#cropSection").width() * canvasDom.height * 100 / (canvasDom.width * $("#cropSection").height())).toFixed(2);
-        // $("#cropLayer").css("height", [cropLayerHeight, "%"].join(""));
-        //
         $cropSection.css("display", "none");
         $cropSection.css("visibility", "visible");
 
+        loadingStop();
     },0)
 
-
-
-    loadingStop();
 }
-
-$("#defaultPic div").on('click',function(){
-    console.log("2222");
-})
 
 
 // 此处可以判断 此浏览器内核 是否支持
@@ -76,6 +101,23 @@ function cropChoose(){
 
 // 触发 upload
 function cropStart(trigerBtn){
+  // 不管是否选择文件 都开始加载主题1
+    changeTheme(themes[0]);
+
+  //  不管是否选择文件 加载所有主题的sm
+  themes.forEach(function(el,index,len){
+    $themeSelectWpr.eq(0).empty();
+    console.log($themeSelectWpr.eq(0));
+    var item = document.createElement('div'),
+        sm = document.createElement('img');
+        sm.setAttribute('src',el.sm);
+        sm.style.width = '100%';
+        item.classList.add('item');
+        item.appendChild(sm);
+        $themeSelectWpr.eq(0).append(item);
+  })
+
+  // 定义
     $upload.unbind('change');
     $upload.one('change', cropChanged);
     $upload.trigger('click');
@@ -83,6 +125,20 @@ function cropStart(trigerBtn){
 
 // 转换为可用的 img base64
 function cropChanged(evt){
+  loadingStart();
+  // 加载 theme1 时 调整二维码框的位置
+  window.setTimeout(function(){
+    $('#dropArea').css({
+      left:$('#cropLayer .wpr').offset().left,
+      top:$('#cropLayer .wpr').offset().top + $cropSection.scrollTop()
+    })
+    $('.themeHead').attr({'data-width':$('.themeHead').offset().width,'data-height':$('.themeHead').height()})
+    setTimeout(function(){
+      $('.themeHead')[0].style.width='100%';
+    },0)
+    loadingStop();
+  },600)
+
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
 
@@ -106,7 +162,6 @@ function cropChanged(evt){
             canvasDom.setAttribute('width',$themeBgImg[0].width)
             canvasDom.setAttribute('height',$themeBgImg[0].height)
             $('#megaPixImage').css({'width':this.width,'height':this.height})
-            loadingStop();
         }
         var mpImg = new MegaPixImage(file);  // 将传入的图片调整为合理的大小
         // console.log('imgExif',imgExif.Orientation);
@@ -169,7 +224,7 @@ function cropLoaded(img){
     var imgOriginX = ($dropArea.width() - cropGesture.targetMinWidth) * 0.5;
     var imgOriginY = ($dropArea.height() - cropGesture.targetMinHeight) * 0.5;
 
-    console.log('imgOriginX',imgOriginX,'imgOriginY',imgOriginY);
+    // console.log('imgOriginX',imgOriginX,'imgOriginY',imgOriginY);
 
     $defaultImgSet.css("display", "");
     $defaultImgSet.width(cropGesture.targetMinWidth);
@@ -200,8 +255,10 @@ function cropStop(){
 function cropConfirm(evt) {
     // pageRecordClick("sng.tu.christmas2015.nextbtn");
     var $cropImg = $defaultImgSet;
+    var $themeHead = $('.themeHead');
     var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
     var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
+    var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
 
     var imgOrigin = {
         x: parseInt($cropImg.css('left')) || 0,
@@ -215,11 +272,13 @@ function cropConfirm(evt) {
     console.log('imgSize width height',imgSize.width,imgSize.height);
     canvasCtx.fillStyle = 'rgba(255, 255, 255, 0)';
     canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
-    // 画用户头像
-    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top,$dropArea.width(),$dropArea.height());
     // 画主题图片
     canvasCtx.drawImage($themeBgImg[0],0,0,$themeBgImg.width(),$themeBgImg.height())
-
+    // 画用户头像
+    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
+    // 画用户头像框
+    console.log('$themeHead',$(window).scrollTop(),$('#cropSection').scrollTop());
+    canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
     setTimeout(function(){
         proSave()
 
@@ -234,7 +293,6 @@ function cropConfirm(evt) {
 }
 
 function proSave(){
-
     var dataURL = "";
     if (window.isAndroid) {
         var imgEncoder = new JPEGEncoder();
@@ -250,5 +308,3 @@ function proSave(){
     }
     img.src = dataURL
 }
-
-

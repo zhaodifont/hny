@@ -34,3 +34,9 @@ background-color:#fff;}
 img{vertical-align: top}
 .bg-f{background-color: #fff;}
 .flex{display: flex;}
+
+/* 滚动条不显示  */
+::-webkit-scrollbar{width:.0rem;height:.0rem;background-color:rgba(0,0,0,.14);;border-radius:.04rem;}
+::-webkit-scrollbar-thumb{border:0px solid rgba(255,255,255,.16);background-color:rgba(0,0,0,.64);border-radius:.04rem;}
+::-webkit-scrollbar-corner,
+::-webkit-resizer{background:#959595;}
