@@ -7,14 +7,19 @@
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./static/css/main.css">
-
   </head>
 <body>
 <script type="text/javascript">
 !function(e,t){var n=e.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,function(){var t=n.clientWidth;t&&(t>=750?(t=750,e.body.style.width="750px"):e.body.style.width=t+"px",n.style.fontSize=100*(t/750)+"px",n.dataset.width=t,n.dataset.percent=100*(t/750))});d(),e.documentElement.classList.add("iosx"+t.devicePixelRatio),e.addEventListener&&t.addEventListener(i,d,!1)}(document,window)
 </script>
+
 <div id="app" class="p-r">
 
+<div style="z-index:9999999;position:absolute;left:-999rem;">
+  <div id="zd_qrcode" style="border:1px red solid;"></div>
+  <canvas id="qr-canvas" width="40" height="30"></canvas>
+  <input type="file" id="handleQR"  accept="image/*" />
+</div>
     <!-- 默认上传input -->
     <input id="upload" class="p-a" type="file" accept="image/*" />
 
@@ -22,6 +27,7 @@
     <div class="loadingDiv">
         <div class="flex">
             <span class="wpr">
+              <img src="./static/img/icon-loading.png" class='loadingIcon' alt="">
                 loading...
             </span>
         </div>
@@ -49,6 +55,8 @@
 
     <!--  转换图片时需要 -->
     <div id="megaPixImage"></div>
+    <!--  转换图片时需要 -->
+    <div id="megaPixImage"></div>
     <!-- 生成器 -->
     <canvas id="cropCanvas" class="p-a" style="z-index:1;left:-999rem;background-color:rgba(0,0,0,0)" width="420" height="420"></canvas>
 
@@ -59,13 +67,13 @@
           <!-- themebg -->
             <div id="theme_bg" class="p-r">
                 <img src="" id="themeBgImg" style="width:100%;">
-                <div id="eCode" class="ecode p-a" style="right:15.06%;bottom:.6rem;"><img src="" alt=""></div>
+                <img id="eCode" class="ecode p-a" style="right:15.06%;bottom:.6rem;" src="./static/img/upqr.jpg" alt="">
             </div>
              <!-- themehead -->
             <div id="cropLayer" class="defaultPic p-a" style="">
-                <img src="" class="themeHead" alt="">
+                <img src="" class="themeHead" data-width="0" alt="">
                 <div class="wpr p-a" style="">
-                    <img id="cropImg" class="p-a" style="top:0" src="./static/img/default.jpg">
+                    <img id="cropImg" class="p-a" style="top:0" src="">
                 </div>
             </div>
             <div id="dropArea" class="defaultPic p-a"></div>
@@ -80,14 +88,13 @@
               <div class="">
                   <div class="item" id="reChoose">重新选择</div>
                   <span>
-                    <!-- <div class="item"></div> -->
+                    <div class="item"></div><div class="item"></div><div class="item"></div><div class="item"></div><div class="item"></div>
                   </span>
               </div>
             </div>
 
         </div>
     </div>
-
 
     <div id="proSection" style="display:none;">
         <div class="view">
@@ -99,8 +106,40 @@
         </div>
     </div>
 
+    <div id="qrGuide" style="z-index:333;display:none;">
+        <div class="wpr">
+          <div class="return">
+            返回
+          </div>
+          <a href="javascript:void(0)" class="btn">上传微信收款二维码</a>
+          <img src="" style="width:6.87rem" alt="">
+          <p>
+            - 1 -<br/>
+            点击微信右上角“+”，弹出框点击“收付款”
+          </p>
+          <img src="" style="width:4.32rem" alt="">
+          <p>
+            - 2 -<br/>
+            点击“二维码收款”
+          </p>
+          <img src="" style="width:4.65rem" alt="">
+          <p>
+            - 3 -<br/>
+            点击“保存收款码”
+          </p>
+          <img src="" style="width:4rem" alt="">
+          <p>
+            - 4 -<br/>
+            收款码将会保存在相册里
+          </p>
+          <img src="" style="width:4.26rem" alt="">
+
+          <a href="javascript:void(0)" class="btn">上传微信收款二维码</a>
+        </div>
+    </div>
+
     <!-- ./static/test.mp3 -->
-    <audio src="./test.mp3" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
+    <audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
     <div id="audio_control" class='p-a'>
       <img src="./static/img/audio_Icon.png" class="run" alt="">
     </div>
@@ -112,7 +151,6 @@
 function loadScript(_src,cb){
     var script = document.createElement('script');
     script.type="text/javascript";
-    script.async = 'async';
     if(script.readyState){
         script.onreadystatechange = function(){
             if(script.readyState == 'loaded' || script.readyState == 'complete'){
@@ -130,9 +168,9 @@ function loadScript(_src,cb){
       audio = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
       playStat = false;
+      audio.src = './test.mp3';
   auBtn.onclick=function(){
     playStat = !playStat;
-    console.log(icon);
     if(playStat){
       audio.play()
       icon.style.animationPlayState="running"
@@ -190,8 +228,10 @@ function loadOtherJs(){
   var checkAll = function(val){
           console.log("check js this time ok:",val,zeptoJsLoaded , extJsLoad , globalJsloaded , mainJsLoaded);
           if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
-            console.log(123);
-              indexPageReady();
+            console.log('ok 23333');
+              setTimeout(function(){
+                indexPageReady();
+              },0)
               allJsloaded = true;
               checkAll = null;
           }else{return;}

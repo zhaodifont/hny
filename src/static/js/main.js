@@ -6,63 +6,7 @@ function loadingStop(){
     $('.loadingDiv').css('display','none');
 }
 
-var $upload = $('#upload'), //原始上传按钮
-    $cropSection = $('#cropSection'), //第二步的section
-    $defaultImgSet = $('#cropImg'), // 第二步的图片
-    canvasDom,
-    canvasCtx,
-    $dropArea = $("#dropArea"), // 可以触发拖动的区域
-    $reChoose = $('#reChoose,#reChooseb'),
-    $toNext = $('#toNext'),
-    $themeBgImg = $('#themeBgImg'),
-    $themeFoot = $('#theme_foot'),
-    $themeSelectWpr = $('.styleChoose .wpr span'),
-    cropGesture = null,
-    themeStlye = 1,
-    themes = [
-      {
-        bg:'./static/img/theme1-bg.jpg',
-        head:'./static/img/theme1-head.png',
-        foot:'./static/img/theme1-foot.jpg',
-        sm:'./static/img/theme1-sm.jpg',
-        heado:{width:'110',height:'135'},
-        cropLayerPos:{
-          top:'.46rem',left:'10.8%',width:'78.4%'
-        },
-        cropLayerWprPos:{
-          top:'2.24rem',left:'.58rem'
-        }
-      }
-    ],
-    changeTheme=function(obj){
-      console.log('changeThemechange');
-      $themeFoot.find('img')[0].style.width="100%";
-      $themeFoot.find('img')[0].src = obj.foot;
-      $('.themeHead')[0].src = obj.head;
-
-      // cropLayer
-      var posa = obj.cropLayerPos,
-          posb = obj.cropLayerWprPos
-      for (var key in posa) {
-        $('#cropLayer').css(key,posa[key])
-      }
-      for (var key in posb) {
-        $('#cropLayer .wpr').css(key,posb[key])
-      }
-
-      var img = new Image();
-      img.onload = function(){
-        themeBgImg.src = img.src;
-      };
-      img.src = obj.bg;
-    }
-
 window.indexPageReady = function(){
-    loadingStart();
-    $('#firstPage .chooseBtn').on('click',cropChoose)
-    // 调试
-    // changeTheme(themes[0]);
-
 
     // 在页面初始化完 设置 滑动区域
     // 让目标 arg2 在 容器 arg1 中 可以滑动 缩放的区域 arg3
@@ -88,9 +32,97 @@ window.indexPageReady = function(){
         $cropSection.css("visibility", "visible");
 
         loadingStop();
-    },0)
+
+        loadScript('./static/js/qrcode.js');
+        loadScript('./static/js/llqrcode.js');
+
+        $('#qrGuide .btn').unbind('click');
+        $('#qrGuide .btn').on('click',function(){
+          $('#handleQR').trigger('click');
+        });
+    },40)
+    // $('#firstPage .chooseBtn').on('click',cropChoose)
+    document.querySelector('#firstPage .chooseBtn').onclick = function(){
+      cropChoose()
+    };
 
 }
+
+var $upload = $('#upload'), //原始上传按钮
+    $cropSection = $('#cropSection'), //第二步的section
+    $defaultImgSet = $('#cropImg'), // 第二步的图片
+    canvasDom,
+    canvasCtx,
+    upqrStatue = false,
+    $dropArea = $("#dropArea"), // 可以触发拖动的区域
+    $reChoose = $('#reChoose,#reChooseb'),
+    $toNext = $('#toNext'),
+    $themeBgImg = $('#themeBgImg'),
+    $themeFoot = $('#theme_foot'),
+    $themeSelectWpr = $('.styleChoose .wpr span'),
+    qrImgs = [
+      'qr_guide_t.png','qr_guide1.png',
+      'qr_guide2.png','qr_guide3.png','qr_guide4.png'
+    ],
+    cropGesture = null,
+    themeStlye = 1,
+    themes = [
+      {
+        bg:'./static/img/theme1-bg.jpg',
+        head:'./static/img/theme1-head.png',
+        foot:'./static/img/theme1-foot.jpg',
+        sm:'./static/img/theme1-sm.jpg',
+        heado:{width:'110',height:'135'},
+        cropLayerPos:{
+          top:'.46rem',left:'10.8%',width:'78.4%'
+        },
+        cropLayerWprPos:{
+          top:'2.22rem',left:'.52rem'
+        }
+      }
+    ],
+    changeTheme=function(obj){
+      loadingStart()
+      $themeFoot.find('img')[0].style.width="100%";
+      $themeFoot.find('img')[0].src = obj.foot;
+      $('.themeHead')[0].src = obj.head;
+      // cropLayer
+      var posa = obj.cropLayerPos,
+          posb = obj.cropLayerWprPos
+      for (var key in posa) {
+        $('#cropLayer').css(key,posa[key])
+      }
+      for (var key in posb) {
+        $('#cropLayer .wpr').css(key,posb[key])
+      }
+
+      var img = new Image();
+      img.onload = function(){
+        themeBgImg.src = img.src;
+        setTimeout(function(){
+          loadingStop();
+        },260)
+      };
+      img.src = obj.bg;
+      var timer = setInterval(function(){
+        var aW = $('.themeHead').attr('data-width');
+        if(aW != 0){
+          console.log('aW != 0',aW != 0);
+          clearInterval(timer);
+          timer = null;
+          $('#dropArea').css({
+            left:$('#cropLayer .wpr').offset().left,
+            top:$('#cropLayer .wpr').offset().top + $cropSection.scrollTop()
+          })
+          $('.themeHead').css('width','100%')
+        }else{
+          $('.themeHead').attr({'data-width':$('.themeHead').offset().width,'data-height':$('.themeHead').height()})
+        }
+      },60)
+    },
+    zd_qrcode = null;
+
+
 
 
 // 此处可以判断 此浏览器内核 是否支持
@@ -102,7 +134,7 @@ function cropChoose(){
 // 触发 upload
 function cropStart(trigerBtn){
   // 不管是否选择文件 都开始加载主题1
-    changeTheme(themes[0]);
+  changeTheme(themes[0]);loadingStop();
 
   //  不管是否选择文件 加载所有主题的sm
   themes.forEach(function(el,index,len){
@@ -117,7 +149,6 @@ function cropStart(trigerBtn){
         $themeSelectWpr.eq(0).append(item);
   })
 
-  // 定义
     $upload.unbind('change');
     $upload.one('change', cropChanged);
     $upload.trigger('click');
@@ -125,25 +156,11 @@ function cropStart(trigerBtn){
 
 // 转换为可用的 img base64
 function cropChanged(evt){
-  loadingStart();
-  // 加载 theme1 时 调整二维码框的位置
-  window.setTimeout(function(){
-    $('#dropArea').css({
-      left:$('#cropLayer .wpr').offset().left,
-      top:$('#cropLayer .wpr').offset().top + $cropSection.scrollTop()
-    })
-    $('.themeHead').attr({'data-width':$('.themeHead').offset().width,'data-height':$('.themeHead').height()})
-    setTimeout(function(){
-      $('.themeHead')[0].style.width='100%';
-    },0)
-    loadingStop();
-  },600)
-
+    changeTheme(themes[0]);
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
 
-    console.log('cropChanged');
-    console.log(this.files);
+
     if(this.files.length < 1){
         cropStop();
         return preventEventPropagation(evt);
@@ -158,10 +175,10 @@ function cropChanged(evt){
         var fullScreenImg = new Image();
         fullScreenImg.onload = function () {
             cropLoaded(this);
-
             canvasDom.setAttribute('width',$themeBgImg[0].width)
             canvasDom.setAttribute('height',$themeBgImg[0].height)
             $('#megaPixImage').css({'width':this.width,'height':this.height})
+            // loadingStop();
         }
         var mpImg = new MegaPixImage(file);  // 将传入的图片调整为合理的大小
         // console.log('imgExif',imgExif.Orientation);
@@ -203,11 +220,6 @@ function cropLoaded(img){
 
         })
     })
-
-    console.log('cropLoaded');
-    // $('#cropLayer .wpr').css('left',$('#cropLayer .wpr').offsetLeft)
-
-
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
     var imgHeight = img.height;
@@ -241,15 +253,22 @@ function cropLoaded(img){
     $toNext.unbind(isSupportTouch ? "touchend" : "click");
     $toNext.on(isSupportTouch ? "touchend" : "click", cropConfirm);
 
+    $('#eCode').unbind('click');
+    $('#eCode').on('click',function(){
+      $('#qrGuide').css('display','');
+    })
+    $('#qrGuide .return').unbind('click');
+    $('#qrGuide .return').on('click',function(){
+      $('#qrGuide').css('display','none');
+    })
+
+
+    if(!upqrStatue)upqr();
+
 }
 
 function cropStop(){
     console.log('cropStop');
-
-    // 取消选择 theme
-    // $cropSection.find('.item').each(function(index,item){
-    //     $(item).unbind('click');
-    // });
 }
 
 function cropConfirm(evt) {
@@ -277,11 +296,14 @@ function cropConfirm(evt) {
     // 画用户头像
     canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
     // 画用户头像框
-    console.log('$themeHead',$(window).scrollTop(),$('#cropSection').scrollTop());
     canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
+    // 画用户二维码
+    canvasCtx.fillStyle="#fff";
+    canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width(),$('#eCode').height());
+    canvasCtx.drawImage($('#eCode')[0], 0, 0, 124, 124, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width()+10,$('#eCode').height()+10);
     setTimeout(function(){
+        loadingStart()
         proSave()
-
         // 取消选择 theme
         $cropSection.find('.item').each(function(index,item){
             $(item).unbind('click');
@@ -305,6 +327,71 @@ function proSave(){
     img.onload = function(){
         $('#proSection img')[0].src = img.src;
         $('#proSection').css('display','block')
+        loadingStop()
     }
     img.src = dataURL
+}
+
+function upqr(){
+  document.querySelector('#handleQR').addEventListener('change',function(){
+    handleFiles(this.files)
+  },false)
+
+  function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function read(a){
+    var html="<br>";
+    if(a.indexOf('error') > -1){
+      alert('请输入有效的收款二维码')
+    }else{
+      console.log('htmlEntities(a)',htmlEntities(a));
+      zd_qrcode.makeCode(htmlEntities(a))
+      $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
+      $('#qrGuide').css('display','none');
+    }
+    $('#handleQR')[0].value = '';
+  }
+
+  var gCanvas;
+  function load(){
+    if(window.File && window.FileReader){
+      initCanvas(200, 150);
+      qrcode.callback = read;
+     }
+  }
+
+  function initCanvas(w,h){
+      gCanvas = document.getElementById("qr-canvas");
+      gCanvas.style.width = w + "px";
+      gCanvas.style.height = h + "px";
+      gCanvas.width = w;
+      gCanvas.height = h;
+      gCtx = gCanvas.getContext("2d");
+      gCtx.clearRect(0, 0, w, h);
+  }
+  load();
+
+  function handleFiles(f){
+    var o=[];
+    for(var i =0;i<f.length;i++)
+    {
+          var reader = new FileReader();
+          reader.onload = (function(theFile) {
+            console.log('file:',theFile);
+            return function(e) {
+                gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+                qrcode.decode(e.target.result);
+            };
+          })(f[i]);
+          reader.readAsDataURL(f[i]);
+      }
+  }
+
+  zd_qrcode = new QRCode(document.getElementById("zd_qrcode"), {
+  	width : 100,
+  	height : 100
+  });
+  zd_qrcode.makeCode('')
+  upqrStatue = true;
 }
