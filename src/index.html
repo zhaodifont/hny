@@ -189,6 +189,12 @@ function loadScript(_src,cb){
       audio.src = './test.mp3';
       audio.load();
       // audio.play();
+  document.querySelector('#app').addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
+  function handlePlay(){
+    audio.play();
+    document.title = 'add sucess';
+    document.querySelector('#app').removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
+  }
   auBtn.addEventListener(window.isSupportTouch?'touchend':'click',function(){
     playStat = !playStat;
     if(playStat){
@@ -224,11 +230,11 @@ loadScript('./static/js/count.js',function(){
 
   var timer = setInterval(function(){
     console.log(defaultbgStatue);
-    if(defaultbgStatue){
+    if(defaultbgStatue && defaultbgStatue){
       clearInterval(timer);
 
       timer = null;
-      
+      if(loadingStop)loadingStop();
       // document.querySelectorAll('.loadingDiv')[0].style.display='none';
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
