@@ -189,6 +189,7 @@ function loadScript(_src,cb){
       audio.src = './test.mp3';
       audio.load();
       audio.play();
+
   auBtn.addEventListener(window.isSupportTouch?'touchend':'click',function(){
     playStat = !playStat;
     if(playStat){
@@ -209,7 +210,6 @@ loadScript('./static/js/count.js',function(){
   var defaultbgStatue = false;
   var img = new Image();
   img.onload = function(){
-    loadOtherJs();
     img.setAttribute('width','100%')
     document.querySelectorAll('.guide')[0].appendChild(img);
     defaultbgStatue = true;
@@ -229,7 +229,8 @@ loadScript('./static/js/count.js',function(){
       clearInterval(timer);
 
       timer = null;
-      document.querySelectorAll('.loadingDiv')[0].style.display='none';
+      loadingStop();
+      // document.querySelectorAll('.loadingDiv')[0].style.display='none';
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
       f_t2.classList.add('fadeIn');
@@ -241,7 +242,6 @@ loadScript('./static/js/count.js',function(){
   },0)
 })
 
-function loadOtherJs(){
   var zeptoJsLoaded = false,
       extJsLoad = false,
       globalJsloaded = false,
@@ -284,7 +284,6 @@ function loadOtherJs(){
           }
       })
 
-}
 
 
 </script>

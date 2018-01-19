@@ -30,9 +30,10 @@ window.indexPageReady = function(){
 
         // $cropSection.css("display", "none");
         // $cropSection.css("visibility", "visible");
-        loadingStop();
+
 
     },40)
+  
     // $('#firstPage .chooseBtn').on('click',cropChoose)
     document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",cropChoose,false)
     $('#audio').trigger('click');
