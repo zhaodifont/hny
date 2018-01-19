@@ -83,7 +83,7 @@
         <div class="styleChoose p-r" id="theme_foot">
           <img src="" alt="">
             <!-- <a href="javascript:void(0)" id="reChoose">重新选择</a> -->
-            <a href="javascript:void(0)" id="toNext">下一步</a>
+            <a href="javascript:void(0)" id="toNext" style="position:absolute;left:-999rem;">下一步</a>
             <div class="wpr p-a">
               <div class="">
                   <div class="item" id="reChoose"><var>换张<br/>照片</var></div>
@@ -92,18 +92,36 @@
                   </span>
               </div>
             </div>
-
         </div>
+
+
     </div>
 
     <div id="proSection" style="display:none;">
         <div class="view">
             <img src="" alt="">
         </div>
-        <div class="txt">
-            <a href="javascript:void(0)" id="reChooseb">重新选择</a>
-            长按保存 就可以拜年收红包咯
+        <div class="content p-r">
+            <img src="" width="100%" alt="">
+            <div class="wpr p-a">
+              <div><span class="save">保存</span></div>
+              <div><span class="share">分享</span></div>
+            </div>
         </div>
+        <div class="nextGuide">
+          <div class="wpr p-r">
+            <div class="paw p-a"><img src="./static/img/paw.png" alt=""></div>
+            <div class="paw2 p-a"><img src="./static/img/paw.png" alt=""></div>
+            <div class="flow p-a"><img src="./static/img/flower.png" alt=""></div>
+            <div class="p1">
+              存好啦~<br/>分享到朋友圈领红包吧
+            </div>
+            <div class="confirm">
+              <span>确定</span>
+            </div>
+          </div>
+        </div>
+
     </div>
 
     <div id="qrGuide" style="z-index:333;display:none;">
@@ -167,8 +185,10 @@ function loadScript(_src,cb){
   var auBtn = document.querySelector('#audio_control'),
       audio = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
-      playStat = false;
+      playStat = true;
       audio.src = './test.mp3';
+      audio.load();
+      audio.play();
   auBtn.addEventListener(window.isSupportTouch?'touchend':'click',function(){
     playStat = !playStat;
     if(playStat){

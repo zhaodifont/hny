@@ -31,9 +31,11 @@ window.indexPageReady = function(){
         // $cropSection.css("display", "none");
         // $cropSection.css("visibility", "visible");
         loadingStop();
+
     },40)
     // $('#firstPage .chooseBtn').on('click',cropChoose)
     document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",cropChoose,false)
+    $('#audio').trigger('click');
 }
 
 var $upload = $('#upload'), //原始上传按钮
@@ -42,6 +44,7 @@ var $upload = $('#upload'), //原始上传按钮
     canvasDom,
     canvasCtx,
     upqrStatue = false,
+    initTheme = false,
     $dropArea = $("#dropArea"), // 可以触发拖动的区域
     $reChoose = $('#reChoose,#reChooseb'),
     $toNext = $('#toNext'),
@@ -101,7 +104,9 @@ var $upload = $('#upload'), //原始上传按钮
       img.onload = function(){
         themeBgImg.src = img.src;
         setTimeout(function(){
+          console.log('initTheme');
           loadingStop();
+          initTheme = true;
         },260)
       };
       img.src = obj.bg;
@@ -140,7 +145,7 @@ function cropStart(trigerBtn){
 
   // 在用户选择文件的时候 尽可能缓冲加载更多的资源
   // 不管是否选择文件 都开始加载主题1
-  changeTheme(themes[0]);loadingStop();
+  if(!initTheme){changeTheme(themes[0]);loadingStop();};
 
   $('#qrGuide .btn').unbind(window.isSupportTouch ? "touchend" : "click");
   $('#qrGuide .btn').on(window.isSupportTouch ? "touchend" : "click",function(){
@@ -165,18 +170,10 @@ function cropStart(trigerBtn){
   });
   $('#theme_foot span').find('.item').each(function(index,item){
       $(item).on(window.isSupportTouch ? "touchend" : "click",function(){
-          console.log(index+1);
-          // var url = '../dist/static/img/style' + (index+1) + '.png';
-          // console.log($(this).index()+1,themeStlye);
+
           var n = $(this).index();
           if(n+1 == themeStlye){loadingStop();return false;}
-          // a.onload = function(){
-          //     console.log("loadimg");
-          //     $('#themeBgImg')[0].src = a.src;
-          //     loadingStop();
-              themeStlye = n+1;
-          // }
-          // a.src = url;
+          themeStlye = n+1;
           changeTheme(themes[index]);
       })
   })
@@ -188,10 +185,9 @@ function cropStart(trigerBtn){
 
 // 转换为可用的 img base64
 function cropChanged(evt){
-    changeTheme(themes[0]);
+    if(!initTheme){changeTheme(themes[0]);}
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
-    loadingStart()
 
     if(this.files.length < 1){
         cropStop();
@@ -287,6 +283,7 @@ function cropStop(){
 }
 
 function cropConfirm(evt) {
+    loadingStart();
     // pageRecordClick("sng.tu.christmas2015.nextbtn");
     var $cropImg = $defaultImgSet;
     // var $themeHead = $('.themeHead');
@@ -325,6 +322,11 @@ function cropConfirm(evt) {
 }
 
 function proSave(){
+  $('.nextGuide').css('display','flex');
+  $('.nextGuide .confirm').unbind(window.isSupportTouch ? "touchend" : "click");;
+  $('.nextGuide .confirm').on(window.isSupportTouch?'touchend':'click',function(){
+    $('.nextGuide').css('display','none');
+  })
     var dataURL = "";
     if (window.isAndroid) {
         var imgEncoder = new JPEGEncoder();
@@ -359,6 +361,12 @@ function upqr(){
       zd_qrcode.makeCode(htmlEntities(a))
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
       $('#qrGuide').css('display','none');
+      $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
+      loadingStart();
+      setTimeout(function(){
+        $('#toNext').trigger('click');
+      },260)
+
     }
     $('#handleQR')[0].value = '';
   }
