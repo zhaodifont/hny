@@ -157,9 +157,9 @@
     </div>
 
     <!-- ./static/test.mp3 -->
-    <audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
+    <audio src="" controls loop preload id='audio' style="position:absolute;left:-999rem;"></audio>
     <div id="audio_control" class='p-a'>
-      <img src="./static/img/audio_Icon.png" class="run" alt="">
+      <span><img src="./static/img/audio_Icon.png" alt=""></span>
     </div>
 
 </div>
@@ -182,31 +182,42 @@ function loadScript(_src,cb){
 }
 
 !function(){
-  var auBtn = document.querySelector('#audio_control'),
+  var auBtn = document.querySelector('#audio_control span'),
+      myappd = document.querySelector('#app'),
       audio = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
-      playStat = true;
+      isPlaying = false;
       audio.src = './test.mp3';
       audio.load();
       // audio.play();
-  document.querySelector('#app').addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
+  myappd.addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
   function handlePlay(){
+    isPlaying = true;
+    myappd.removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
     audio.play();
-    document.title = 'add sucess';
-    document.querySelector('#app').removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
   }
-  auBtn.addEventListener(window.isSupportTouch?'touchend':'click',function(){
-    playStat = !playStat;
-    if(playStat){
-      audio.play()
-      icon.style.animationPlayState="running";
-      icon.style.WebkitAnimationPlayState="running";
-    }else{
-      audio.pause()
-      icon.style.animationPlayState="paused";
-      icon.style.WebkitAnimationPlayState="paused";
-    }
-  },false)
+
+  var image = auBtn.querySelector('img');
+  document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
+    isPlaying ? pause() : play();
+  },false);
+
+  function pause() {
+    isPlaying = false;
+    var iTransform = getComputedStyle(image).transform;
+    var cTransform = getComputedStyle(auBtn).transform;
+    auBtn.style.transform = cTransform === 'none'
+       ? iTransform
+       : iTransform.concat(' ', cTransform);
+    image.classList.remove('run');
+    audio.pause()
+  }
+
+  function play() {
+    isPlaying = true;
+    image.classList.add('run');
+    audio.play()
+  }
 
 }()
 

@@ -25,15 +25,17 @@
 }
 
 #audio_control{
-  z-index: 99998;width:.6rem;height:.6rem;background: url('../img/audioBg.png') center center no-repeat;background-size:cover;
+  z-index: 99998;
+  width:.6rem;height:.6rem;background: url('../img/audioBg.png') center center no-repeat;background-size:cover;
   right:.3rem;top:1.02rem;text-align: center;line-height: .6rem;
 }
+
+#audio_control span{display:inline-block;width:.35rem;height:.35rem;vertical-align: middle;}
 #audio_control img{
-  width:.33rem;text-align: center;line-height: .6rem;vertical-align: sub;
+  width:.35rem;height:.35rem;vertical-align:top;
 }
 #audio_control img.run{
   animation:audIconRun 5s linear 0s infinite normal forwards;
-  animation-play-state:running;
 }
 @keyframes audIconRun {
   0%{
