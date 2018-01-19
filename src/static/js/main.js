@@ -27,16 +27,18 @@ window.indexPageReady = function(){
 
         $cropSection.css("visibility", "hidden");
         $cropSection.css("display", "");
-
+        loadingStop();
         // $cropSection.css("display", "none");
         // $cropSection.css("visibility", "visible");
-
+        document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",function(){
+          cropChoose()
+        },false)
 
     },40)
-  
+
     // $('#firstPage .chooseBtn').on('click',cropChoose)
-    document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",cropChoose,false)
-    $('#audio').trigger('click');
+
+    // $('#audio').trigger('click');
 }
 
 var $upload = $('#upload'), //原始上传按钮

@@ -188,8 +188,7 @@ function loadScript(_src,cb){
       playStat = true;
       audio.src = './test.mp3';
       audio.load();
-      audio.play();
-
+      // audio.play();
   auBtn.addEventListener(window.isSupportTouch?'touchend':'click',function(){
     playStat = !playStat;
     if(playStat){
@@ -229,7 +228,7 @@ loadScript('./static/js/count.js',function(){
       clearInterval(timer);
 
       timer = null;
-      loadingStop();
+      
       // document.querySelectorAll('.loadingDiv')[0].style.display='none';
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
