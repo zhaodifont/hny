@@ -28,24 +28,12 @@ window.indexPageReady = function(){
         $cropSection.css("visibility", "hidden");
         $cropSection.css("display", "");
 
-        $cropSection.css("display", "none");
-        $cropSection.css("visibility", "visible");
-
+        // $cropSection.css("display", "none");
+        // $cropSection.css("visibility", "visible");
         loadingStop();
-
-        loadScript('./static/js/qrcode.js');
-        loadScript('./static/js/llqrcode.js');
-
-        $('#qrGuide .btn').unbind('click');
-        $('#qrGuide .btn').on('click',function(){
-          $('#handleQR').trigger('click');
-        });
     },40)
     // $('#firstPage .chooseBtn').on('click',cropChoose)
-    document.querySelector('#firstPage .chooseBtn').onclick = function(){
-      cropChoose()
-    };
-
+    document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",cropChoose,false)
 }
 
 var $upload = $('#upload'), //原始上传按钮
@@ -69,33 +57,46 @@ var $upload = $('#upload'), //原始上传按钮
     themes = [
       {
         bg:'./static/img/theme1-bg.jpg',
-        head:'./static/img/theme1-head.png',
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme1-sm.jpg',
-        heado:{width:'110',height:'135'},
-        cropLayerPos:{
-          top:'.46rem',left:'10.8%',width:'78.4%'
-        },
-        cropLayerWprPos:{
-          top:'2.22rem',left:'.52rem'
-        }
+      },
+      {
+        bg:'./static/img/theme2-bg.jpg',
+        foot:'./static/img/theme1-foot.jpg',
+        sm:'./static/img/theme2-sm.jpg',
+
+      },
+      {
+        bg:'./static/img/theme3-bg.jpg',
+        foot:'./static/img/theme1-foot.jpg',
+        sm:'./static/img/theme3-sm.jpg',
       }
     ],
     changeTheme=function(obj){
       loadingStart()
       $themeFoot.find('img')[0].style.width="100%";
       $themeFoot.find('img')[0].src = obj.foot;
-      $('.themeHead')[0].src = obj.head;
+      $('#cropLayer').css({
+        height:$('#cropLayer').offset().width,
+        left:($('#cropSection').width() - $('#cropLayer').width()) / 2
+      })
+
+      // $('.themeHead')[0].src = obj.head;
       // cropLayer
       var posa = obj.cropLayerPos,
           posb = obj.cropLayerWprPos
-      for (var key in posa) {
-        $('#cropLayer').css(key,posa[key])
-      }
-      for (var key in posb) {
-        $('#cropLayer .wpr').css(key,posb[key])
-      }
-
+      // for (var key in posa) {
+      //   $('#cropLayer').css(key,posa[key])
+      // }
+      // for (var key in posb) {
+      //   $('#cropLayer .wpr').css(key,posb[key])
+      // }
+      $('#dropArea').css({
+        width:$('#cropLayer').width(),
+        height:$('#cropLayer').height(),
+        left:$('#cropLayer').offset().left,
+        top:$('#cropLayer').offset().top + $cropSection.scrollTop()
+      })
       var img = new Image();
       img.onload = function(){
         themeBgImg.src = img.src;
@@ -104,21 +105,24 @@ var $upload = $('#upload'), //原始上传按钮
         },260)
       };
       img.src = obj.bg;
-      var timer = setInterval(function(){
-        var aW = $('.themeHead').attr('data-width');
-        if(aW != 0){
-          console.log('aW != 0',aW != 0);
-          clearInterval(timer);
-          timer = null;
-          $('#dropArea').css({
-            left:$('#cropLayer .wpr').offset().left,
-            top:$('#cropLayer .wpr').offset().top + $cropSection.scrollTop()
-          })
-          $('.themeHead').css('width','100%')
-        }else{
-          $('.themeHead').attr({'data-width':$('.themeHead').offset().width,'data-height':$('.themeHead').height()})
-        }
-      },60)
+      // console.log("$('#cropLayer').offset().width",$('#cropLayer').offset().width);
+      // $('#cropLayer').height($('#cropLayer').offset().width)
+
+      // var timer = setInterval(function(){
+      //   var aW = $('.themeHead').attr('data-width');
+      //   if(aW != 0){
+      //     console.log('aW != 0',aW != 0);
+      //     clearInterval(timer);
+      //     timer = null;
+      //     $('#dropArea').css({
+      //       left:$('#cropLayer .wpr').offset().left,
+      //       top:$('#cropLayer .wpr').offset().top + $cropSection.scrollTop()
+      //     })
+      //     $('.themeHead').css('width','100%')
+      //   }else{
+      //     $('.themeHead').attr({'data-width':$('.themeHead').offset().width,'data-height':$('.themeHead').height()})
+      //   }
+      // },60)
     },
     zd_qrcode = null;
 
@@ -133,20 +137,48 @@ function cropChoose(){
 
 // 触发 upload
 function cropStart(trigerBtn){
+
+  // 在用户选择文件的时候 尽可能缓冲加载更多的资源
   // 不管是否选择文件 都开始加载主题1
   changeTheme(themes[0]);loadingStop();
 
+  $('#qrGuide .btn').unbind(window.isSupportTouch ? "touchend" : "click");
+  $('#qrGuide .btn').on(window.isSupportTouch ? "touchend" : "click",function(){
+    $('#handleQR').trigger('click');
+  });
+
   //  不管是否选择文件 加载所有主题的sm
+  $themeSelectWpr.eq(0).empty();
   themes.forEach(function(el,index,len){
-    $themeSelectWpr.eq(0).empty();
-    console.log($themeSelectWpr.eq(0));
     var item = document.createElement('div'),
         sm = document.createElement('img');
         sm.setAttribute('src',el.sm);
         sm.style.width = '100%';
+        console.log(sm);
         item.classList.add('item');
         item.appendChild(sm);
-        $themeSelectWpr.eq(0).append(item);
+        $themeSelectWpr[0].appendChild(item);
+  })
+  // 选择theme
+  $('#theme_foot span').find('.item').each(function(index,item){
+      $(item).unbind(window.isSupportTouch ? "touchend" : "click");
+  });
+  $('#theme_foot span').find('.item').each(function(index,item){
+      $(item).on(window.isSupportTouch ? "touchend" : "click",function(){
+          console.log(index+1);
+          // var url = '../dist/static/img/style' + (index+1) + '.png';
+          // console.log($(this).index()+1,themeStlye);
+          var n = $(this).index();
+          if(n+1 == themeStlye){loadingStop();return false;}
+          // a.onload = function(){
+          //     console.log("loadimg");
+          //     $('#themeBgImg')[0].src = a.src;
+          //     loadingStop();
+              themeStlye = n+1;
+          // }
+          // a.src = url;
+          changeTheme(themes[index]);
+      })
   })
 
     $upload.unbind('change');
@@ -159,7 +191,7 @@ function cropChanged(evt){
     changeTheme(themes[0]);
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
-
+    loadingStart()
 
     if(this.files.length < 1){
         cropStop();
@@ -198,46 +230,23 @@ function cropLoaded(img){
     var isSupportTouch = window.supportTouch;
     $cropSection.css("display", "");
 
-    //  选择theme
-    $cropSection.find('.item').each(function(index,item){
-        $(item).unbind('click');
-    });
-    $cropSection.find('.item').each(function(index,item){
-        $(item).on('click',function(){
-            loadingStart();
-            var url = '../dist/static/img/style' + (index+1) + '.png';
-            console.log($(this).index()+1,themeStlye);
-            var a = new Image(),n = $(this).index();
-            if(n+1 == themeStlye){loadingStop();return false;}
-            a.onload = function(){
-                console.log("loadimg");
-                $('#themeBgImg')[0].src = a.src;
-                loadingStop();
-                themeStlye = n+1;
-            }
-            a.src = url;
 
-
-        })
-    })
+    console.log(img);
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
     var imgHeight = img.height;
     var ratioWidth = $dropArea.width() / imgWidth; // 5 / 10
     var ratioHeight = $dropArea.height() / imgHeight; // 5 / 20
     var ratio = ratioWidth > ratioHeight ? ratioWidth : ratioHeight;
-    console.log('imgWidth',imgWidth);
-    console.log('imgHeight',imgHeight);
+
     cropGesture.targetMinWidth = imgWidth * ratio;
     cropGesture.targetMinHeight = imgHeight * ratio;
-
-    console.log("ratio",ratio);
 
     var imgOriginX = ($dropArea.width() - cropGesture.targetMinWidth) * 0.5;
     var imgOriginY = ($dropArea.height() - cropGesture.targetMinHeight) * 0.5;
 
     // console.log('imgOriginX',imgOriginX,'imgOriginY',imgOriginY);
-
+    console.log('cropGesture.targetMinWidth:',cropGesture.targetMinWidth);
     $defaultImgSet.css("display", "");
     $defaultImgSet.width(cropGesture.targetMinWidth);
     $defaultImgSet.height(cropGesture.targetMinHeight);
@@ -253,18 +262,24 @@ function cropLoaded(img){
     $toNext.unbind(isSupportTouch ? "touchend" : "click");
     $toNext.on(isSupportTouch ? "touchend" : "click", cropConfirm);
 
-    $('#eCode').unbind('click');
-    $('#eCode').on('click',function(){
+    $('#eCode').unbind(isSupportTouch ? "touchend" : "click");
+    $('#eCode').on(isSupportTouch ? "touchend" : "click",function(){
       $('#qrGuide').css('display','');
     })
-    $('#qrGuide .return').unbind('click');
-    $('#qrGuide .return').on('click',function(){
+    $('#qrGuide .return').unbind(isSupportTouch ? "touchend" : "click");
+    $('#qrGuide .return').on(isSupportTouch ? "touchend" : "click",function(){
       $('#qrGuide').css('display','none');
     })
 
-
-    if(!upqrStatue)upqr();
-
+    if(!upqrStatue){
+      $('#qrGuide img').each(function(index,el){
+        el.src= './static/img/' + qrImgs[index]
+      })
+      loadScript('./static/js/qrcode.js');
+      loadScript('./static/js/llqrcode.js',function(){
+        upqr()
+      });
+    }
 }
 
 function cropStop(){
@@ -274,10 +289,10 @@ function cropStop(){
 function cropConfirm(evt) {
     // pageRecordClick("sng.tu.christmas2015.nextbtn");
     var $cropImg = $defaultImgSet;
-    var $themeHead = $('.themeHead');
+    // var $themeHead = $('.themeHead');
     var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
     var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
-    var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
+    // var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
 
     var imgOrigin = {
         x: parseInt($cropImg.css('left')) || 0,
@@ -288,15 +303,15 @@ function cropConfirm(evt) {
         width: $cropImg.width(),
         height: $cropImg.height()
     };
-    console.log('imgSize width height',imgSize.width,imgSize.height);
-    canvasCtx.fillStyle = 'rgba(255, 255, 255, 0)';
-    canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
+    // console.log('imgSize width height',imgSize.width,imgSize.height);
+    // canvasCtx.fillStyle = 'rgba(255, 255, 255, 0)';
+    // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
     // 画主题图片
-    canvasCtx.drawImage($themeBgImg[0],0,0,$themeBgImg.width(),$themeBgImg.height())
+    canvasCtx.drawImage($themeBgImg[0],0,0,750,993,0,0,$themeBgImg.width(),$themeBgImg.height())
     // 画用户头像
     canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
     // 画用户头像框
-    canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
+    // canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
     // 画用户二维码
     canvasCtx.fillStyle="#fff";
     canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width(),$('#eCode').height());
@@ -304,11 +319,6 @@ function cropConfirm(evt) {
     setTimeout(function(){
         loadingStart()
         proSave()
-        // 取消选择 theme
-        $cropSection.find('.item').each(function(index,item){
-            $(item).unbind('click');
-        });
-
     },0)
 
     return preventEventPropagation(evt);
@@ -318,7 +328,7 @@ function proSave(){
     var dataURL = "";
     if (window.isAndroid) {
         var imgEncoder = new JPEGEncoder();
-        dataURL = imgEncoder.encode(canvasCtx.getImageData(0, 0, canvasDom.width, canvasDom.height), 100, true);
+        dataURL = imgEncoder.encode(canvasCtx.getImageData(0, 0, canvasDom.width, canvasDom.height), 200, true);
     } else {
         dataURL = canvasDom.toDataURL("image/jpeg", 1.0);
     }

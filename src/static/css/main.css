@@ -77,18 +77,14 @@
 #theme_bg{
 	z-index:222;
 }
-.defaultPic{z-index:266;}
-.defaultPic .wpr{
-	width:4.84rem;height:4.84rem;
-	margin:auto;/*overflow:hidden;*/
-}
-.defaultPic .wpr{overflow: hidden;}
+#cropLayer{width:63.73%;left:18.16%;top:2.68rem;}
+#cropLayer .wpr{width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;}
+.defaultPic .wpr{overflow: hidden;width:4.73rem;height:4.73rem;}
 /* .defaultPic .background{background-color: transparent;opacity: 0;position: absolute;left: 0;top: 0;z-index: 215;width:100%;height:100%;} */
 #dropArea{
-  z-index: 288;border:1px red solid;transition: all .5s;
+  z-index: 288;transition: all .5s;
 }
 #dropArea.defaultPic{
-	width:4.84rem;height:4.84rem;
 }
 
 .themeHead{position: relative;z-index: 1;}
@@ -96,9 +92,13 @@
 /* 选择主题 */
 .styleChoose .wpr{width:100%;top:0;padding-top:.34rem;}
 .styleChoose .wpr>div{width:auto;margin-left:.36rem;white-space: nowrap;overflow: hidden;overflow-x: scroll;}
+.styleChoose .wpr>div>.item{font-size: .3rem;color:#e5d585;}
+.styleChoose .wpr>div>.item var{
+  display: inline-block;line-height: 1.5;vertical-align: middle;
+}
 
 .styleChoose .flex{justify-content: space-around;}
-.styleChoose .item{display: inline-block;margin-right: .5rem;width:1.12rem;height:1.36rem;background-color: #e8462d;border-radius: .12rem;color:#fff;text-align: center;line-height: 1.26rem;}
+.styleChoose .item{display: inline-block;margin-right: .44rem;width:1.12rem;height:1.36rem;background-color: #e8462d;border-radius: .12rem;color:#fff;text-align: center;line-height: 1.26rem;}
 
 #cropCanvas{left:80%;top:0;}
 /* width:1.22rem;height:1.22rem; */
