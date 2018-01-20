@@ -196,6 +196,7 @@ function loadScript(_src,cb){
     isPlaying = true;
     myappd.removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
     audio.play();
+    play();
   }
   document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
     isPlaying ? pause() : play();
@@ -240,7 +241,7 @@ loadScript('./static/js/count.js',function(){
       clearInterval(timer);
       timer = null;
       if(loadingStop)loadingStop();
-    
+
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
       f_t2.classList.add('fadeIn');

@@ -161,7 +161,7 @@ function cropStart(trigerBtn){
         sm = document.createElement('img');
         sm.setAttribute('src',el.sm);
         sm.style.width = '100%';
-        console.log(sm);
+        // console.log(sm);
         item.classList.add('item');
         item.appendChild(sm);
         $themeSelectWpr[0].appendChild(item);
@@ -229,7 +229,7 @@ function cropLoaded(img){
     $cropSection.css("display", "");
 
 
-    console.log(img);
+    // console.log(img);
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
     var imgHeight = img.height;
@@ -359,7 +359,7 @@ function upqr(){
     if(a.indexOf('error') > -1){
       alert('请输入有效的收款二维码')
     }else{
-      console.log('htmlEntities(a)',htmlEntities(a));
+      // console.log('htmlEntities(a)',htmlEntities(a));
       zd_qrcode.makeCode(htmlEntities(a))
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
       $('#qrGuide').css('display','none');
@@ -398,7 +398,7 @@ function upqr(){
     {
           var reader = new FileReader();
           reader.onload = (function(theFile) {
-            console.log('file:',theFile);
+            // console.log('file:',theFile);
             return function(e) {
                 gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
                 qrcode.decode(e.target.result);
