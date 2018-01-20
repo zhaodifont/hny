@@ -15,7 +15,7 @@
 
 <div id="app" class="p-r">
 
-<div style="z-index:9999999;position:absolute;left:-999rem;">
+<div style="z-index:9999;position:absolute;left:-999rem;">
   <div id="zd_qrcode" style="border:1px red solid;"></div>
   <canvas id="qr-canvas" width="40" height="30"></canvas>
   <input type="file" id="handleQR"  accept="image/*" />
@@ -186,6 +186,7 @@ function loadScript(_src,cb){
       myappd = document.querySelector('#app'),
       audio = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
+      image = auBtn.querySelector('img'),
       isPlaying = false;
       audio.src = './test.mp3';
       audio.load();
@@ -196,12 +197,9 @@ function loadScript(_src,cb){
     myappd.removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
     audio.play();
   }
-
-  var image = auBtn.querySelector('img');
   document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
     isPlaying ? pause() : play();
   },false);
-
   function pause() {
     isPlaying = false;
     var iTransform = getComputedStyle(image).transform;
@@ -212,18 +210,16 @@ function loadScript(_src,cb){
     image.classList.remove('run');
     audio.pause()
   }
-
   function play() {
     isPlaying = true;
     image.classList.add('run');
     audio.play()
   }
-
 }()
-
+var defaultbgStatue = false;
 loadScript('./static/js/count.js',function(){
+  document.querySelectorAll('.loadingDiv')[0].style.display='';
   // 默认图片
-  var defaultbgStatue = false;
   var img = new Image();
   img.onload = function(){
     img.setAttribute('width','100%')
@@ -240,13 +236,11 @@ loadScript('./static/js/count.js',function(){
       f_t2 = document.querySelector('#firstPage .t2');
 
   var timer = setInterval(function(){
-    console.log(defaultbgStatue);
-    if(defaultbgStatue && defaultbgStatue){
+    if(defaultbgStatue){
       clearInterval(timer);
-
       timer = null;
       if(loadingStop)loadingStop();
-      // document.querySelectorAll('.loadingDiv')[0].style.display='none';
+    
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
       f_t2.classList.add('fadeIn');

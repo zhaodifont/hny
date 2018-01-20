@@ -12,7 +12,6 @@ window.indexPageReady = function(){
     // 让目标 arg2 在 容器 arg1 中 可以滑动 缩放的区域 arg3
 
     window.setTimeout(function(){
-
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
             targetMinWidth : 750,
@@ -27,7 +26,7 @@ window.indexPageReady = function(){
 
         $cropSection.css("visibility", "hidden");
         $cropSection.css("display", "");
-        loadingStop();
+        if(defaultbgStatue)loadingStop();
         // $cropSection.css("display", "none");
         // $cropSection.css("visibility", "visible");
         document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",function(){
