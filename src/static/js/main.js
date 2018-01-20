@@ -180,6 +180,7 @@ function cropStart(trigerBtn){
       })
   })
 
+
     $upload.unbind('change');
     $upload.one('change', cropChanged);
     $upload.trigger('click');
@@ -187,6 +188,7 @@ function cropStart(trigerBtn){
 
 // 转换为可用的 img base64
 function cropChanged(evt){
+  loadingStart();
     if(!initTheme){changeTheme(themes[0]);}
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
@@ -252,6 +254,7 @@ function cropLoaded(img){
     $defaultImgSet.css("top", [imgOriginY, "px"].join(""));
 
     $defaultImgSet[0].src = img.src;
+    if(initTheme)loadingStop();
     cropGesture.unbindEvents();
     cropGesture.bindEvents();
 
