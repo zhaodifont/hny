@@ -7,6 +7,9 @@
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./static/css/main.css">
+    <script type="text/javascript" src="./static/js/bridge_android.js">
+
+    </script>
   </head>
 <body>
 <script type="text/javascript">
@@ -163,8 +166,22 @@
     </div>
 
 </div>
-
 <script>
+
+!function(){
+
+  // document.querySelector('#test').onclick=function(){
+  //   b612cnb://inappBrowser?${testUrl}
+  //
+  //   B612Kaji.Native.android.Function.getInstance().eventCamera(
+  //     function(result) {
+  //       // result = base64ImageString
+  //     },{type:"imageCamera",categoryId:30015,stickerId:81536,autoDownload:true}
+  //   );
+  // }
+
+}()
+
 
 function loadScript(_src,cb){
     var script = document.createElement('script');
@@ -188,7 +205,7 @@ function loadScript(_src,cb){
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
       isPlaying = false;
-      audio.src = './test.mp3';
+      audio.src = './test22.mp3';
       audio.load();
       // audio.play();
   myappd.addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
@@ -294,8 +311,6 @@ loadScript('./static/js/count.js',function(){
               mainJsLoaded = true;
           }
       })
-
-
 
 </script>
 </body>

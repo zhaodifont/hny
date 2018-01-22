@@ -69,8 +69,8 @@
 #firstPage .t1{width:6.69rem;}
 #firstPage .t2{width:3.97rem;margin-right:.96rem;}
 #joinNum{
-  background-color: #fae8a2;color:#cc403c;line-height: 1.2;font-size: .26rem;
-  margin:0 .1rem;padding:0 .1rem;border-radius: .15rem;}
+  background-color: #fae8a2;color:#cc403c;line-height: .26rem;padding:0 .2rem;font-size: .26rem;
+  margin:0 .1rem;border-radius: .15rem;line-height: 1;vertical-align: middle;line-height: .5rem;}
 #targetNum{margin-left: .1rem;}
 .chooseBtn{
 	display: block;width:4.06rem;background-color:#fff;text-align: center;color:#cf4440;line-height: .96rem;font-size: .42rem;
