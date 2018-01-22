@@ -69,7 +69,7 @@
 #firstPage .t1{width:6.69rem;}
 #firstPage .t2{width:3.97rem;margin-right:.96rem;}
 .firstPage_choose{
-  z-index:166;background-color: rgba(0,0,0,.6);
+  z-index:226;background-color: rgba(0,0,0,.6);
   display: flex;align-items: center;justify-content: center;
 }
 .firstPage_choose .wpr{
