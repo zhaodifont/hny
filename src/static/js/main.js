@@ -198,6 +198,7 @@ function cropChanged(evt){
         return preventEventPropagation(evt);
     }
     var file = this.files[0];
+
     var reader = new FileReader();
     reader.onload = function () {
         var binary = this.result;
@@ -206,6 +207,7 @@ function cropChanged(evt){
 
         var fullScreenImg = new Image();
         fullScreenImg.onload = function () {
+          console.log(this);
             cropLoaded(this);
             canvasDom.setAttribute('width',$themeBgImg[0].width)
             canvasDom.setAttribute('height',$themeBgImg[0].height)
