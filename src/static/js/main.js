@@ -62,7 +62,8 @@ window.indexPageReady = function(){
 
         document.querySelector('.openCamera').addEventListener(_touch(),function(){
           openCamera(function(res){
-            // document.querySelector('#testTxt').innerText = res;
+            document.querySelector('#testTxt').innerText = res.length;
+            if(res.length == 0)return;
             $('.guide img')[0].src=res;
           })
         },false)
@@ -176,7 +177,7 @@ function cropChoose(){
 }
 
 // 触发 upload
-function cropStart(trigerBtn){
+function cropStart(){
 
   // 在用户选择文件的时候 尽可能缓冲加载更多的资源
   // 不管是否选择文件 都开始加载主题1
