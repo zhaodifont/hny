@@ -5,19 +5,29 @@ function loadingStart(){
 function loadingStop(){
     $('.loadingDiv').css('display','none');
 }
+function _touch(){
+  return window.supportTouch?"touchend":"click";
+}
+// 相机
+function openCamera(cb) {
+  return window.cameraApi.eventCamera(
+    function(result) {
+      cb(result);
+    },{type:"imageCamera"}
+  );
+}
 
 window.indexPageReady = function(){
-
     // 在页面初始化完 设置 滑动区域
     // 让目标 arg2 在 容器 arg1 中 可以滑动 缩放的区域 arg3
 
     window.setTimeout(function(){
+
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
             targetMinWidth : 750,
             targetMinHeight: 750
         })
-
         var $canvas = $("#cropCanvas");
         canvasDom = $canvas[0];
         canvasCtx = canvasDom.getContext("2d");
@@ -29,13 +39,39 @@ window.indexPageReady = function(){
         if(defaultbgStatue)loadingStop();
         // $cropSection.css("display", "none");
         // $cropSection.css("visibility", "visible");
-        document.querySelector('#firstPage .chooseBtn').addEventListener(window.supportTouch ? "touchend" : "click",function(){
-          cropChoose()
+        if(window.isAndroid){
+          window.cameraApi = B612Kaji.Native.android.Function.getInstance();
+        }
+
+        document.querySelector('#firstPage .chooseBtn').addEventListener(_touch(),function(){
+          // cropChoose()
+          document.querySelector('#testTxt').innerHTML = ('isAndroid:'+window.isAndroid + '_isIos:' + window.isIos + 'cameraApi:' + window.cameraApi)
+
+          $('.firstPage_choose').css('display','flex');
+          $('.firstPage_choose').unbind(_touch());
+          $('.firstPage_choose').on(_touch(),function(){
+            $('.firstPage_choose').css('display','none');
+          })
+          $('.firstPage_choose .wpr').unbind(_touch());
+          $('.firstPage_choose .wpr').on(_touch(),function(e){
+            e.stopPropagation();
+          })
+
+
         },false)
 
-    },40)
+        document.querySelector('.openCamera').addEventListener(_touch(),function(){
+          openCamera(function(res){
+            // document.querySelector('#testTxt').innerText = res;
+            $('.guide img')[0].src=res;
+          })
+        },false)
+
+
+    },200)
 
     // $('#firstPage .chooseBtn').on('click',cropChoose)
+
 
     // $('#audio').trigger('click');
 }
@@ -133,9 +169,6 @@ var $upload = $('#upload'), //原始上传按钮
     },
     zd_qrcode = null;
 
-
-
-
 // 此处可以判断 此浏览器内核 是否支持
 function cropChoose(){
     cropStart($upload);
@@ -149,8 +182,8 @@ function cropStart(trigerBtn){
   // 不管是否选择文件 都开始加载主题1
   if(!initTheme){changeTheme(themes[0]);loadingStop();};
 
-  $('#qrGuide .btn').unbind(window.isSupportTouch ? "touchend" : "click");
-  $('#qrGuide .btn').on(window.isSupportTouch ? "touchend" : "click",function(){
+  $('#qrGuide .btn').unbind(_touch());
+  $('#qrGuide .btn').on(_touch(),function(){
     $('#handleQR').trigger('click');
   });
 
