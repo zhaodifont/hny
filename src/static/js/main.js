@@ -8,40 +8,56 @@ function loadingStop(){
 
 var _touch = window.supportTouch?"touchend":"click";
 // 相机
-function openCamera(cb) {
-  return window.cameraApi.eventCamera(
-    function(result) {
-      cb(result);
-    },{type:"imageCamera"}
-  );
+function openCamera(cb,option,a,b) {
+  if(window.isAndroid){
+    return window.cameraApi.eventCamera(
+      function(result) {
+        cb(result)
+      },option
+    );
+  }else if(window.isIos){
+    return window.cameraApi.eventCamera(
+      function(result,type) {
+        if(!result.success){
+          loadingStop();
+          return;
+        }
+        result = result.base64Image;
+        cb(result)
+      },option.type,a,b
+    );
+  }else{
+    alert('error')
+  }
+
 }
-// 相册
-function openGallery(cb) {
-  return window.cameraApi.eventCamera(
-    function(result) {
-      cb(result);
-    },{type:"imageAlbum"}
-  );
-}
+
 // 保存
 function saveImage(cb,imgBase64) {
   return window.cameraApi.saveImage(
     function(result) {
       cb(result);
     },imgBase64
-  );
+  )
 }
 // 保存
 function shareImageWithCallback(cb1,cb2,imgBase64) {
-  return window.cameraApi.shareImageWithCallback(
-    function(result) {
-      cb1(result);
-    },
-    function(result) {
-      cb2(result);
-    },
-    imgBase64
-  );
+  if(window.isAndroid){
+    return window.cameraApi.shareImageWithCallback(
+      function(result) {
+        cb1(result);
+      },
+      function(result) {
+        cb2(result);
+      },
+      imgBase64
+    );
+  }else if(window.isIos){
+    return window.cameraApi.shareImage(
+      imgBase64
+    );
+  }
+
 }
 
 window.indexPageReady = function(){
@@ -64,10 +80,12 @@ window.indexPageReady = function(){
         // $cropSection.css("visibility", "visible");
         if(window.isAndroid){
           window.cameraApi = B612Kaji.Native.android.Function.getInstance();
+        }else if(window.isIos){
+          window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
         }
 
         document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
-          // cropChoose()
+
           document.querySelector('#testTxt').innerHTML = ('isAndroid:'+window.isAndroid + '_isIos:' + window.isIos + 'cameraApi:' + window.cameraApi)
 
           $('.firstPage_choose').css('display','flex');
@@ -93,7 +111,6 @@ window.indexPageReady = function(){
         document.querySelector('.openGallery').addEventListener(_touch,function(){
           openGalleryBefore()
         },false)
-
 
         $('#testTxt').click(function(){
           saveImage(function(res){
@@ -189,8 +206,6 @@ function cropStart(res){
   // 不管是否选择文件 都开始加载主题1
   if(!initTheme){changeTheme(themes[0]);loadingStop();};
 
-
-
   //  不管是否选择文件 加载所有主题的sm
   $themeSelectWpr.eq(0).empty();
   themes.forEach(function(el,index,len){
@@ -221,18 +236,19 @@ function cropStart(res){
 function openCameraBefore(){
   loadingStart();
   openCamera(function(res){
-    // document.querySelector('#testTxt').innerText = res;
+    // document.querySelector('#testTxt').innerText = JSON.stringify(res);
+
     if(res.length == 0){
       loadingStop();
       return false;
     };
     $('.firstPage_choose').css('display','none');
     cropChanged(res)
-  })
+  },{type:"imageCamera"})
 }
 function openGalleryBefore(){
   loadingStart();
-  openGallery(function(res){
+  openCamera(function(res,type){
     // document.querySelector('#testTxt').innerText = res;
     if(res.length == 0){
       loadingStop();
@@ -240,7 +256,7 @@ function openGalleryBefore(){
     };
     $('.firstPage_choose').css('display','none');
     cropChanged(res)
-  })
+  },{type:"imageAlbum"})
 }
 
 // 转换为可用 img base64
@@ -266,7 +282,6 @@ function cropChanged(res){
 function cropLoaded(img){
     $cropSection.css("display", "");
 
-    // console.log(img);
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
     var imgHeight = img.height;
@@ -407,18 +422,17 @@ function proSave(){
 }
 
 function upqr(){
-
   // 二维码引导
   $('#qrGuide .btn').unbind(_touch);
   $('#qrGuide .btn').on(_touch,function(){
     loadingStart();
-    openGallery(function(res){
+    openCamera(function(res){
       if(res.length == 0){
-        return false;
         loadingStop()
+        return false;
       };
       qrcode.decode(res);
-    })
+    },{type:'imageAlbum'})
   });
 
   function htmlEntities(str) {

@@ -175,7 +175,7 @@
 
 </div>
 
-<div id="testTxt" style="position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
+<div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
 
 <script>
 function loadScript(_src,cb){
@@ -204,7 +204,7 @@ function loadScript(_src,cb){
     loadScript('./static/js/bridge_android.js');
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;
-    loadScript('./static/bridge_ios.js');
+    loadScript('./static/js/bridge_ios.js');
   }else{
     window.isOther = true;
   }
@@ -219,7 +219,7 @@ function loadScript(_src,cb){
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
       isPlaying = false;
-      audio.src = './test22.mp3';
+      audio.src = './test.mp3';
       audio.load();
       // audio.play();
   myappd.addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
