@@ -86,7 +86,7 @@ window.indexPageReady = function(){
 
         document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
 
-          document.querySelector('#testTxt').innerHTML = ('isAndroid:'+window.isAndroid + '_isIos:' + window.isIos + 'cameraApi:' + window.cameraApi)
+          // document.querySelector('#testTxt').innerHTML = ('isAndroid:'+window.isAndroid + '_isIos:' + window.isIos + 'cameraApi:' + window.cameraApi)
 
           $('.firstPage_choose').css('display','flex');
           $('.firstPage_choose').unbind(_touch);
@@ -112,11 +112,11 @@ window.indexPageReady = function(){
           openGalleryBefore()
         },false)
 
-        $('#testTxt').click(function(){
-          saveImage(function(res){
-            alert(0)
-          },$('.guide img')[0].src)
-        })
+        // $('#testTxt').click(function(){
+        //   saveImage(function(res){
+        //     alert(0)
+        //   },$('.guide img')[0].src)
+        // })
 
     },200)
 
@@ -149,17 +149,41 @@ var $upload = $('#upload'), //原始上传按钮
         bg:'./static/img/theme1-bg.jpg',
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme1-sm.jpg',
+        eqpos:{
+          bottom:'.75rem',right:'41.866%'
+        }
       },
       {
         bg:'./static/img/theme2-bg.jpg',
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme2-sm.jpg',
-
+        eqpos:{
+          bottom:'.69rem',right:'17.06%'
+        }
       },
       {
         bg:'./static/img/theme3-bg.jpg',
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme3-sm.jpg',
+        eqpos:{
+          bottom:'.6rem',right:'15.06%'
+        }
+      },
+      {
+        bg:'./static/img/theme4-bg.jpg',
+        foot:'./static/img/theme1-foot.jpg',
+        sm:'./static/img/theme4-sm.jpg',
+        eqpos:{
+          bottom:'.85rem',right:'41.866%'
+        }
+      },
+      {
+        bg:'./static/img/theme5-bg.jpg',
+        foot:'./static/img/theme1-foot.jpg',
+        sm:'./static/img/theme5-sm.jpg',
+        eqpos:{
+          bottom:'.99rem',right:'18.4%'
+        }
       }
     ],
     changeTheme=function(obj){
@@ -171,13 +195,10 @@ var $upload = $('#upload'), //原始上传按钮
         left:($('#cropSection').width() - $('#cropLayer').width()) / 2
       })
 
-      // $('.themeHead')[0].src = obj.head;
-      // cropLayer
-      var posa = obj.cropLayerPos,
-          posb = obj.cropLayerWprPos
-      // for (var key in posa) {
-      //   $('#cropLayer').css(key,posa[key])
-      // }
+      if(!!obj.eqpos){
+        $('#eCode').css(obj.eqpos)
+      }
+
       // for (var key in posb) {
       //   $('#cropLayer .wpr').css(key,posb[key])
       // }
@@ -191,7 +212,7 @@ var $upload = $('#upload'), //原始上传按钮
       img.onload = function(){
         themeBgImg.src = img.src;
         setTimeout(function(){
-          console.log('initTheme');
+          // console.log('initTheme');
           loadingStop();
           initTheme = true;
         },260)
@@ -218,13 +239,16 @@ function cropStart(res){
         item.appendChild(sm);
         $themeSelectWpr[0].appendChild(item);
   })
+  $('#theme_foot span').find('.item').eq(0).addClass('active')
   // 底部选择theme部分
   $('#theme_foot span').find('.item').each(function(index,item){
       $(item).unbind(_touch);
   });
   $('#theme_foot span').find('.item').each(function(index,item){
       $(item).on(_touch,function(){
+        $('#theme_foot span').find('.item').removeClass('active');
           var n = $(this).index();
+          $(this).addClass('active')
           if(n+1 == themeStlye){loadingStop();return false;}
           themeStlye = n+1;
           changeTheme(themes[index]);
@@ -296,7 +320,7 @@ function cropLoaded(img){
     var imgOriginY = ($dropArea.height() - cropGesture.targetMinHeight) * 0.5;
 
     // console.log('imgOriginX',imgOriginX,'imgOriginY',imgOriginY);
-    console.log('cropGesture.targetMinWidth:',cropGesture.targetMinWidth);
+    // console.log('cropGesture.targetMinWidth:',cropGesture.targetMinWidth);
     $defaultImgSet.css("display", "");
     $defaultImgSet.width(cropGesture.targetMinWidth);
     $defaultImgSet.height(cropGesture.targetMinHeight);

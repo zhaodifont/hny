@@ -78,7 +78,7 @@
           <!-- themebg -->
             <div id="theme_bg" class="p-r">
                 <img src="" id="themeBgImg" style="width:100%;">
-                <img id="eCode" class="ecode p-a" style="right:15.06%;bottom:.6rem;" src="./static/img/upqr.jpg" alt="">
+                <img id="eCode" class="ecode p-a" src="./static/img/upqr.jpg" alt="">
             </div>
              <!-- themehead -->
             <div id="cropLayer" class="p-a" style="">
@@ -99,7 +99,7 @@
               <div class="">
                   <div class="item" id="reChoose"><var>换张<br/>照片</var></div>
                   <span>
-                    <div class="item"></div><div class="item"></div><div class="item"></div><div class="item"></div><div class="item"></div>
+                    <!-- <div class="item"></div><div class="item"></div><div class="item"></div><div class="item"></div><div class="item"></div> -->
                   </span>
               </div>
             </div>
@@ -292,7 +292,7 @@ loadScript('./static/js/count.js',function(){
   var checkAll = function(val){
           console.log("check js this time ok:",val,zeptoJsLoaded , extJsLoad , globalJsloaded , mainJsLoaded);
           if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
-            console.log('ok 23333');
+            // console.log('ok 23333');
               setTimeout(function(){
                 indexPageReady();
               },0)
