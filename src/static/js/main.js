@@ -378,16 +378,13 @@ function upqr(){
     // loadingStart();
     openGallery(function(res){
       // document.querySelector('#testTxt').innerText = res;
-      $('#testTxt').text(typeof res);
+
       if(res.length == 0){
         return false;
       };
 
-      gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-      setTimeout(function(){
-        qrcode.decode(res);
-      },600)
 
+      handleFiles(res);
     })
   });
 
@@ -400,6 +397,7 @@ function upqr(){
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function read(a){
+
     if(a.indexOf('error') > -1 || a.indexOf('Failed') > -1){
       alert('请输入有效的收款二维码')
     }else{
@@ -414,6 +412,7 @@ function upqr(){
       },260)
 
     }
+    $('#testTxt').text(a)
     $('#handleQR')[0].value = '';
   }
 
@@ -437,22 +436,28 @@ function upqr(){
       gCtx.clearRect(0, 0, w, h);
   }
 
-  function handleFiles(f){
-    var o=[];
+  function handleFiles(res){
+    // for(var i =0;i<f.length;i++){
+    //   var reader = new FileReader();
+    //   reader.onload = (function(theFile) {
+    //     return function(e) {
+    //         gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    //         qrcode.decode(e.target.result);
+    //     };
+    //   })(f[i]);
+    //   reader.readAsDataURL(f[i]);
+    // }
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    // $('#testTxt').text(res)
+    var img = new Image();
+    img.onload = function(){
+      var reader = new FileReader(),_this = this;
 
-    for(var i =0;i<f.length;i++)
-    {
+      qrcode.decode(this.src);
+    }
+    img.src = res;
+    // qrcode.decode(res);
 
-          var reader = new FileReader();
-          reader.onload = (function(theFile) {
-
-            return function(e) {
-                gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-                qrcode.decode(e.target.result);
-            };
-          })(f[i]);
-          reader.readAsDataURL(f[i]);
-      }
   }
 
   zd_qrcode = new QRCode(document.getElementById("zd_qrcode"), {
