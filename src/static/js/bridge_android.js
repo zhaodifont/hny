@@ -58,4 +58,4 @@ B612Kaji.Native.android.Function.getInstance = function() {
 	}
 	return B612Kaji.Native.android.Function.instance;
 }
-// B612Kaji.Native.android.Function.instance = null;
+B612Kaji.Native.android.Function.instance = null;

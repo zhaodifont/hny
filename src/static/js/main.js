@@ -378,11 +378,16 @@ function upqr(){
     // loadingStart();
     openGallery(function(res){
       // document.querySelector('#testTxt').innerText = res;
+      $('#testTxt').text(typeof res);
       if(res.length == 0){
         return false;
       };
+
       gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-      qrcode.decode(res);
+      setTimeout(function(){
+        qrcode.decode(res);
+      },600)
+
     })
   });
 
@@ -395,7 +400,6 @@ function upqr(){
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function read(a){
-    $('#testTxt').text(a)
     if(a.indexOf('error') > -1 || a.indexOf('Failed') > -1){
       alert('请输入有效的收款二维码')
     }else{
