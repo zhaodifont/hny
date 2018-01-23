@@ -138,7 +138,7 @@
   overflow: hidden;text-align: center;font-size: .3rem;color: #fff;
 }
 #qrGuide .return{
-  font-size: .26rem;line-height: .66rem;border-radius: 2rem;width:2rem;border:.02rem #fff1a5 solid;color:#fff1a5;
+  font-size: .36rem;margin:.24rem 0 0 .35rem;color:#fff;text-align: left;
 }
 #qrGuide img{
   margin:.15rem auto;

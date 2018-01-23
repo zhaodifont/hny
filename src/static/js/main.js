@@ -376,15 +376,13 @@ function upqr(){
   $('#qrGuide .btn').unbind(_touch);
   $('#qrGuide .btn').on(_touch,function(){
     // loadingStart();
-    alert(0)
     openGallery(function(res){
-      alert(0)
-      $('#testTxt').text(res);
+      // document.querySelector('#testTxt').innerText = res;
       if(res.length == 0){
-        loadingStop();
         return false;
       };
-      // $('#testTxt').text(res);
+      gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+      qrcode.decode(res);
     })
   });
 
@@ -397,7 +395,7 @@ function upqr(){
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function read(a){
-    var html="<br>";
+    $('#testTxt').text(a)
     if(a.indexOf('error') > -1 || a.indexOf('Failed') > -1){
       alert('请输入有效的收款二维码')
     }else{
