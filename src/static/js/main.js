@@ -360,6 +360,7 @@ function upqr(){
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function read(a){
+    alert(a)
     var html="<br>";
     if(a.indexOf('error') > -1){
       alert('请输入有效的收款二维码')
