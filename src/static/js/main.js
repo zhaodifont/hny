@@ -15,7 +15,7 @@ function openCamera(cb) {
     },{type:"imageCamera"}
   );
 }
-// 相机
+// 相册
 function openGallery(cb) {
   return window.cameraApi.eventCamera(
     function(result) {
@@ -23,13 +23,29 @@ function openGallery(cb) {
     },{type:"imageAlbum"}
   );
 }
+// 保存
+function saveImage(cb,imgBase64) {
+  return window.cameraApi.saveImage(
+    function(result) {
+      cb(result);
+    },imgBase64
+  );
+}
+// 保存
+function shareImageWithCallback(cb1,cb2,imgBase64) {
+  return window.cameraApi.shareImageWithCallback(
+    function(result) {
+      cb1(result);
+    },
+    function(result) {
+      cb2(result);
+    },
+    imgBase64
+  );
+}
 
 window.indexPageReady = function(){
-    // 在页面初始化完 设置 滑动区域
-    // 让目标 arg2 在 容器 arg1 中 可以滑动 缩放的区域 arg3
-
     window.setTimeout(function(){
-
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
             targetMinWidth : 750,
@@ -78,6 +94,12 @@ window.indexPageReady = function(){
           openGalleryBefore()
         },false)
 
+
+        $('#testTxt').click(function(){
+          saveImage(function(res){
+            alert(0)
+          },$('.guide img')[0].src)
+        })
 
     },200)
 
@@ -309,25 +331,18 @@ function cropStop(){
 }
 
 function cropConfirm(evt) {
-    loadingStart();
-    // pageRecordClick("sng.tu.christmas2015.nextbtn");
     var $cropImg = $defaultImgSet;
-    // var $themeHead = $('.themeHead');
     var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
     var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
     // var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
-
     var imgOrigin = {
         x: parseInt($cropImg.css('left')) || 0,
         y: parseInt($cropImg.css('top')) || 0
     };
-    console.log('imgOrigin x,y',imgOrigin.x,imgOrigin.y);
     var imgSize = {
         width: $cropImg.width(),
         height: $cropImg.height()
     };
-    // console.log('imgSize width height',imgSize.width,imgSize.height);
-    // canvasCtx.fillStyle = 'rgba(255, 255, 255, 0)';
     // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
     // 画主题图片
     canvasCtx.drawImage($themeBgImg[0],0,0,750,993,0,0,$themeBgImg.width(),$themeBgImg.height())
@@ -365,9 +380,30 @@ function proSave(){
     img.onload = function(){
         $('#proSection img')[0].src = img.src;
         $('#proSection').css('display','block')
-        loadingStop()
+        loadingStop();
+
     }
-    img.src = dataURL
+    img.src = dataURL;
+
+    $('#proSection .save').on(_touch,function(){
+      saveImage(function(res){
+        alert('照骗已经存入您的相册里了')
+      },img.src)
+    })
+
+    $('#proSection .share').on(_touch,function(){
+      shareImageWithCallback(
+        function(res){
+          // 点击分享
+        },
+        function(res){
+          // alert('分享完了')
+          // 分享返回
+        },
+        img.src
+      )
+    })
+
 }
 
 function upqr(){
@@ -375,33 +411,22 @@ function upqr(){
   // 二维码引导
   $('#qrGuide .btn').unbind(_touch);
   $('#qrGuide .btn').on(_touch,function(){
-    // loadingStart();
+    loadingStart();
     openGallery(function(res){
-      // document.querySelector('#testTxt').innerText = res;
-
       if(res.length == 0){
         return false;
+        loadingStop()
       };
-
-
-      handleFiles(res);
+      qrcode.decode(res);
     })
   });
-
-  // document.querySelector('#handleQR').addEventListener('change',function(){
-  //   handleFiles(this.files)
-  //   $('#testTxt').text('file1:',this.files);
-  // },false)
 
   function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function read(a){
-
-    if(a.indexOf('error') > -1 || a.indexOf('Failed') > -1){
-      alert('请输入有效的收款二维码')
-    }else{
-      // console.log('htmlEntities(a)',htmlEntities(a));
+    loadingStop();
+    if(!!(a.indexOf('wxp:') > -1)){
       zd_qrcode.makeCode(htmlEntities(a))
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
       $('#qrGuide').css('display','none');
@@ -409,13 +434,14 @@ function upqr(){
       loadingStart();
       setTimeout(function(){
         $('#toNext').trigger('click');
-      },260)
-
+      },0)
+    }else if(a.indexOf('Failed') > -1){
+      alert('抱歉您的手机不支持此功能')
+    }else{
+      alert('请输入有效的收款二维码')
     }
-    $('#testTxt').text(a)
     $('#handleQR')[0].value = '';
   }
-
 
   function load(){
     if(window.File && window.FileReader){
@@ -434,30 +460,6 @@ function upqr(){
       gCanvas.height = h;
       gCtx = gCanvas.getContext("2d");
       gCtx.clearRect(0, 0, w, h);
-  }
-
-  function handleFiles(res){
-    // for(var i =0;i<f.length;i++){
-    //   var reader = new FileReader();
-    //   reader.onload = (function(theFile) {
-    //     return function(e) {
-    //         gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-    //         qrcode.decode(e.target.result);
-    //     };
-    //   })(f[i]);
-    //   reader.readAsDataURL(f[i]);
-    // }
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-    // $('#testTxt').text(res)
-    var img = new Image();
-    img.onload = function(){
-      var reader = new FileReader(),_this = this;
-
-      qrcode.decode(this.src);
-    }
-    img.src = res;
-    // qrcode.decode(res);
-
   }
 
   zd_qrcode = new QRCode(document.getElementById("zd_qrcode"), {
