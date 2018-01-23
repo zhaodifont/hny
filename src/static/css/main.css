@@ -132,7 +132,7 @@
 .nextGuide .wpr .paw2{width:.5rem;left:0;transform: translate(-50%,0) rotate(180deg);top:.58rem;}
 .nextGuide .wpr img{width: 100%;}
 
-#qrGuide{border:1px blue solid;box-sizing: border-box;overflow: hidden;overflow-y: scroll;}
+#qrGuide{box-sizing: border-box;overflow: hidden;overflow-y: scroll;}
 #qrGuide .wpr{
   background:url('../img/qr_guide_bg.jpg') 0 0 repeat;background-size:.84rem .49rem;
   overflow: hidden;text-align: center;font-size: .3rem;color: #fff;
