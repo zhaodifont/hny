@@ -344,13 +344,9 @@ function cropLoaded(img){
     $('#eCode').unbind(_touch);
     $('#eCode').on(_touch,function(){
       $('#qrGuide').css('display','');
-      // loadScript('./static/js/qrcode.js');
-      // loadScript('./static/js/llqrcode.js',function(){
-      //   setTimeout(function(){
-      //       upqr()
-      //   },0)
-      // });
-      upqr()
+      if(!upqrStatue){
+        upqr()
+      }
     })
     $('#qrGuide .return').unbind(_touch);
     $('#qrGuide .return').on(_touch,function(){
