@@ -396,7 +396,7 @@ function cropConfirm(evt) {
     canvasCtx.drawImage($('#eCode')[0], 0, 0, 124, 124, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width()+10,$('#eCode').height()+10);
     setTimeout(function(){
         proSave()
-    },20)
+    },260)
 
     return preventEventPropagation(evt);
 }
