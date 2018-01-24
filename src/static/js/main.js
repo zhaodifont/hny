@@ -150,7 +150,7 @@ var $upload = $('#upload'), //原始上传按钮
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme1-sm.jpg',
         eqpos:{
-          bottom:'.75rem',right:'41.866%'
+          bottom:'1.09rem',right:'41.866%'
         }
       },
       {
@@ -158,7 +158,7 @@ var $upload = $('#upload'), //原始上传按钮
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme2-sm.jpg',
         eqpos:{
-          bottom:'.69rem',right:'17.06%'
+          bottom:'1.03rem',right:'17.06%'
         }
       },
       {
@@ -166,7 +166,7 @@ var $upload = $('#upload'), //原始上传按钮
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme3-sm.jpg',
         eqpos:{
-          bottom:'.6rem',right:'15.06%'
+          bottom:'.94rem',right:'15.06%'
         }
       },
       {
@@ -174,7 +174,7 @@ var $upload = $('#upload'), //原始上传按钮
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme4-sm.jpg',
         eqpos:{
-          bottom:'.85rem',right:'41.866%'
+          bottom:'1.19rem',right:'41.866%'
         }
       },
       {
@@ -182,7 +182,7 @@ var $upload = $('#upload'), //原始上传按钮
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme5-sm.jpg',
         eqpos:{
-          bottom:'.99rem',right:'18.4%'
+          bottom:'1.33rem',right:'18.4%'
         }
       }
     ],
@@ -370,6 +370,7 @@ function cropStop(){
 }
 
 function cropConfirm(evt) {
+  loadingStart()
     var $cropImg = $defaultImgSet;
     var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
     var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
@@ -384,7 +385,7 @@ function cropConfirm(evt) {
     };
     // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
     // 画主题图片
-    canvasCtx.drawImage($themeBgImg[0],0,0,750,993,0,0,$themeBgImg.width(),$themeBgImg.height())
+    canvasCtx.drawImage($themeBgImg[0],0,0,750,1027,0,0,$themeBgImg.width(),$themeBgImg.height())
     // 画用户头像
     canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
     // 画用户头像框
@@ -394,9 +395,8 @@ function cropConfirm(evt) {
     canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width(),$('#eCode').height());
     canvasCtx.drawImage($('#eCode')[0], 0, 0, 124, 124, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width()+10,$('#eCode').height()+10);
     setTimeout(function(){
-        loadingStart()
         proSave()
-    },0)
+    },20)
 
     return preventEventPropagation(evt);
 }
@@ -420,7 +420,6 @@ function proSave(){
         $('#proSection img')[0].src = img.src;
         $('#proSection').css('display','block')
         loadingStop();
-
     }
     img.src = dataURL;
 

@@ -106,7 +106,7 @@
 
 /* 选择主题 */
 .styleChoose{overflow: hidden;}
-.styleChoose .wpr{width:100%;top:0;padding-top:.34rem;box-sizing: border-box;}
+.styleChoose .wpr{width:100%;top:0;box-sizing: border-box;}
 .styleChoose .wpr>div{width:auto;margin-left:.36rem;white-space: nowrap;height:1.68rem;overflow: auto;overflow-x: scroll;}
 .styleChoose .wpr>div>.item{font-size: .3rem;color:#e5d585;}
 .styleChoose .wpr>div>.item var{

@@ -168,7 +168,7 @@
     </div>
 
     <!-- ./static/test.mp3 -->
-    <audio src="" controls loop preload id='audio' style="position:absolute;left:-999rem;"></audio>
+    <audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
     <div id="audio_control" class='p-a'>
       <span><img src="./static/img/audio_Icon.png" alt=""></span>
     </div>
@@ -208,46 +208,47 @@ function loadScript(_src,cb){
   }else{
     window.isOther = true;
   }
-  document.querySelector('#testTxt').innerHTML =('isAndroid:'+window.isAndroid + '; -isIos:' + window.isIos + '; -cameraApi:' + window.cameraApi)
+  // document.querySelector('#testTxt').innerHTML =('isAndroid:'+window.isAndroid + '; -isIos:' + window.isIos + '; -cameraApi:' + window.cameraApi)
 
 }()
 
 !function(){
   var auBtn = document.querySelector('#audio_control span'),
       myappd = document.querySelector('#app'),
-      audio = document.querySelector('#audio'),
+      audio_ = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
-      isPlaying = false;
-      audio.src = './test.mp3';
-      audio.load();
-      audio.play();
-      play()
-  // myappd.addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
-  // function handlePlay(){
-  //   isPlaying = true;
-  //   myappd.removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
-  //   audio.play();
-  //   play();
-  // }
-  document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
-    isPlaying ? pause() : play();
-  },false);
-  function pause() {
-    isPlaying = false;
-    var iTransform = getComputedStyle(image).transform;
-    var cTransform = getComputedStyle(auBtn).transform;
-    auBtn.style.transform = cTransform === 'none'
-       ? iTransform
-       : iTransform.concat(' ', cTransform);
-    image.classList.remove('run');
-    audio.pause()
-  }
-  function play() {
-    isPlaying = true;
-    image.classList.add('run');
-    audio.play()
-  }
+      isPlaying = true;
+      audio_.load();
+      audio_.src="./mus.mp3";
+
+      function pause() {
+        isPlaying = false;
+        var iTransform = getComputedStyle(image).transform;
+        var cTransform = getComputedStyle(auBtn).transform;
+        auBtn.style.transform = cTransform === 'none'
+           ? iTransform
+           : iTransform.concat(' ', cTransform);
+        image.classList.remove('run');
+        audio_.pause()
+      }
+      function play() {
+        isPlaying = true;
+        image.classList.add('run');
+        audio_.play()
+
+      }
+      function musicInBrowserHandler() {
+          play()
+          document.body.removeEventListener('touchstart', musicInBrowserHandler);
+      }
+      document.body.addEventListener('touchstart', musicInBrowserHandler,false);
+
+    document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
+      isPlaying ? pause() : play();
+    },false);
+    play()
+
 }()
 var defaultbgStatue = false;
 loadScript('./static/js/count.js',function(){
