@@ -397,8 +397,8 @@ function cropConfirm(evt) {
     // canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
     // 画用户二维码
     canvasCtx.fillStyle="#fff";
-    canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width(),$('#eCode').height());
-    canvasCtx.drawImage($('#eCode')[0], 0, 0, 124, 124, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width()+10,$('#eCode').height()+10);
+    canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width()+1,$('#eCode').height()+1);
+    canvasCtx.drawImage($('#eCode')[0], 0, 0, 424, 424, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width(),$('#eCode').height());
     setTimeout(function(){
         proSave()
     },260)
@@ -506,8 +506,8 @@ function upqr(){
   }
 
   zd_qrcode = new QRCode(document.getElementById("zd_qrcode"), {
-  	width : 100,
-  	height : 100
+  	width : 400,
+  	height : 400
   });
   zd_qrcode.makeCode('')
   upqrStatue = true;
