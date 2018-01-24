@@ -344,6 +344,13 @@ function cropLoaded(img){
     $('#eCode').unbind(_touch);
     $('#eCode').on(_touch,function(){
       $('#qrGuide').css('display','');
+      // loadScript('./static/js/qrcode.js');
+      // loadScript('./static/js/llqrcode.js',function(){
+      //   setTimeout(function(){
+      //       upqr()
+      //   },0)
+      // });
+      upqr()
     })
     $('#qrGuide .return').unbind(_touch);
     $('#qrGuide .return').on(_touch,function(){
@@ -355,9 +362,7 @@ function cropLoaded(img){
         el.src= './static/img/' + qrImgs[index]
       })
       loadScript('./static/js/qrcode.js');
-      loadScript('./static/js/llqrcode.js',function(){
-        upqr()
-      });
+      loadScript('./static/js/llqrcode.js');
     }
 }
 
@@ -465,6 +470,7 @@ function upqr(){
     loadingStop();
     if(!!(a.indexOf('wxp:') > -1)){
       zd_qrcode.makeCode(htmlEntities(a))
+
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
       $('#qrGuide').css('display','none');
       $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
