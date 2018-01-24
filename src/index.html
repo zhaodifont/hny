@@ -221,14 +221,15 @@ function loadScript(_src,cb){
       isPlaying = false;
       audio.src = './test.mp3';
       audio.load();
-      // audio.play();
-  myappd.addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
-  function handlePlay(){
-    isPlaying = true;
-    myappd.removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
-    audio.play();
-    play();
-  }
+      audio.play();
+      play()
+  // myappd.addEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
+  // function handlePlay(){
+  //   isPlaying = true;
+  //   myappd.removeEventListener(window.isSupportTouch?'touchstart':'click',handlePlay,false);
+  //   audio.play();
+  //   play();
+  // }
   document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
     isPlaying ? pause() : play();
   },false);
