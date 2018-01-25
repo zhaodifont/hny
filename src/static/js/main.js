@@ -426,7 +426,7 @@ function proSave(){
 
     $('#proSection .save').on(_touch,function(){
       saveImage(function(res){
-        alert('照骗已经存入您的相册里了')
+        alert('拜年红包图已存好，分享就收钱')
       },img.src)
     })
 
@@ -466,7 +466,6 @@ function upqr(){
     loadingStop();
     if(!!(a.indexOf('wxp:') > -1)){
       zd_qrcode.makeCode(htmlEntities(a))
-
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
       $('#qrGuide').css('display','none');
       $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
@@ -477,7 +476,7 @@ function upqr(){
     }else if(a.indexOf('Failed') > -1){
       alert('抱歉您的手机不支持此功能')
     }else{
-      alert('请输入有效的收款二维码')
+      alert('未识别到收款二维码，收不到红包哦')
     }
     $('#handleQR')[0].value = '';
   }
