@@ -295,8 +295,9 @@ function cropChanged(res){
     img.onload = function(){
       cropLoaded(this);
       // $('#testTxt').text(this)
-      canvasDom.setAttribute('width',$themeBgImg[0].width)
-      canvasDom.setAttribute('height',$themeBgImg[0].height)
+      // alert($themeBgImg[0].width + '-' + $('#theme_bg').width())
+      canvasDom.setAttribute('width',$('#theme_bg').width())
+      canvasDom.setAttribute('height',$('#theme_bg').height())
       $('#megaPixImage').css({'width':this.width,'height':this.height})
     }
     img.src = res;
@@ -373,7 +374,7 @@ function cropStop(){
 function cropConfirm(evt) {
   loadingStart()
     var $cropImg = $defaultImgSet;
-    var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
+    var canvasScale =  canvasDom.width / $('#theme_bg').width();
     var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
     // var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
     var imgOrigin = {
@@ -386,9 +387,15 @@ function cropConfirm(evt) {
     };
     // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
     // 画主题图片
+    document.title = (canvasDom.height + '-' + canvasDom.width)
     canvasCtx.drawImage($themeBgImg[0],0,0,750,1027,0,0,$themeBgImg.width(),$themeBgImg.height())
+    // canvasCtx.scale($('#theme_bg').width()/750,$('#theme_bg').width()/750)
+    // canvasCtx.drawImage($themeBgImg[0],0,0,750,1027);
+    // alert($('#theme_bg').width()/750)
+
     // 画用户头像
     canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
+    // canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*canvasScale, Math.abs(imgOrigin.y)*canvasScale, $dropArea.width()*canvasScale, $dropArea.height()*canvasScale, 272,138,472,472);
     // 画用户头像框
     // canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
     // 画用户二维码
