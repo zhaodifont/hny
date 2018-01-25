@@ -476,7 +476,9 @@ function upqr(){
     }else if(a.indexOf('Failed') > -1){
       alert('抱歉您的手机不支持此功能')
     }else{
-      alert('未识别到收款二维码，收不到红包哦')
+      setTimeout(function(){
+        alert('未识别到收款二维码，收不到红包哦')
+      },0)
     }
     $('#handleQR')[0].value = '';
   }

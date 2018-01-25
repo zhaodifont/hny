@@ -27,15 +27,22 @@
 #audio_control{
   z-index: 99998;
   width:.6rem;height:.6rem;background: url('../img/audioBg.png') center center no-repeat;background-size:cover;
-  right:.3rem;top:1.02rem;text-align: center;line-height: .6rem;
+  right:.35rem;top:1.32rem;text-align: center;line-height: .6rem;
 }
 
-#audio_control span{display:inline-block;width:.34rem;height:.34rem;vertical-align: middle;}
 #audio_control img{
-  width:.34rem;height:.34rem;vertical-align:top;
+  width:.33rem;vertical-align:sub;
 }
-#audio_control img.run{
+#audio_control.run img{
   animation:audIconRun 5s linear 0s infinite normal forwards;
+}
+#audio_control:before{
+  content:"";width:.44rem;height:.05rem;background-color: #fbc81f;display: block;position: absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%) rotateZ(45deg);
+  z-index: 66;
+}
+#audio_control.run:before{
+  display: none;
 }
 @keyframes audIconRun {
   0%{
@@ -82,13 +89,15 @@
 .firstPage_choose .wpr span:nth-child(1){margin-bottom: .3rem;}
 
 #joinNum{
-  background-color: #fae8a2;color:#cc403c;line-height: .26rem;padding:0 .18rem;font-size: .24rem;
-  margin:0 .1rem;border-radius: .15rem;line-height: 1;vertical-align: middle;position: relative;top:-.03rem;line-height: .4rem;}
+  background-color: #fae8a2;color:#cc403c;line-height: .26rem;padding:0 .18rem;font-size: .26rem;
+  /* font-family: "PingFang SC"; */
+  margin:0 .1rem;border-radius: .2rem;line-height: 1;vertical-align: middle;position: relative;top:-.03rem;line-height: .4rem;}
 #targetNum{margin-left: .1rem;}
 .chooseBtn{
-	display: block;width:4.06rem;background-color:#fff;text-align: center;color:#cf4440;line-height: .92rem;font-size: .38rem;
-	border-radius: .6rem;margin:.12rem auto .4rem;
+	display: block;width:4.06rem;background-color:#fff;text-align: center;margin:.12rem auto .4rem;border-radius: .6rem;line-height: .92rem;
+	/* letter-spacing: .02rem;color:#cf4440;font-size: .38rem; */
 }
+.chooseBtn img{vertical-align: sub;}
 #theme_bg{
 	z-index:222;
 }
@@ -106,6 +115,7 @@
 
 /* 选择主题 */
 .styleChoose{overflow: hidden;}
+#reChoose img{vertical-align: top;margin-top:.3rem;}
 .styleChoose .wpr{width:100%;top:0;box-sizing: border-box;}
 .styleChoose .wpr>div{width:auto;margin-left:.36rem;white-space: nowrap;height:1.68rem;overflow: auto;overflow-x: scroll;}
 .styleChoose .wpr>div>.item{font-size: .3rem;color:#e5d585;}
