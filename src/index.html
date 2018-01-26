@@ -297,17 +297,6 @@ loadScript('./static/js/count.js',function(){
               checkAll = null;
           }else{return;}
       };
-      // loadScript('./static/js/zepto.min.js',function(){
-      //     zeptoJsLoaded = true;
-      //     checkAll('zepto');
-      //     loadScript('./static/js/main.js',function(){
-      //       if(zeptoJsLoaded){
-      //           checkAll('main');
-      //           mainJsLoaded = true;
-      //           // transNumber();
-      //       }
-      //   })
-      // })
       loadScript('./static/js/global.js',function(){
           globalJsloaded = true;
           checkAll('global');
@@ -317,10 +306,6 @@ loadScript('./static/js/count.js',function(){
           checkAll('ext');
       })
       loadScript('./static/js/main.js',function(){
-          // if(zeptoJsLoaded){
-          //     checkAll('main');
-          //     mainJsLoaded = true;
-          // }
           mainJsLoaded = true;
           checkAll('main');
 

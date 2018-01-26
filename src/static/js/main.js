@@ -357,11 +357,14 @@ function cropLoaded(img){
     })
 
     if(!upqrStatue){
+      setTimeout(function(){
+        loadScript('./static/js/qrcode.js');
+        loadScript('./static/js/llqrcode.js');
+      },0)
+
       $('#qrGuide img').each(function(index,el){
         el.src= './static/img/' + qrImgs[index]
       })
-      loadScript('./static/js/qrcode.js');
-      loadScript('./static/js/llqrcode.js');
     }
 }
 
@@ -407,7 +410,7 @@ function cropConfirm(evt) {
    canvasCtx.drawImage($('#eCode')[0], 0, 0, 424, 424, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width(),$('#eCode').height());
    setTimeout(function(){
        proSave()
-   },260)
+   },160)
 
     return preventEventPropagation(evt);
 }
@@ -456,6 +459,23 @@ function proSave(){
 }
 
 function upqr(){
+  var gCanvas;
+  function initCanvas(w,h){
+      gCanvas = document.getElementById("qr-canvas");
+      gCanvas.style.width = w + "px";
+      gCanvas.style.height = h + "px";
+      gCanvas.width = w;
+      gCanvas.height = h;
+      gCtx = gCanvas.getContext("2d");
+      gCtx.clearRect(0, 0, w, h);
+  }
+
+  zd_qrcode = new QRCode(document.getElementById("zd_qrcode"), {
+  	width : 400,
+  	height : 400
+  });
+  zd_qrcode.makeCode('');
+
   // 二维码引导
   $('#qrGuide .btn').unbind(_touch);
   $('#qrGuide .btn').on(_touch,function(){
@@ -503,21 +523,5 @@ function upqr(){
   }
   load();
 
-  var gCanvas;
-  function initCanvas(w,h){
-      gCanvas = document.getElementById("qr-canvas");
-      gCanvas.style.width = w + "px";
-      gCanvas.style.height = h + "px";
-      gCanvas.width = w;
-      gCanvas.height = h;
-      gCtx = gCanvas.getContext("2d");
-      gCtx.clearRect(0, 0, w, h);
-  }
-
-  zd_qrcode = new QRCode(document.getElementById("zd_qrcode"), {
-  	width : 400,
-  	height : 400
-  });
-  zd_qrcode.makeCode('')
   upqrStatue = true;
 }
