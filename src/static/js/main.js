@@ -209,8 +209,8 @@ function cropChanged(evt){
         fullScreenImg.onload = function () {
           console.log(this);
             cropLoaded(this);
-            canvasDom.setAttribute('width',$themeBgImg[0].width)
-            canvasDom.setAttribute('height',$themeBgImg[0].height)
+            canvasDom.setAttribute('width',750)
+            canvasDom.setAttribute('height',993)
             $('#megaPixImage').css({'width':this.width,'height':this.height})
             // loadingStop();
         }
@@ -311,6 +311,7 @@ function cropConfirm(evt) {
     // canvasCtx.fillStyle = 'rgba(255, 255, 255, 0)';
     // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
     // 画主题图片
+    canvasCtx.scale(2,2);
     canvasCtx.drawImage($themeBgImg[0],0,0,750,993,0,0,$themeBgImg.width(),$themeBgImg.height())
     // 画用户头像
     canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());

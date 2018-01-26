@@ -138,7 +138,7 @@
   display: block;width:4.45rem;line-height: .96rem;border-radius: 2rem;text-align: center;background-color: #fff;color:#cf4440;font-size: .36rem;
   margin: .8rem auto .5rem;
 }
-#proSection{z-index:444;background-color:#fff;overflow: hidden;overflow-y: scroll;}
+#proSection{z-index:444;background-color:#fff;overflow: hidden;overflow-y: scroll;transform: scale(.5);transform-origin:0% 0%;right:auto;bottom:auto;}
 #proSection .content .wpr{top:0;bottom:0;left:0;right:0;display: flex;justify-content: center;width:100%;}
 #proSection .content .wpr span{display: block;margin:.5rem .3rem;width:3.1rem;line-height: .96rem;text-align: center;color:#fff;font-size: .36rem;background-color: #e23536;border-radius: 4rem;}
 
