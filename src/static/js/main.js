@@ -147,7 +147,7 @@ var $upload = $('#upload'), //原始上传按钮
     themeStlye = 1,
     themes = [
       {
-        bg:'./static/img/theme1-bg.jpg',
+        bg:'./static/img/theme1-bg.jpg?v=123a',
         foot:'./static/img/theme1-foot.jpg',
         sm:'./static/img/theme1-sm.jpg',
         eqpos:{
@@ -375,34 +375,32 @@ function cropStop(){
 
 function cropConfirm(evt) {
   loadingStart()
-    var $cropImg = $defaultImgSet;
-    var canvasScale =  canvasDom.width / $('#theme_bg').width();
-    var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
-    // var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
-    var imgOrigin = {
-        x: parseInt($cropImg.css('left')) || 0,
-        y: parseInt($cropImg.css('top')) || 0
-    };
-    var imgSize = {
-        width: $cropImg.width(),
-        height: $cropImg.height()
-    };
-    // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
-    // 画主题图片
-    document.title = (canvasDom.height + '-' + canvasDom.width)
-    canvasCtx.drawImage($themeBgImg[0],0,0,750,1027,0,0,$themeBgImg.width(),$themeBgImg.height())
-
-    // 画用户头像
-    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
-    // 画用户头像框
-    // canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
-    // 画用户二维码
-    canvasCtx.fillStyle="#fff";
-    canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width()+1,$('#eCode').height()+1);
-    canvasCtx.drawImage($('#eCode')[0], 0, 0, 424, 424, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width(),$('#eCode').height());
-    setTimeout(function(){
-        proSave()
-    },260)
+   var $cropImg = $defaultImgSet;
+   var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
+   var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
+   // var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
+   var imgOrigin = {
+       x: parseInt($cropImg.css('left')) || 0,
+       y: parseInt($cropImg.css('top')) || 0
+   };
+   var imgSize = {
+       width: $cropImg.width(),
+       height: $cropImg.height()
+   };
+   // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
+   // 画主题图片
+   canvasCtx.drawImage($themeBgImg[0],0,0,750,1027,0,0,$themeBgImg.width(),$themeBgImg.height())
+   // 画用户头像
+   canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
+   // 画用户头像框
+   // canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
+   // 画用户二维码
+   canvasCtx.fillStyle="#fff";
+   canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width()+1,$('#eCode').height()+1);
+   canvasCtx.drawImage($('#eCode')[0], 0, 0, 424, 424, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width(),$('#eCode').height());
+   setTimeout(function(){
+       proSave()
+   },260)
 
     return preventEventPropagation(evt);
 }
@@ -460,7 +458,9 @@ function upqr(){
         loadingStop()
         return false;
       };
-      qrcode.decode(res);
+      setTimeout(function(){
+        qrcode.decode(res);
+      },0)
     },{type:'imageAlbum'})
   });
 
