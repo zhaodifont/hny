@@ -390,8 +390,12 @@ function cropConfirm(evt) {
    };
    // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
    // 画主题图片
-   canvasCtx.scale(1.8,1.8)
-   $('#proSection .vwpr')[0].style.transform = 'scale(.552,.552)';
+   var sa = canvasDom.width/$themeBgImg.width(),
+        as = $themeBgImg.width()/canvasDom.width;
+   // alert(canvasDom.width + '--' + $themeBgImg.width()) //750 414
+   canvasCtx.scale(sa,sa);
+   $('#proSection .vwpr')[0].style.transform = 'scale(' + as + ')';
+   $('#proSection .vwpr')[0].style.webkitTransform = 'scale(' + as + ')';
    canvasCtx.drawImage($themeBgImg[0],0,0,750,1027,0,0,$themeBgImg.width(),$themeBgImg.height())
    // 画用户头像
    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
