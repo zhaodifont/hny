@@ -298,8 +298,8 @@ function cropChanged(res){
       cropLoaded(this);
       // $('#testTxt').text(this)
       // alert($themeBgImg[0].width + '-' + $('#theme_bg').width())
-      canvasDom.setAttribute('width',$('#theme_bg').width())
-      canvasDom.setAttribute('height',$('#theme_bg').height())
+      canvasDom.setAttribute('width',750)
+      canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
     }
     img.src = res;
@@ -375,6 +375,7 @@ function cropStop(){
 
 function cropConfirm(evt) {
   loadingStart()
+  $('#proSection .view').height($('#theme_bg').height())
    var $cropImg = $defaultImgSet;
    var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
    var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
@@ -389,6 +390,8 @@ function cropConfirm(evt) {
    };
    // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
    // 画主题图片
+   canvasCtx.scale(1.8,1.8)
+   $('#proSection .vwpr')[0].style.transform = 'scale(.552,.552)';
    canvasCtx.drawImage($themeBgImg[0],0,0,750,1027,0,0,$themeBgImg.width(),$themeBgImg.height())
    // 画用户头像
    canvasCtx.drawImage($cropImg[0], Math.abs(imgOrigin.x)*megaPixImageScale, Math.abs(imgOrigin.y)*megaPixImageScale, $dropArea.width()*megaPixImageScale, $dropArea.height()*megaPixImageScale, $dropArea.offset().left,$dropArea.offset().top+ $cropSection.scrollTop(),$dropArea.width(),$dropArea.height());
