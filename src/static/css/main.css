@@ -3,11 +3,11 @@
     overflow: hidden;
     bottom:0;top:0;left:50%;right:0;transform: translate(-50%,0);transition: all .5s;
 }
-.loadingDiv,.loadingDiv .flex,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.firstPage_choose{
+.loadingDiv,.loadingDiv .flex,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.offlineTip,.firstPage_choose{
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
 .loadingDiv{
-    bottom:0;background-color: rgba(255,255,255,.85);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
+    bottom:0;background-color: rgba(0,0,0,.6);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
     z-index:99999;
 }
 .loadingDiv .flex{
@@ -15,6 +15,23 @@
 }
 .loadingIcon{
   width:1.26rem;display: block;margin:0 auto .2rem;animation:loadIcon 1s linear 0s infinite normal;
+}
+.offlineTip{
+  z-index: 888;background-color: rgba(0,0,0,.8);display: flex;align-items: center;justify-content: center;
+}
+.offlineTip .wpr{
+  width: 64.5%;background-color: #fff;padding: .58rem 0;border-radius: .16rem;font-size: .32rem;color:#666;text-align: center;
+}
+.offlineTip span{
+    display: block;
+    width: 3.26rem;
+    line-height: .88rem;
+    color: #fff;
+    font-size: .32rem;
+    text-align: center;
+    margin: .52rem auto 0;
+    background-color: #cf453f;
+    border-radius: 4rem;
 }
 @keyframes loadIcon {
   0%{
@@ -77,7 +94,7 @@
 #firstPage .t1{width:6.69rem;}
 #firstPage .t2{width:3.97rem;margin-right:.96rem;}
 .firstPage_choose{
-  z-index:226;background-color: rgba(0,0,0,.6);
+  z-index:99999;background-color: rgba(0,0,0,.6);
   display: flex;align-items: center;justify-content: center;
 }
 .firstPage_choose .wpr{
@@ -165,8 +182,7 @@
   margin: .8rem auto .5rem;
 }
 #proSection{z-index:444;background-color:#fff;overflow: hidden;}
-#proSection .view{width:1200px}
-#proSection .vwpr{transform-origin: 0% 0%;border:1px blue solid;box-sizing: border-box;}
+#proSection .vwpr{transform-origin: 0% 0%;box-sizing: border-box;}
 #proSection .content .wpr{top:0;bottom:0;left:0;right:0;display: flex;justify-content: center;width:100%;}
 #proSection .content .wpr span{display: block;margin:.5rem .3rem;width:3.1rem;line-height: .96rem;text-align: center;color:#fff;font-size: .36rem;background-color: #e23536;border-radius: 4rem;}
 

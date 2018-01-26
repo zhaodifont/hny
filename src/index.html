@@ -64,6 +64,7 @@
           <span class="openGallery">从相册选取</span>
         </div>
     </div>
+
     <!--  转换图片时需要 -->
     <div id="megaPixImage"></div>
     <!-- 生成器 -->
@@ -133,6 +134,13 @@
           </div>
         </div>
 
+    </div>
+
+    <div class="offlineTip p-a" style="display:none">
+      <div class="wpr">
+        请检查网络连接
+        <span>确定</span>
+      </div>
     </div>
 
     <div id="qrGuide" style="z-index:333;display:none;">
@@ -244,11 +252,20 @@ function loadScript(_src,cb){
     },false);
     play()
 
+    document.addEventListener("visibilitychange", function () {
+      if(document.visibilityState == 'hidden'){
+        pause()
+      }else if(document.visibilityState == 'visible'){
+        play()
+      }
+    }, false);
+
+
 }()
 var defaultbgStatue = false;
 loadScript('./static/js/count.js',function(){
 
-  var s1 = '2018/01/14',
+  var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
       mcs = s2 - new Date(s1).getTime(),
       targNum = 0,
