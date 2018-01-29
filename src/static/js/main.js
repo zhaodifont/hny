@@ -36,8 +36,7 @@ function openCamera(cb,option,a,b) {
 function saveImage(cb,imgBase64) {
   return window.cameraApi.saveImage(
     function(result) {
-      var res = window.isAndroid?result:result.base64Image
-      cb(res);
+      cb(result);
     },imgBase64
   )
 }
@@ -63,8 +62,8 @@ function shareImageWithCallback(cb1,cb2,imgBase64) {
 function getCameraImage(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
-        // document.querySelector('#testTxt').innerText = result.base64Image;
-        cb(result)
+      var res = window.isAndroid?result:(result.base64Image)
+      cb(res);
     }
   );
 }
