@@ -7,14 +7,17 @@
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
 .loadingDiv{
-    bottom:0;background-color: rgba(0,0,0,.65);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
+    bottom:0;background-color: rgba(0,0,0,.65);color:#c2c2c2;font-size:.32rem;letter-spacing:.02rem;
     z-index:99999;
 }
 .loadingDiv .flex{
 	justify-content: center;align-items: center;
 }
+.loadingDiv .wpr{
+  width:3.42rem;height:3.42rem;background-color: rgba(255,255,255,.95);border-radius: .6rem;text-align: center;padding-top:.8rem;box-sizing: border-box;
+}
 .loadingIcon{
-  width:1.26rem;display: block;margin:0 auto .2rem;animation:loadIcon 1s linear 0s infinite normal;
+  width:1.06rem;display: block;margin:0 auto .2rem;
 }
 .offlineTip{
   z-index: 888;background-color: rgba(0,0,0,.85);display: flex;align-items: center;justify-content: center;
@@ -122,8 +125,8 @@
 	z-index:222;
 }
 #cropLayer{width:63.73%;left:18.16%;top:2.68rem;}
-#cropLayer .wpr{width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;}
-.defaultPic .wpr{overflow: hidden;width:4.73rem;height:4.73rem;}
+#cropLayer .wpr{width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;border:1px #fff solid;}
+.defaultPic .wpr{overflow: hidden;width:4.73rem;height:4.73rem;border:1px #fff solid;}
 /* .defaultPic .background{background-color: transparent;opacity: 0;position: absolute;left: 0;top: 0;z-index: 215;width:100%;height:100%;} */
 #dropArea{
   z-index: 288;transition: all .5s;
@@ -236,4 +239,42 @@
   animation-name: fadeIn;
 }
 
-#testImg{display: none;}
+@keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.bounce {
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  animation-iteration-count:infinite;
+}

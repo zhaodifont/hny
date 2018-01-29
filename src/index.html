@@ -17,19 +17,19 @@
 
 <div id="app" class="p-r">
 
-<div style="z-index:9999;position:absolute;left:-999rem;">
+<!-- <div style="z-index:9999;position:absolute;left:-999rem;">
   <div id="zd_qrcode" style="border:1px red solid;"></div>
   <canvas id="qr-canvas" width="40" height="30"></canvas>
   <input type="file" id="handleQR"  accept="image/*" />
-</div>
+</div> -->
     <!-- 默认上传input -->
-    <input id="upload" class="p-a" type="file" accept="image/*" />
+    <!-- <input id="upload" class="p-a" type="file" accept="image/*" /> -->
 
     <!-- loading -->
     <div class="loadingDiv">
         <div class="flex">
             <span class="wpr">
-              <img src="./static/img/icon-loading.png" class='loadingIcon' alt="">
+              <img src="./static/img/loading.png" class='loadingIcon bounce animated' alt="">
                 loading...
             </span>
         </div>
@@ -184,7 +184,7 @@
 </div>
 
 <div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
-<img id="testImg" src="" style="position:absolute;z-index:66666;left:0;top:0" alt="">
+<img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
 <script>
 function loadScript(_src,cb){
     var script = document.createElement('script');

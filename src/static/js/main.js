@@ -78,11 +78,11 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       loadingStart();
-      cropStart();
-      if(res.length == 0){
+      if(!res || res.length == 0){
         loadingStop();
         return false;
       };
+      cropStart();
       cropChanged(res)
       $('.firstPage_choose').unbind(_touch);
       $('.firstPage_choose').on(_touch,function(){
