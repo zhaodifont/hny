@@ -59,6 +59,14 @@ function shareImageWithCallback(cb1,cb2,imgBase64) {
   }
 
 }
+function getCameraImage(cb){
+  return window.cameraApi.getCameraImage(
+    function(result) {
+        // document.querySelector('#testTxt').innerText = result.base64Image;
+        cb(result)
+    }
+  );
+}
 
 window.indexPageReady = function(){
     window.setTimeout(function(){
@@ -82,14 +90,19 @@ window.indexPageReady = function(){
           window.cameraApi = B612Kaji.Native.android.Function.getInstance();
         }else if(window.isIos){
           window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
-          alert(0)
-          B612Kaji.Native.ios.Function.getInstance().getCameraImage(
-            function(result) {
-              alert(1)
-                document.querySelector('#testTxt').innerText = result.base64Image;
-            }
-          );
         }
+
+        setTimeout(function(){
+          getCameraImage(function(res){
+            alert(0)
+            if(res.length == 0){
+              loadingStop();
+              return false;
+            };
+            $('.firstPage_choose').css('display','none');
+            cropChanged(res)
+          })
+        },0)
 
         document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
 
@@ -130,7 +143,7 @@ window.indexPageReady = function(){
         //   },$('.guide img')[0].src)
         // })
 
-    },200)
+    },20)
 
     // $('#firstPage .chooseBtn').on('click',cropChoose)
 
