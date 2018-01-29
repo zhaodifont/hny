@@ -92,11 +92,10 @@ window.indexPageReady = function(){
           window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
         }
 
-        cropStart();
-
         setTimeout(function(){
           getCameraImage(function(res){
             loadingStart();
+            cropStart();
             if(res.length == 0){
               loadingStop();
               return false;
@@ -129,7 +128,7 @@ window.indexPageReady = function(){
             e.stopPropagation();
           })
 
-
+          cropStart();
 
         },false)
         window.addEventListener("offline", function(e){
@@ -294,6 +293,34 @@ function cropStart(res){
 
   cropStartStatus = true;
 }
+
+// 二维码引导
+$('#qrGuide .btn').unbind(_touch);
+$('#qrGuide .btn').on(_touch,function(){
+  loadingStart();
+  openCamera(function(res){
+    if(res.length == 0){
+      loadingStop()
+      return false;
+    };
+    setTimeout(function(){
+      // qrcode.decode(res);
+      var img = new Image();
+      img.onload = function(){
+        $('#testImg')[0].src = this.src;
+        $('#testImg').attr({width:this.width,height:this.height})
+        // $('#testImg').attr(height,this.height)
+        // $('#eCode')[0].src = this.src;
+        $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
+        setTimeout(function(){
+          $('#toNext').trigger('click');
+        },0)
+
+      }
+      img.src=res;
+    },0)
+  },{type:'imageAlbum'})
+});
 
 function openCameraBefore(){
   loadingStart();
@@ -522,33 +549,33 @@ var upqr = function(){
   });
   zd_qrcode.makeCode('');
 
-  // 二维码引导
-  $('#qrGuide .btn').unbind(_touch);
-  $('#qrGuide .btn').on(_touch,function(){
-    loadingStart();
-    openCamera(function(res){
-      if(res.length == 0){
-        loadingStop()
-        return false;
-      };
-      setTimeout(function(){
-        // qrcode.decode(res);
-        var img = new Image();
-        img.onload = function(){
-          $('#testImg')[0].src = this.src;
-          $('#testImg').attr({width:this.width,height:this.height})
-          // $('#testImg').attr(height,this.height)
-          // $('#eCode')[0].src = this.src;
-          $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
-          setTimeout(function(){
-            $('#toNext').trigger('click');
-          },0)
-
-        }
-        img.src=res;
-      },0)
-    },{type:'imageAlbum'})
-  });
+  // // 二维码引导
+  // $('#qrGuide .btn').unbind(_touch);
+  // $('#qrGuide .btn').on(_touch,function(){
+  //   loadingStart();
+  //   openCamera(function(res){
+  //     if(res.length == 0){
+  //       loadingStop()
+  //       return false;
+  //     };
+  //     setTimeout(function(){
+  //       // qrcode.decode(res);
+  //       var img = new Image();
+  //       img.onload = function(){
+  //         $('#testImg')[0].src = this.src;
+  //         $('#testImg').attr({width:this.width,height:this.height})
+  //         // $('#testImg').attr(height,this.height)
+  //         // $('#eCode')[0].src = this.src;
+  //         $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
+  //         setTimeout(function(){
+  //           $('#toNext').trigger('click');
+  //         },0)
+  //
+  //       }
+  //       img.src=res;
+  //     },0)
+  //   },{type:'imageAlbum'})
+  // });
 
   function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
