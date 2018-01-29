@@ -261,7 +261,7 @@ var $upload = $('#upload'), //原始上传按钮
 // 首屏弹层时 加载其余
 function cropStart(res){
   // 不管是否选择文件 都开始加载主题1
-  if(!initTheme){changeTheme(themes[0]);loadingStop()};
+  if(!initTheme){changeTheme(themes[0])};
 
   //  不管是否选择文件 加载所有主题的sm
   $themeSelectWpr.eq(0).empty();
