@@ -100,6 +100,7 @@ window.indexPageReady = function(){
               loadingStop();
               return false;
             };
+            cropChanged(res)
             $('.firstPage_choose').unbind(_touch);
             $('.firstPage_choose').on(_touch,function(){
               $('.firstPage_choose').css('display','none');
@@ -109,7 +110,7 @@ window.indexPageReady = function(){
               e.stopPropagation();
             })
             $('.firstPage_choose').css('display','none');
-            cropChanged(res)
+
           })
         },0)
 
@@ -326,7 +327,7 @@ function cropChanged(res){
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
 
-
+    loadingStart()
     var img = new Image();
     img.onload = function(){
       cropLoaded(this);
@@ -335,6 +336,7 @@ function cropChanged(res){
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
+      loadingStop()
     }
     img.src = res;
 }
