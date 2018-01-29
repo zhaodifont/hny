@@ -78,7 +78,8 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       loadingStart();
-      if(!res || res.length == 0){
+      alert(0)
+      if(!!res && res.length == 0){
         loadingStop();
         return false;
       };
