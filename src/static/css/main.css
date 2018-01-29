@@ -43,7 +43,7 @@
 }
 
 #audio_control{
-  z-index: 99998;
+  z-index: 99990;
   width:.6rem;height:.6rem;background: url('../img/audioBg.png') center center no-repeat;background-size:cover;
   right:.35rem;top:1.32rem;text-align: center;line-height: .6rem;
 }
@@ -94,7 +94,7 @@
 #firstPage .t1{width:6.69rem;}
 #firstPage .t2{width:3.97rem;margin-right:.96rem;}
 .firstPage_choose{
-  z-index:99999;background-color: rgba(0,0,0,.65);
+  z-index:99996;background-color: rgba(0,0,0,.65);
   display: flex;align-items: center;justify-content: center;
 }
 .firstPage_choose .wpr{
@@ -181,7 +181,7 @@
   display: block;width:4.45rem;line-height: .96rem;border-radius: 2rem;text-align: center;background-color: #fff;color:#cf4440;font-size: .36rem;
   margin: .8rem auto .5rem;
 }
-#proSection{z-index:444;background-color:#fff;overflow: hidden;}
+#proSection{z-index:444;background-color:#fff;box-sizing: border-box;overflow-x: scroll;}
 #proSection .vwpr{transform-origin: 0% 0%;box-sizing: border-box;}
 #proSection .content .wpr{top:0;bottom:0;left:0;right:0;display: flex;justify-content: center;width:100%;}
 #proSection .content .wpr span{display: block;margin:.5rem .3rem;width:3.1rem;line-height: .96rem;text-align: center;color:#fff;font-size: .36rem;background-color: #e23536;border-radius: 4rem;}
@@ -235,3 +235,5 @@
 .fadeIn {
   animation-name: fadeIn;
 }
+
+#testImg{display: none;}
