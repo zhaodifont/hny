@@ -420,16 +420,16 @@ function cropLoaded(img){
       $('#qrGuide').css('display','none');
     })
 
-    // if(!upqrStatue){
-    //   setTimeout(function(){
-    //     loadScript('./static/js/qrcode.js');
-    //     loadScript('./static/js/llqrcode.js');
-    //   },0)
-    //
-    //   $('#qrGuide img').each(function(index,el){
-    //     el.src= './static/img/' + qrImgs[index]
-    //   })
-    // }
+    if(!upqrStatue){
+      // setTimeout(function(){
+      //   loadScript('./static/js/qrcode.js');
+      //   loadScript('./static/js/llqrcode.js');
+      // },0)
+
+      $('#qrGuide img').each(function(index,el){
+        el.src= './static/img/' + qrImgs[index]
+      })
+    }
 }
 
 function toReChoose(){
