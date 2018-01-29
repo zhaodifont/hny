@@ -7,7 +7,7 @@
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
 .loadingDiv{
-    bottom:0;background-color: rgba(255,255,255,.85);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
+    bottom:0;background-color: rgba(0,0,0,.85);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
     z-index:99999;
 }
 .loadingDiv .flex{
@@ -17,7 +17,7 @@
   width:1.26rem;display: block;margin:0 auto .2rem;animation:loadIcon 1s linear 0s infinite normal;
 }
 .offlineTip{
-  z-index: 888;background-color: rgba(0,0,0,.8);display: flex;align-items: center;justify-content: center;
+  z-index: 888;background-color: rgba(0,0,0,.85);display: flex;align-items: center;justify-content: center;
 }
 .offlineTip .wpr{
   width: 64.5%;background-color: #fff;padding: .58rem 0;border-radius: .16rem;font-size: .32rem;color:#666;text-align: center;

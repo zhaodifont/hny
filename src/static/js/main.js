@@ -99,6 +99,14 @@ window.indexPageReady = function(){
               loadingStop();
               return false;
             };
+            $('.firstPage_choose').unbind(_touch);
+            $('.firstPage_choose').on(_touch,function(){
+              $('.firstPage_choose').css('display','none');
+            })
+            $('.firstPage_choose .wpr').unbind(_touch);
+            $('.firstPage_choose .wpr').on(_touch,function(e){
+              e.stopPropagation();
+            })
             $('.firstPage_choose').css('display','none');
             cropChanged(res)
           })
