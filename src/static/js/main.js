@@ -36,7 +36,8 @@ function openCamera(cb,option,a,b) {
 function saveImage(cb,imgBase64) {
   return window.cameraApi.saveImage(
     function(result) {
-      cb(result);
+      var res = window.isAndroid?result:result.base64Image
+      cb(res);
     },imgBase64
   )
 }

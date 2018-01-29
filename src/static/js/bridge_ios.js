@@ -87,7 +87,7 @@ B612Kaji.Native.ios.Function.prototype = {
 	getCameraImage: function(sCallback) {
 		this.callback.getCameraImage = function(result) {
 			var json = JSON.parse(result);
-			console.log("success : " + json.success + " errorMessage : " + json.errorMessage + "base64Image : " + json.base64Image.length);
+			// console.log("success : " + json.success + " errorMessage : " + json.errorMessage + "base64Image : " + json.base64Image.length);
 			sCallback(json);
 		};
 		this.calliOSFunction("getCameraImage", null, "B612Kaji.Native.ios.Function.getInstance().callback.getCameraImage");
