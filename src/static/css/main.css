@@ -7,7 +7,7 @@
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
 .loadingDiv{
-    bottom:0;background-color: rgba(0,0,0,.85);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
+    bottom:0;background-color: rgba(0,0,0,.65);color:#c2c2c2;font-size:.36rem;letter-spacing:.02rem;
     z-index:99999;
 }
 .loadingDiv .flex{
@@ -94,7 +94,7 @@
 #firstPage .t1{width:6.69rem;}
 #firstPage .t2{width:3.97rem;margin-right:.96rem;}
 .firstPage_choose{
-  z-index:99999;background-color: rgba(0,0,0,.6);
+  z-index:99999;background-color: rgba(0,0,0,.65);
   display: flex;align-items: center;justify-content: center;
 }
 .firstPage_choose .wpr{
