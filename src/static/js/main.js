@@ -92,10 +92,11 @@ window.indexPageReady = function(){
           window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
         }
 
+        cropStart();
+
         setTimeout(function(){
           getCameraImage(function(res){
             loadingStart();
-            cropStart();
             if(res.length == 0){
               loadingStop();
               return false;
@@ -128,7 +129,7 @@ window.indexPageReady = function(){
             e.stopPropagation();
           })
 
-          cropStart();
+
 
         },false)
         window.addEventListener("offline", function(e){
