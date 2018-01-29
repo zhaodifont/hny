@@ -94,7 +94,7 @@ window.indexPageReady = function(){
 
         setTimeout(function(){
           getCameraImage(function(res){
-            alert(0)
+            cropStart();
             if(res.length == 0){
               loadingStop();
               return false;
