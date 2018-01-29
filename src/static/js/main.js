@@ -86,7 +86,7 @@ window.indexPageReady = function(){
           B612Kaji.Native.ios.Function.getInstance().getCameraImage(
             function(result) {
               alert(1)
-                document.querySelector('#testTxt').src = result.base64Image;
+                document.querySelector('#testTxt').innerText = result.base64Image;
             }
           );
         }
