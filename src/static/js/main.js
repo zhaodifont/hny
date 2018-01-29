@@ -82,8 +82,10 @@ window.indexPageReady = function(){
           window.cameraApi = B612Kaji.Native.android.Function.getInstance();
         }else if(window.isIos){
           window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
+          alert(0)
           B612Kaji.Native.ios.Function.getInstance().getCameraImage(
             function(result) {
+              alert(1)
                 document.querySelector('#testTxt').src = result.base64Image;
             }
           );
