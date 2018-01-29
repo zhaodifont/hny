@@ -420,7 +420,7 @@ function cropLoaded(img){
       $('#qrGuide').css('display','none');
     })
 
-    if(!upqrStatue){
+    if($('#qrGuide img')[0].getAttribute('src').length == 0){
       // setTimeout(function(){
       //   loadScript('./static/js/qrcode.js');
       //   loadScript('./static/js/llqrcode.js');
