@@ -69,6 +69,33 @@ function getCameraImage(cb){
 }
 
 window.indexPageReady = function(){
+
+    if(window.isAndroid){
+      window.cameraApi = B612Kaji.Native.android.Function.getInstance();
+    }else if(window.isIos){
+      window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
+    }
+
+    getCameraImage(function(res){
+      loadingStart();
+      cropStart();
+      if(res.length == 0){
+        loadingStop();
+        return false;
+      };
+      cropChanged(res)
+      $('.firstPage_choose').unbind(_touch);
+      $('.firstPage_choose').on(_touch,function(){
+        $('.firstPage_choose').css('display','none');
+      })
+      $('.firstPage_choose .wpr').unbind(_touch);
+      $('.firstPage_choose .wpr').on(_touch,function(e){
+        e.stopPropagation();
+      })
+      $('.firstPage_choose').css('display','none');
+
+    })
+
     window.setTimeout(function(){
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
@@ -84,39 +111,8 @@ window.indexPageReady = function(){
         $cropSection.css("visibility", "hidden");
         $cropSection.css("display", "");
         if(defaultbgStatue)loadingStop();
-        // $cropSection.css("display", "none");
-        // $cropSection.css("visibility", "visible");
-        if(window.isAndroid){
-          window.cameraApi = B612Kaji.Native.android.Function.getInstance();
-        }else if(window.isIos){
-          window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
-        }
-
-        setTimeout(function(){
-          getCameraImage(function(res){
-            loadingStart();
-            cropStart();
-            if(res.length == 0){
-              loadingStop();
-              return false;
-            };
-            cropChanged(res)
-            $('.firstPage_choose').unbind(_touch);
-            $('.firstPage_choose').on(_touch,function(){
-              $('.firstPage_choose').css('display','none');
-            })
-            $('.firstPage_choose .wpr').unbind(_touch);
-            $('.firstPage_choose .wpr').on(_touch,function(e){
-              e.stopPropagation();
-            })
-            $('.firstPage_choose').css('display','none');
-
-          })
-        },0)
 
         document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
-
-          // document.querySelector('#testTxt').innerHTML = ('isAndroid:'+window.isAndroid + '_isIos:' + window.isIos + 'cameraApi:' + window.cameraApi)
 
           $('.firstPage_choose').css('display','flex');
           $('.firstPage_choose').unbind(_touch);
@@ -147,18 +143,7 @@ window.indexPageReady = function(){
           openGalleryBefore()
         },false)
 
-        // $('#testTxt').click(function(){
-        //   saveImage(function(res){
-        //     alert(0)
-        //   },$('.guide img')[0].src)
-        // })
-
     },20)
-
-    // $('#firstPage .chooseBtn').on('click',cropChoose)
-
-
-    // $('#audio').trigger('click');
 }
 var $upload = $('#upload'), //原始上传按钮
     $cropSection = $('#cropSection'), //第二步的section
