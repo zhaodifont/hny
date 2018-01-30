@@ -120,10 +120,11 @@
 	/* letter-spacing: .02rem;color:#cf4440;font-size: .38rem; */
 }
 .chooseBtn img{vertical-align: middle;}
-#cropSection{}
 #theme_bg{
 	z-index:222;
 }
+#cropSection{height:100%;overflow-y: scroll;}
+.styleChoose{overflow: hidden;}
 #cropLayer{width:63.73%;left:18.16%;top:2.68rem;}
 #cropLayer .wpr{width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;}
 .defaultPic .wpr{overflow: hidden;width:4.73rem;height:4.73rem;}
@@ -183,8 +184,9 @@
   display: block;width:4.45rem;line-height: .96rem;border-radius: 2rem;text-align: center;background-color: #fff;color:#cf4440;font-size: .36rem;
   margin: .8rem auto .5rem;
 }
-#proSection{z-index:444;background-color:#fff;box-sizing: border-box;overflow-x: scroll;}
+#proSection{z-index:444;background-color:#fff;height:100%;box-sizing: border-box;overflow-x: scroll;}
 #proSection .vwpr{transform-origin: 0% 0%;box-sizing: border-box;}
+#proSection .content{overflow: hidden;}
 #proSection .content .wpr{top:0;bottom:0;left:0;right:0;display: flex;justify-content: center;width:100%;}
 #proSection .content .wpr span{display: block;margin:.5rem .3rem;width:3.1rem;line-height: .96rem;text-align: center;color:#fff;font-size: .36rem;background-color: #e23536;border-radius: 4rem;}
 

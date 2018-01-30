@@ -448,7 +448,7 @@ function cropLoaded(img){
       // alert(!upqrStatue && !lowVersion)
       if(lowVersion){
         setTimeout(function(){
-          alert('由于您的手机版本号较低 请按照以下流程制作收款二维码')
+          alert('二维码识别有点问题，请将微信收款二维码直接保存到相册')
         },260)
       }else if(!upqrStatue && !lowVersion){
         upqr()
