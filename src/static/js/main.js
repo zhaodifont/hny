@@ -214,7 +214,6 @@ var $upload = $('#upload'), //原始上传按钮
       loadingStart()
       $themeFoot.find('img')[0].style.width="100%";
       $themeFoot.find('img')[0].src = obj.foot;
-      // alert($('#cropLayer').offset().width)
       $('#cropLayer').css({
         height:$('#cropLayer').offset().width,
         left:($('#cropSection').width() - $('#cropLayer').width()) / 2
@@ -349,7 +348,6 @@ function cropChanged(res){
     img.onload = function(){
       cropLoaded(this);
       // $('#testTxt').text(this)
-      // alert($themeBgImg[0].width + '-' + $('#theme_bg').width())
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
@@ -448,7 +446,6 @@ function cropConfirm(evt) {
    // 画主题图片
    var sa = canvasDom.width/$themeBgImg.width(),
         as = $themeBgImg.width()/canvasDom.width;
-   // alert(canvasDom.width + '--' + $themeBgImg.width()) //750 414
    canvasCtx.scale(sa,sa);
    $('#proSection .vwpr')[0].style.transform = 'scale(' + as + ')';
    $('#proSection .vwpr')[0].style.webkitTransform = 'scale(' + as + ')';
@@ -459,14 +456,12 @@ function cropConfirm(evt) {
    // canvasCtx.drawImage($themeHead[0], 0, 0, parseInt($themeHead.attr('data-width')), parseInt($themeHead.attr('data-height')), $themeHead.offset().left,$themeHead.offset().top + $cropSection.scrollTop(),$themeHead.width(),$themeHead.height());
    // 画用户二维码
    // 23.67  18.75
-   // alert($('#testImg').attr('width')+ '___' +$('#testImg').attr('height'))
    var ecodeS = window.isAndroid?0.1875:0.2335;
    var ecode = {
      'left':$('#testImg').attr('width')*0.2367,
      'top': $('#testImg').attr('height')*ecodeS,
      'width': $('#testImg').attr('width')*.5266
    };
-   // alert('width:' + $('#testImg').attr('width') +'height:' + $('#testImg').attr('height') + "--left:" + ecode.left+'_' +ecode.top + '_' + ecode.width)
    // canvasCtx.fillStyle="#fff";
    // canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width()+1,$('#eCode').height()+1);
    canvasCtx.drawImage($('#testImg')[0], ecode.left, ecode.top, ecode.width, ecode.width, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width(),$('#eCode').height());
