@@ -178,6 +178,7 @@ window.indexPageReady = function(){
 
         },false)
 
+        // 检测断网
         window.addEventListener("offline", function(e){
           $('.offlineTip').css('display','flex')
         })
@@ -193,9 +194,6 @@ window.indexPageReady = function(){
         document.querySelector('.openGallery').addEventListener(_touch,function(){
           openGalleryBefore()
         },false)
-
-
-
 
     },20)
 }
