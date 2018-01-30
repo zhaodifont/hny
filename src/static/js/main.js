@@ -62,9 +62,17 @@ function shareImageWithCallback(cb1,cb2,imgBase64) {
 function getCameraImage(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
-      alert(!!result)
-      var res = window.isAndroid?result:(result.base64Image)
-      cb(res);
+      // alert(!!result)
+      if(window.isAndroid){
+        alert(!!result)
+        cb(result);
+      }else if(window.isIos){
+        alert(!!result.base64Image)
+        !!result.base64Image && cb(result.base64Image);
+      }else{
+        return;
+      }
+
     }
   );
 }
