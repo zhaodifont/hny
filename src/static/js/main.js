@@ -56,6 +56,8 @@ function shareImageWithCallback(cb1,cb2,imgBase64) {
     return window.cameraApi.shareImage(
       imgBase64
     );
+  }else{
+    alert('shareImageWithCallback error')
   }
 
 }
@@ -63,13 +65,12 @@ function getCameraImage(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
       // alert(!!result)
-      if(window.isAndroid){
-        alert(!!result)
-        cb(result);
-      }else if(window.isIos){
-        alert(!!result.base64Image)
-        !!result.base64Image && cb(result.base64Image);
+      if(window.isAndroid && !!result){
+        cb(result)
+      }else if(window.isIos && !!result.base64Image){
+         cb(result.base64Image);
       }else{
+        alert('getCameraImage error')
         return;
       }
 
