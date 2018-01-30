@@ -557,6 +557,7 @@ function proSave(){
     $('#proSection .save').on(_touch,function(){
       saveImage(function(res){
         alert('拜年红包图已存好，分享就收钱')
+        $('#proSection .share').trigger(_touch);
       },img.src)
     })
 
