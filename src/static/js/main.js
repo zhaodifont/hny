@@ -20,7 +20,7 @@ var lowSysVersion = function(){
       var limit = parseInt(iosLimitVersion[i], 10) || 0;
                 // cur<limit：当前版本低于限制版本； cur==limit:当前版本等于限制版本，继续比较小版本；cur>limit:当前版本高于限制版本
       if(cur < limit){
-        document.title = ("低版本模式");
+        // document.title = ("低版本模式");
         return true;
       } else if(cur > limit){
         return false;
@@ -36,7 +36,7 @@ var lowSysVersion = function(){
       var cur = parseInt(andrVersionArr[i], 10) || 0;
       var limit = parseInt(andrLimitVersion[i], 10) || 0;
       if(cur <= limit){
-        document.title = ("低版本模式");
+        // document.title = ("低版本模式");
         return true;
       } else if(cur > limit){
         return false;
