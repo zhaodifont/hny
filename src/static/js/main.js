@@ -88,14 +88,13 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       loadingStart();
-      if(!!res && res.length == 0){
-        loadingStop();
-        return false;
-      };
+
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
       cropStart();
-      cropChanged(res)
+      setTimeout(function(){
+        cropChanged(res)
+      },200)
       $('.firstPage_choose').unbind(_touch);
       $('.firstPage_choose').on(_touch,function(){
         $('.firstPage_choose').css('display','none');
