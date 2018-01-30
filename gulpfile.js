@@ -1,7 +1,10 @@
 var gulp = require('gulp'),
     del = require('del');
     minifyCss = require('gulp-minify-css'),
+    cache = require('gulp-cache'),
     cached = require('gulp-cached'),
+    pngquant = require('imagemin-pngquant'),
+    tinypng_nokey = require('gulp-tinypng-nokey'),
     concat =require('gulp-concat'),
     uglify = require('gulp-uglify'),
     browserSync = require('browser-sync'), // 保存自动刷新
@@ -27,32 +30,16 @@ let AppPath = './src/',
 // imgMin
 gulp.task('imgMin', function() {
   return gulp.src(imgSrc)
-    .pipe(cached('image'))
-    .pipe(
-      imagemin({
-            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
-            progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
-            interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
-            multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化
-        })
-      )
-    .pipe(gulp.dest(distImgSrc))
-    .pipe(reload({stream:true}));
+  .pipe(cache(tinypng_nokey()))
+  .pipe(gulp.dest(distImgSrc))
+  .pipe(reload({stream:true}))
 });
 
 gulp.task('stream', function () {
     // Endless stream mode
-
-    return watch(imgSrc,function(){
-      del(distImgSrc);
-      gulp.src(imgSrc).pipe(imagemin({
-            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
-            progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
-            interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
-            multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化
-        }))
+    return gulp.src(imgSrc)
+    .pipe(tinypng_nokey())
     .pipe(gulp.dest(distImgSrc))
-  }).pipe(reload({stream:true}));
 
 });
 gulp.task('css', function() {

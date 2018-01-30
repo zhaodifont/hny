@@ -22,8 +22,13 @@
     "gulp-rev": "^8.0.0",
     "gulp-rev-collector": "^1.2.2",
     "gulp-sass": "^3.1.0",
+    "gulp-tinypng-nokey": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^4.3.11",
+    "imagemin-pngquant": "^5.0.1",
     "json3": "^3.3.2"
+  },
+  "devDependencies": {
+    "gulp-cache": "^1.0.2"
   }
 }
