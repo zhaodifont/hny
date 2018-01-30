@@ -62,6 +62,7 @@ function shareImageWithCallback(cb1,cb2,imgBase64) {
 function getCameraImage(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
+      alert(!!result)
       var res = window.isAndroid?result:(result.base64Image)
       cb(res);
     }
@@ -78,11 +79,12 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       loadingStart();
-      alert(0)
       if(!!res && res.length == 0){
         loadingStop();
         return false;
       };
+      $cropSection.css("visibility", "hidden");
+      $cropSection.css("display", "");
       cropStart();
       cropChanged(res)
       $('.firstPage_choose').unbind(_touch);
@@ -124,10 +126,10 @@ window.indexPageReady = function(){
           $('.firstPage_choose .wpr').on(_touch,function(e){
             e.stopPropagation();
           })
-
           cropStart();
 
         },false)
+
         window.addEventListener("offline", function(e){
           $('.offlineTip').css('display','flex')
         })
@@ -212,6 +214,7 @@ var $upload = $('#upload'), //原始上传按钮
       loadingStart()
       $themeFoot.find('img')[0].style.width="100%";
       $themeFoot.find('img')[0].src = obj.foot;
+      // alert($('#cropLayer').offset().width)
       $('#cropLayer').css({
         height:$('#cropLayer').offset().width,
         left:($('#cropSection').width() - $('#cropLayer').width()) / 2

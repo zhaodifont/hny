@@ -125,7 +125,7 @@
 	z-index:222;
 }
 #cropLayer{width:63.73%;left:18.16%;top:2.68rem;}
-#cropLayer .wpr{width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;border:1px #fff solid;}
+#cropLayer .wpr{width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;}
 .defaultPic .wpr{overflow: hidden;width:4.73rem;height:4.73rem;border:1px #fff solid;}
 /* .defaultPic .background{background-color: transparent;opacity: 0;position: absolute;left: 0;top: 0;z-index: 215;width:100%;height:100%;} */
 #dropArea{
