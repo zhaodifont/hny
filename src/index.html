@@ -6,7 +6,7 @@
     <meta name= "author" content="lzd" >
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1125">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1347">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
     </script>
   </head>
@@ -176,7 +176,7 @@
       </div>
 
       <!-- ./static/test.mp3 -->
-      <audio src="" controls autoplay loop id='audio' style="position:absolute;left:-999rem;"></audio>
+      <audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
       <div id="audio_control" class='p-a'>
         <img src="./static/img/audio_Icon.png" alt="">
       </div>
@@ -225,7 +225,7 @@ function loadScript(_src,cb){
       audio_ = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
-      isPlaying = true,
+      isPlaying = false,
       _touch = ("createTouch" in document)?"touchend":"click";
       audio_.load();
       audio_.src="./mus.mp3";
@@ -233,17 +233,19 @@ function loadScript(_src,cb){
       var _pause = function() {
         isPlaying = false;
         auBtn.classList.remove('run');
-        $('#audio_control').removeClass('run');
+        // $('#audio_control').removeClass('run');
+        icon.style.animationPlayState="paused"
         audio_.pause()
       }
       var _play = function() {
         isPlaying = true;
         auBtn.classList.add('run');
-        $('#audio_control').addClass('run');
+        // $('#audio_control').addClass('run');
+        icon.style.animationPlayState="running"
         audio_.play()
 
       }
-      function musicHandler() {
+      function musicHandler(ev) {
           _play()
           document.body.removeEventListener(_touch, musicHandler);
       }
