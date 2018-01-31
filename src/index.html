@@ -225,8 +225,7 @@ function loadScript(_src,cb){
       audio_ = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
-      // touchp = ("createTouch" in document)?"touchend":"click",
-      touchp = 'touchend',
+      touchp = ("createTouch" in document)?"touchend":"click",
       zTop = $("#cropSection").scrollTop(),
       isPlaying = false;
       audio_.load();
@@ -264,11 +263,12 @@ function loadScript(_src,cb){
 
     if(!!document.visibilityState){
       document.addEventListener("visibilitychange", function () {
+        var status = isPlaying;
         setTimeout(function(){
           if(document.visibilityState == 'hidden'){
-              _pause()
+              audio_.pause()
           }else if(document.visibilityState == 'visible'){
-              _play()
+              status?_play():_pause();
           }
         },120)
       }, false);
