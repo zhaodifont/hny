@@ -6,7 +6,7 @@
     <meta name= "author" content="lzd" >
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1435">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1633">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
     </script>
   </head>
@@ -225,46 +225,55 @@ function loadScript(_src,cb){
       audio_ = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
-      isPlaying = false,
-      _touch = ("createTouch" in document)?"touchend":"click";
+      // touchp = ("createTouch" in document)?"touchend":"click",
+      touchp = 'touchend',
+      zTop = $("#cropSection").scrollTop(),
+      isPlaying = false;
       audio_.load();
       audio_.src="./mus.mp3";
 
       var _pause = function() {
         isPlaying = false;
         auBtn.classList.remove('run');
-        // $('#audio_control').removeClass('run');
-        icon.style.animationPlayState="paused"
+        icon.style.animationName="";
+        icon.style.animationPlayState="paused";
+        icon.style.WebkitAnimationPlayState="paused";
         audio_.pause()
       }
       var _play = function() {
         isPlaying = true;
         auBtn.classList.add('run');
-        // $('#audio_control').addClass('run');
-        icon.style.animationPlayState="running"
+        icon.style.animationName="audIconRun";
+        icon.style.WebkitAnimationName="audIconRun";
+        icon.style.animationPlayState="running";
+        icon.style.WebkitAnimationPlayState="running";
         audio_.play()
 
       }
       function musicHandler(ev) {
           _play()
-          document.body.removeEventListener(_touch, musicHandler);
+          document.body.removeEventListener(touchp, musicHandler);
       }
-      document.body.addEventListener(_touch, musicHandler,false);
+      document.body.addEventListener(touchp, musicHandler,false);
 
-    document.querySelector('#audio_control').addEventListener(_touch, function(ev) {
+    document.querySelector('#audio_control').addEventListener(touchp, function(ev) {
       isPlaying?_pause():_play();
+      ev.stopPropagation();
     },false);
-    _play()
+
 
     if(!!document.visibilityState){
       document.addEventListener("visibilitychange", function () {
-        if(document.visibilityState == 'hidden'){
-          _pause()
-        }else if(document.visibilityState == 'visible'){
-          _play()
-        }
+        setTimeout(function(){
+          if(document.visibilityState == 'hidden'){
+              _pause()
+          }else if(document.visibilityState == 'visible'){
+              _play()
+          }
+        },120)
       }, false);
     }
+    _play()
 
 }()
 var defaultbgStatue = false;
@@ -353,7 +362,7 @@ loadScript('./static/js/count.js',function(){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=1435',function(){
+      loadScript('./static/js/main.js?v=1633',function(){
           mainJsLoaded = true;
           checkAll('main');
 
