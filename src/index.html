@@ -6,7 +6,7 @@
     <meta name= "author" content="lzd" >
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1234">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1125">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
     </script>
   </head>
@@ -107,28 +107,30 @@
 
       <!-- 生成canvas - 图片 -->
       <div id="proSection" style="display:none;">
-          <div class="view">
-            <div class="vwpr">
-              <img src="" alt="">
+        <div class="p-r">
+            <div class="view">
+              <div class="vwpr">
+                <img src="" alt="">
+              </div>
             </div>
-          </div>
-          <div class="content p-r">
-              <img src="" width="100%" alt="">
-              <div class="wpr p-a">
-                <div><span class="save">保存</span></div>
-                <div><span class="share">分享</span></div>
-              </div>
-          </div>
-          <div class="nextGuide">
-            <div class="wpr p-r">
-              <div class="paw p-a"><img src="./static/img/paw.png" alt=""></div>
-              <div class="paw2 p-a"><img src="./static/img/paw.png" alt=""></div>
-              <div class="flow p-a"><img src="./static/img/flower.png" alt=""></div>
-              <div class="p1">
-                保存好了~<br/>分享给亲朋好友领红包吧
-              </div>
-              <div class="confirm">
-                <span>确定</span>
+            <div class="content p-r">
+                <img src="" width="100%" alt="">
+                <div class="wpr p-a">
+                  <div><span class="save">保存</span></div>
+                  <div><span class="share">分享</span></div>
+                </div>
+            </div>
+            <div class="nextGuide" style="display:none">
+              <div class="wpr p-r">
+                <div class="paw p-a"><img src="./static/img/paw.png" alt=""></div>
+                <div class="paw2 p-a"><img src="./static/img/paw.png" alt=""></div>
+                <div class="flow p-a"><img src="./static/img/flower.png" alt=""></div>
+                <div class="p1">
+                  保存好了~<br/>分享给亲朋好友领红包吧
+                </div>
+                <div class="confirm">
+                  <span>确定</span>
+                </div>
               </div>
             </div>
           </div>
@@ -227,12 +229,13 @@ function loadScript(_src,cb){
       audio_.load();
       audio_.src="./mus.mp3";
 
-      function pause() {
+      var pause = function() {
         isPlaying = false;
+
         auBtn.classList.remove('run');
         audio_.pause()
       }
-      function play() {
+      var play = function() {
         isPlaying = true;
         auBtn.classList.add('run');
         audio_.play()

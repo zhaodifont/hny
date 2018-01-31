@@ -447,9 +447,9 @@ function cropLoaded(img){
       $('#qrGuide').css('display','');
       // alert(!upqrStatue && !lowVersion)
       if(lowVersion){
-        setTimeout(function(){
-          alert('二维码识别有点问题，请将微信收款二维码直接保存到相册')
-        },260)
+        // setTimeout(function(){
+        //   alert('二维码识别有点问题，请将微信收款二维码直接保存到相册')
+        // },260)
       }else if(!upqrStatue && !lowVersion){
         upqr()
       }
@@ -533,11 +533,7 @@ function cropConfirm(evt) {
 }
 
 function proSave(){
-  $('.nextGuide').css('display','flex');
-  $('.nextGuide .confirm').unbind(_touch);
-  $('.nextGuide .confirm').on(_touch,function(){
-    $('.nextGuide').css('display','none');
-  })
+
     var dataURL = "";
     if (window.isAndroid) {
         var imgEncoder = new JPEGEncoder();
@@ -554,25 +550,32 @@ function proSave(){
     }
     img.src = dataURL;
 
-    $('#proSection .save').on(_touch,function(){
-      saveImage(function(res){
-        alert('拜年红包图已存好，分享就收钱')
-        $('#proSection .share').trigger(_touch);
-      },img.src)
-    })
+    setTimeout(function(){
+      $('#proSection .save').on(_touch,function(){
+        saveImage(function(res){
+          $('.nextGuide').css('display','flex');
+          $('.nextGuide .confirm').unbind(_touch);
+          $('.nextGuide .confirm').on(_touch,function(){
+            $('.nextGuide').css('display','none');
+            $('#proSection .share').trigger(_touch);
+          })
+        },img.src)
+      })
 
-    $('#proSection .share').on(_touch,function(){
-      shareImageWithCallback(
-        function(res){
-          // 点击分享
-        },
-        function(res){
-          // alert('分享完了')
-          // 分享返回
-        },
-        img.src
-      )
-    })
+      $('#proSection .share').on(_touch,function(){
+        shareImageWithCallback(
+          function(res){
+            // 点击分享
+          },
+          function(res){
+            // alert('分享完了')
+            // 分享返回
+          },
+          img.src
+        )
+      })
+    },0)
+
 
 }
 

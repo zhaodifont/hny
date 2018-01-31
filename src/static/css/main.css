@@ -156,8 +156,8 @@
   z-index:222;transition: all .4s;
 }
 
-.nextGuide{position: fixed;z-index: 666;display: flex;align-items: center;background-color: rgba(0,0,0,.4);justify-content: center;}
-.nextGuide .wpr{width:4.14rem;background-color: #fff;border-radius: .2rem;}
+.nextGuide{z-index: 666;display: flex;align-items: center;background-color: rgba(0,0,0,.4);justify-content: center;}
+.nextGuide .wpr{width:4.14rem;background-color: #fff;border-radius: .2rem;transform: translate(0,2.6rem);}
 .nextGuide .p1{line-height:.48rem;font-size: .32rem;color:#666;text-align: center;padding:.34rem 0;border-bottom:1px #e5e5e5 solid;}
 .nextGuide .confirm{display: flex;text-align: center;width: 100%;justify-content: center;}
 .nextGuide .confirm span{font-size: .32rem;color:#cf453f;line-height: .88rem;}
