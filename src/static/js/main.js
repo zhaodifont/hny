@@ -446,12 +446,10 @@ function cropLoaded(img){
     $('#eCode').on(_touch,function(){
       $('#qrGuide').css('display','');
       // alert(!upqrStatue && !lowVersion)
-      if(lowVersion){
-        // setTimeout(function(){
-        //   alert('二维码识别有点问题，请将微信收款二维码直接保存到相册')
-        // },260)
-      }else if(!upqrStatue && !lowVersion){
+      if(!upqrStatue && !lowVersion){
         upqr()
+      }else{
+        return;
       }
     })
     $('#qrGuide .return').unbind(_touch);

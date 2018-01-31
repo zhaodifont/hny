@@ -176,7 +176,7 @@
       </div>
 
       <!-- ./static/test.mp3 -->
-      <audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
+      <audio src="" controls autoplay loop id='audio' style="position:absolute;left:-999rem;"></audio>
       <div id="audio_control" class='p-a'>
         <img src="./static/img/audio_Icon.png" alt="">
       </div>
@@ -225,40 +225,45 @@ function loadScript(_src,cb){
       audio_ = document.querySelector('#audio'),
       icon = document.querySelectorAll('#audio_control img')[0],
       image = auBtn.querySelector('img'),
-      isPlaying = true;
+      isPlaying = true,
+      _touch = ("createTouch" in document)?"touchend":"click";
       audio_.load();
       audio_.src="./mus.mp3";
 
-      var pause = function() {
+      var _pause = function() {
         isPlaying = false;
-
         auBtn.classList.remove('run');
+        $('#audio_control').removeClass('run');
         audio_.pause()
       }
-      var play = function() {
+      var _play = function() {
         isPlaying = true;
         auBtn.classList.add('run');
+        $('#audio_control').addClass('run');
         audio_.play()
 
       }
-      function musicInBrowserHandler() {
-          play()
-          document.body.removeEventListener('touchstart', musicInBrowserHandler);
+      function musicHandler() {
+          _play()
+          document.body.removeEventListener(_touch, musicHandler);
       }
-      document.body.addEventListener('touchstart', musicInBrowserHandler,false);
+      document.body.addEventListener(_touch, musicHandler,false);
 
-    document.querySelector('#audio_control').addEventListener(window.isSupportTouch?'touchstart':'click', function bindEvent() {
-      isPlaying ? pause() : play();
+    document.querySelector('#audio_control').addEventListener(_touch, function(ev) {
+      isPlaying?_pause():_play();
     },false);
-    play()
+    _play()
 
-    document.addEventListener("visibilitychange", function () {
-      if(document.visibilityState == 'hidden'){
-        pause()
-      }else if(document.visibilityState == 'visible'){
-        play()
-      }
-    }, false);
+    if(!!document.visibilityState){
+      document.addEventListener("visibilitychange", function () {
+        if(document.visibilityState == 'hidden'){
+          _pause()
+        }else if(document.visibilityState == 'visible'){
+          _play()
+        }
+      }, false);
+    }
+
 }()
 var defaultbgStatue = false;
 loadScript('./static/js/count.js',function(){
