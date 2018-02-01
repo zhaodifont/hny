@@ -549,6 +549,11 @@ function proSave(){
         $('#proSection img')[0].src = img.src;
         $('#proSection').css('display','block')
         loadingStop();
+        // $('.toast').addClass('run');
+        $('.toast').addClass('run');
+        setTimeout(function(){
+          $('.toast').removeClass('run').hiden()
+        },2100)
     }
     img.src = dataURL;
 
@@ -557,6 +562,9 @@ function proSave(){
         saveImage(function(res){
           $('.nextGuide .p1').empty().html('保存好了~<br/>分享给亲朋好友领红包吧')
           $('.nextGuide').css('display','flex');
+          $('.nextGuide .confirm').on(_touch,function(){
+            $('#proSection .share').trigger('click');
+          })
         },img.src)
       })
 

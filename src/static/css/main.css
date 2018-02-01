@@ -214,7 +214,14 @@
 #proSection .content{overflow: hidden;}
 #proSection .content .wpr{top:0;bottom:0;left:0;right:0;display: flex;justify-content: center;width:100%;}
 #proSection .content .wpr span{display: block;margin:.5rem .3rem;width:3.1rem;line-height: .96rem;text-align: center;color:#fff;font-size: .36rem;background-color: #e23536;border-radius: 4rem;}
-
+.toast{
+  position: fixed;z-index: 446;top:50%;left:50%;transform: translate(-50%,-50%);display: block;
+  color:#fff;background-color: rgba(0,0,0,0.7);font-size: .26rem;line-height: 1;padding:.15rem .3rem;border-radius: 1rem;
+  transition: all .2s ease-out .8s;opacity: 0;margin-top: 1rem;
+}
+.toast.run{
+  margin-top:0rem;opacity: 1;
+}
 
 /* animate  */
 .animated {
