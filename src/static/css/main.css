@@ -17,7 +17,7 @@
   height:32%;box-sizing: border-box;
   padding-top:5%;
 }
-.loadingDiv,.loadingDiv .flex,.wrapper,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.offlineTip,.firstPage_choose{
+.loadingDiv,.loadingDiv .flex,.wrapper,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.firstPage_choose{
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
 .loadingDiv{
@@ -33,7 +33,7 @@
 .loadingIcon{
   width:.66rem;display: block;margin:0 auto .2rem;animation:loadIcon 2s linear 0s infinite normal;
 }
-.offlineTip{
+/* .offlineTip{
   z-index: 888;background-color: rgba(0,0,0,.85);display: flex;align-items: center;justify-content: center;
 }
 .offlineTip .wpr{
@@ -49,7 +49,7 @@
     margin: .52rem auto 0;
     background-color: #cf453f;
     border-radius: 4rem;
-}
+} */
 @keyframes loadIcon {
   0%{
     transform:rotateZ(0deg)

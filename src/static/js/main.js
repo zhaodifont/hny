@@ -150,6 +150,7 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
+        // 选择相机/选择相册
         $('.firstPage_choose').unbind(_touch);
         $('.firstPage_choose').on(_touch,function(){
           $('.firstPage_choose').css('display','none');
@@ -157,6 +158,13 @@ window.indexPageReady = function(){
         $('.firstPage_choose .wpr').unbind(_touch);
         $('.firstPage_choose .wpr').on(_touch,function(e){
           e.stopPropagation();
+        })
+
+        // 统一弹出框
+        $('.nextGuide .confirm').unbind(_touch);
+        $('.nextGuide .confirm').on(_touch,function(ev){
+          $('.nextGuide').css('display','none');
+          ev.stopPropagation();
         })
 
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
@@ -176,11 +184,10 @@ window.indexPageReady = function(){
 
         // 检测断网
         window.addEventListener("offline", function(e){
-          $('.offlineTip').css('display','flex')
+          $('.nextGuide .p1').empty().html('请检查网络链接')
+          $('.nextGuide').css('display','flex');
         })
-        $('.offlineTip span').on('click',function(){
-          $('.offlineTip').css('display','none')
-        })
+
         // 打开相机
         document.querySelector('.openCamera').addEventListener(_touch,function(){
           openCameraBefore()
@@ -634,10 +641,6 @@ var upqr = function(){
     $('#handleQR')[0].value = '';
   }
 
-$('.nextGuide .confirm').unbind(_touch);
-$('.nextGuide .confirm').on(_touch,function(){
-  $('.nextGuide').css('display','none');
-})
 
   function load(){
     if(window.File && window.FileReader){
