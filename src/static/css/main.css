@@ -3,6 +3,20 @@
     overflow: hidden;
     bottom:0;top:0;left:50%;right:0;transform: translate(-50%,0);transition: all .5s;
 }
+#app.full #aside{
+  display: none;
+}
+#app.full #firstPage>.p-r{
+  height:100%;overflow: hidden;
+  background:url('../img/qr_guide_bg.jpg') 0 0 repeat;background-size:.84rem .49rem;
+}
+#app.full #firstPage .chooseBtn{
+  margin:7.9% auto 9.12%;
+}
+#app.full #firstPage .p-r>.wpr{
+  height:32%;box-sizing: border-box;
+  padding-top:5%;
+}
 .loadingDiv,.loadingDiv .flex,.wrapper,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.offlineTip,.firstPage_choose{
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }

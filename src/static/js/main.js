@@ -138,19 +138,27 @@ window.indexPageReady = function(){
       setTimeout(function(){
         cropChanged(res)
       },200)
-      $('.firstPage_choose').unbind(_touch);
-      $('.firstPage_choose').on(_touch,function(){
-        $('.firstPage_choose').css('display','none');
-      })
-      $('.firstPage_choose .wpr').unbind(_touch);
-      $('.firstPage_choose .wpr').on(_touch,function(e){
-        e.stopPropagation();
-      })
+
       $('.firstPage_choose').css('display','none');
 
     })
 
+    document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
+      $('.firstPage_choose').css('display','flex');
+      cropStart();
+    },false)
+
     window.setTimeout(function(){
+
+        $('.firstPage_choose').unbind(_touch);
+        $('.firstPage_choose').on(_touch,function(){
+          $('.firstPage_choose').css('display','none');
+        })
+        $('.firstPage_choose .wpr').unbind(_touch);
+        $('.firstPage_choose .wpr').on(_touch,function(e){
+          e.stopPropagation();
+        })
+
         //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
         cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
             targetMinWidth : 750,
@@ -165,21 +173,6 @@ window.indexPageReady = function(){
         $cropSection.css("visibility", "hidden");
         $cropSection.css("display", "");
         if(defaultbgStatue)loadingStop();
-
-        document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
-
-          $('.firstPage_choose').css('display','flex');
-          $('.firstPage_choose').unbind(_touch);
-          $('.firstPage_choose').on(_touch,function(){
-            $('.firstPage_choose').css('display','none');
-          })
-          $('.firstPage_choose .wpr').unbind(_touch);
-          $('.firstPage_choose .wpr').on(_touch,function(e){
-            e.stopPropagation();
-          })
-          cropStart();
-
-        },false)
 
         // 检测断网
         window.addEventListener("offline", function(e){
@@ -392,6 +385,7 @@ function cropChanged(res){
     if(!initTheme){changeTheme(themes[0]);}
     $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
+    $('#firstPage').css('display','none')
 
     loadingStart()
     var img = new Image();
