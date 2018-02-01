@@ -6,7 +6,7 @@
     <meta name= "author" content="lzd" >
     <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1633">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=2051">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
     </script>
   </head>
@@ -54,7 +54,7 @@
                 <span class="chooseBtn"><img src="./static/img/chooseBtn.png" style="width:1.84rem" alt=""></span>
             </div>
           </div>
-
+          <a href="javascript:void(0)"><img src="" id="aside" width="100%" style="margin-top:.1rem;transition:all .4s;-webkit-transition:all .4s;opacity:0;" alt=""></a>
       </div>
 
       <div class="firstPage_choose" style="display:none;">
@@ -120,20 +120,22 @@
                   <div><span class="share">分享</span></div>
                 </div>
             </div>
-            <div class="nextGuide" style="display:none">
-              <div class="wpr p-r">
-                <div class="paw p-a"><img src="./static/img/paw.png" alt=""></div>
-                <div class="paw2 p-a"><img src="./static/img/paw.png" alt=""></div>
-                <div class="flow p-a"><img src="./static/img/flower.png" alt=""></div>
-                <div class="p1">
-                  保存好了~<br/>分享给亲朋好友领红包吧
-                </div>
-                <div class="confirm">
-                  <span>确定</span>
-                </div>
-              </div>
-            </div>
           </div>
+      </div>
+
+      <!-- 文本提示 -->
+      <div class="nextGuide" style="display:none">
+        <div class="wpr p-r">
+          <div class="paw p-a"><img src="./static/img/paw.png" alt=""></div>
+          <div class="paw2 p-a"><img src="./static/img/paw.png" alt=""></div>
+          <div class="flow p-a"><img src="./static/img/flower.png" alt=""></div>
+          <div class="p1">
+            <!-- 保存好了~<br/>分享给亲朋好友领红包吧 -->
+          </div>
+          <div class="confirm">
+            <span>确定</span>
+          </div>
+        </div>
       </div>
 
       <div class="offlineTip p-a" style="display:none">
@@ -228,13 +230,14 @@ function loadScript(_src,cb){
       touchp = ("createTouch" in document)?"touchend":"click",
       zTop = $("#cropSection").scrollTop(),
       isPlaying = false;
-      audio_.load();
       audio_.src="./mus.mp3";
+      audio_.load();
 
       var _pause = function() {
         isPlaying = false;
         auBtn.classList.remove('run');
         icon.style.animationName="";
+        icon.style.WebkitAnimationName="";
         icon.style.animationPlayState="paused";
         icon.style.WebkitAnimationPlayState="paused";
         audio_.pause()
@@ -327,6 +330,12 @@ loadScript('./static/js/count.js',function(){
       timer = null;
       if(loadingStop)loadingStop();
 
+      var img = new Image();
+      img.onload = function(){
+        document.querySelector('#aside').src=this.src;
+        document.querySelector('#aside').style.opacity=1;
+      }
+      img.src="./static/img/aside.jpg";
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
       f_t2.classList.add('fadeIn');
@@ -336,6 +345,8 @@ loadScript('./static/js/count.js',function(){
       });
     }
   },0)
+
+
 })
 
   var zeptoJsLoaded = true,

@@ -10,7 +10,7 @@ function loadingStop(){
 var lowSysVersion = function(){
 // 苹果机
   if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-    var iosLimitVersion = [9, 0, 0]; //"10_3_1", "9_2"; 业务原因ios最低支持到10_3_1版本
+    var iosLimitVersion = [10, 0, 1]; //"10_3_1", "9_2"; 业务原因ios最低支持到10_3_1版本
     var iosVersionArr = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/); // ["OS 10_3_2", "10", "3", "1"]
     //去除匹配的第一个下标的元素
     iosVersionArr.shift();
@@ -53,6 +53,7 @@ var openCamera = function(cb,option,a,b) {
   if(window.isAndroid){
     return window.cameraApi.eventCamera(
       function(result) {
+        // $('#testTxt').text(result);
         cb(result)
       },option
     );
@@ -64,6 +65,8 @@ var openCamera = function(cb,option,a,b) {
           return;
         }
         result = result.base64Image;
+        // alert((/image\/jpeg|image\/png/ig).test(result))
+        // $('#testTxt').text(result);
         cb(result)
       },option.type,a,b
     );
@@ -551,12 +554,8 @@ function proSave(){
     setTimeout(function(){
       $('#proSection .save').on(_touch,function(){
         saveImage(function(res){
+          $('.nextGuide .p1').empty().html('保存好了~<br/>分享给亲朋好友领红包吧')
           $('.nextGuide').css('display','flex');
-          $('.nextGuide .confirm').unbind(_touch);
-          $('.nextGuide .confirm').on(_touch,function(){
-            $('.nextGuide').css('display','none');
-            $('#proSection .share').trigger(_touch);
-          })
         },img.src)
       })
 
@@ -628,14 +627,23 @@ var upqr = function(){
         $('#toNext').trigger('click');
       },0)
     }else if(a.indexOf('Failed') > -1){
-      alert('抱歉您的手机不支持此功能')
+      // $('.nextGuide .p1').empty().html('服务端')
+      // $('.nextGuide').css('display','flex');
+      alert('error 请联系技术人员')
     }else{
       setTimeout(function(){
-        alert('未识别到收款二维码，收不到红包哦')
+        // alert('未识别到收款二维码，收不到红包哦')
+        $('.nextGuide .p1').empty().html('未识别到收款二维码<br/>收不到红包哦<br/>')
+        $('.nextGuide').css('display','flex');
       },0)
     }
     $('#handleQR')[0].value = '';
   }
+
+$('.nextGuide .confirm').unbind(_touch);
+$('.nextGuide .confirm').on(_touch,function(){
+  $('.nextGuide').css('display','none');
+})
 
   function load(){
     if(window.File && window.FileReader){
