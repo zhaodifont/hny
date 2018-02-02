@@ -65,13 +65,12 @@ var openCamera = function(cb,option,a,b) {
           return;
         }
         result = result.base64Image;
-        // alert((/image\/jpeg|image\/png/ig).test(result))
         // $('#testTxt').text(result);
         cb(result)
       },option.type,a,b
     );
   }else{
-    alert('error')
+    console.log('error')
   }
 
 }
@@ -253,7 +252,7 @@ window.indexPageReady = function(){
     window.setTimeout(function(){
 
       !getCameraS && loadScript('./static/js/count.js',function(){
-        // alert(getCameraS + '--enter')
+        alert(!getCameraS)
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
             mcs = s2 - new Date(s1).getTime(),
@@ -527,7 +526,6 @@ function cropLoaded(img){
     $('#eCode').unbind(_touch);
     $('#eCode').on(_touch,function(){
       $('#qrGuide').css('display','');
-      // alert(!upqrStatue && !lowVersion)
       if(!upqrStatue && !lowVersion){
         upqr()
       }else{
@@ -652,7 +650,6 @@ function proSave(){
             // 点击分享
           },
           function(res){
-            // alert('分享完了')
             // 分享返回
           },
           img.src
@@ -716,10 +713,9 @@ var upqr = function(){
     }else if(a.indexOf('Failed') > -1){
       // $('.nextGuide .p1').empty().html('服务端')
       // $('.nextGuide').css('display','flex');
-      alert('error 请联系技术人员')
+      console.log('error 请联系技术人员')
     }else{
       setTimeout(function(){
-        // alert('未识别到收款二维码，收不到红包哦')
         $('.nextGuide .p1').empty().html('未识别到收款二维码<br/>收不到红包哦<br/>')
         $('.nextGuide').css('display','flex');
       },0)
