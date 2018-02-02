@@ -215,9 +215,6 @@ var getCameraImage = function(cb){
           }else{
             return;
           }
-
-
-
         }
       )
     }
@@ -242,8 +239,6 @@ window.indexPageReady = function(){
       $('.firstPage_choose').css('display','none');
     })
 
-
-
     document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
       $('.firstPage_choose').css('display','flex');
       cropStart();
@@ -251,8 +246,8 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
+      alert(getCameraS)
       !getCameraS && loadScript('./static/js/count.js',function(){
-        alert(!getCameraS)
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
             mcs = s2 - new Date(s1).getTime(),
