@@ -233,6 +233,7 @@ window.indexPageReady = function(){
       $cropSection.css("display", "");
       cropStart();
       setTimeout(function(){
+        alert(0)
         cropChanged(res)
       },200)
 
@@ -246,7 +247,7 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
-
+      alert(getCameraS);
       !getCameraS && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
