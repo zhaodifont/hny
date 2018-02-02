@@ -202,6 +202,7 @@ var $upload = $('#upload'), //原始上传按钮
     cropGesture = null,
     defaultbgStatue = false;
 
+
 var getCameraImage = function(cb){
       return window.cameraApi.getCameraImage(
         function(result) {
@@ -226,16 +227,16 @@ window.indexPageReady = function(){
     }
 
     getCameraImage(function(res){
+      alert(!!res);
       getCameraS = true;
-
       loadingStart();
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
       cropStart();
+      $('#testTxt').text('res.length' + res.length + ' getCameraS:' + getCameraS);
       setTimeout(function(){
-        $('#testTxt').text(getCameraS);
         cropChanged(res)
-      },200)
+      },20)
 
       $('.firstPage_choose').css('display','none');
     })
