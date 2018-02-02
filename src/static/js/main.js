@@ -204,19 +204,20 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 var getCameraImage = function(cb){
-      return window.cameraApi.getCameraImage(
-        function(result) {
-          if(window.isAndroid && !!result){
-            cb(result)
-          }else if(window.isIos && !!result.base64Image){
-            cb(result.base64Image);
-          }else{
-            return;
-          }
+  return window.cameraApi.getCameraImage(
+    function(result) {
+      alert('result')
+      if(window.isAndroid && !!result){
+        cb(result)
+      }else if(window.isIos && !!result.base64Image){
+        cb(result.base64Image);
+      }else{
+        return;
+      }
 
-        }
-      )
     }
+  )
+}
 
 window.indexPageReady = function(){
 
