@@ -105,21 +105,7 @@ var shareImageWithCallback = function(cb1,cb2,imgBase64) {
   }
 
 }
-var getCameraImage = function(cb){
-  return window.cameraApi.getCameraImage(
-    function(result) {
-      // alert(!!result)
-      if(window.isAndroid && !!result){
-        cb(result)
-      }else if(window.isIos && !!result.base64Image){
-         cb(result.base64Image);
-      }else{
-        return;
-      }
 
-    }
-  );
-}
 var cropGesture = null;
 window.indexPageReady = function(){
 
