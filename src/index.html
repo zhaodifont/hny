@@ -235,6 +235,7 @@ var getCameraImage = null,
 
 var defaultbgStatue = false;
 !getCameraS && loadScript('./static/js/count.js',function(){
+  alert(getCameraS)
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
       mcs = s2 - new Date(s1).getTime(),
@@ -328,7 +329,7 @@ var defaultbgStatue = false;
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=1743',function(){
+      loadScript('./static/js/main.js?v=1750',function(){
           mainJsLoaded = true;
           checkAll('main');
 
