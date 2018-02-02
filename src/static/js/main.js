@@ -227,13 +227,13 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       getCameraS = true;
-      $('#testTxt').text('!!result' + !!result + ';_ getCameraS'+getCameraS);
+
       loadingStart();
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
       cropStart();
       setTimeout(function(){
-        alert(0)
+        $('#testTxt').text(getCameraS);
         cropChanged(res)
       },200)
 
@@ -247,7 +247,7 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
-      alert(getCameraS);
+
       !getCameraS && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
