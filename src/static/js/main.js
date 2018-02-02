@@ -120,7 +120,7 @@ var getCameraImage = function(cb){
     }
   );
 }
-
+var cropGesture = null;
 window.indexPageReady = function(){
 
     if(window.isAndroid){
@@ -218,7 +218,6 @@ var $upload = $('#upload'), //原始上传按钮
       'qr_guide_t.png','qr_guide1.png',
       'qr_guide2.png','qr_guide3.png','qr_guide4.png'
     ],
-    cropGesture = null,
     themeStlye = 1,
     themes = [
       {
@@ -563,7 +562,7 @@ function proSave(){
           $('.nextGuide .p1').empty().html('保存好了~<br/>分享给亲朋好友领红包吧')
           $('.nextGuide').css('display','flex');
           $('.nextGuide .confirm').on(_touch,function(){
-            $('#proSection .share').trigger('click');
+            $('#proSection .share').trigger('click')
           })
         },img.src)
       })
