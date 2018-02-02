@@ -106,86 +106,6 @@ var shareImageWithCallback = function(cb1,cb2,imgBase64) {
 
 }
 
-var cropGesture = null;
-window.indexPageReady = function(){
-
-    if(window.isAndroid){
-      window.cameraApi = B612Kaji.Native.android.Function.getInstance();
-    }else if(window.isIos){
-      window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
-    }
-
-    getCameraImage(function(res){
-      loadingStart();
-
-      $cropSection.css("visibility", "hidden");
-      $cropSection.css("display", "");
-      cropStart();
-      setTimeout(function(){
-        cropChanged(res)
-      },200)
-
-      $('.firstPage_choose').css('display','none');
-
-    })
-
-    document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
-      $('.firstPage_choose').css('display','flex');
-      cropStart();
-    },false)
-
-    window.setTimeout(function(){
-
-        // 选择相机/选择相册
-        $('.firstPage_choose').unbind(_touch);
-        $('.firstPage_choose').on(_touch,function(){
-          $('.firstPage_choose').css('display','none');
-        })
-        $('.firstPage_choose .wpr').unbind(_touch);
-        $('.firstPage_choose .wpr').on(_touch,function(e){
-          e.stopPropagation();
-        })
-
-        // 统一弹出框
-        $('.nextGuide .confirm').unbind(_touch);
-        $('.nextGuide .confirm').on(_touch,function(ev){
-          $('.nextGuide').css('display','none');
-          ev.stopPropagation();
-        })
-
-        //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
-        cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-            targetMinWidth : 750,
-            targetMinHeight: 750
-        })
-        var $canvas = $("#cropCanvas");
-        canvasDom = $canvas[0];
-        canvasCtx = canvasDom.getContext("2d");
-        cropGesture.targetMinWidth = canvasDom.width;
-        cropGesture.targetMinHeight = canvasDom.height;
-
-        $cropSection.css("visibility", "hidden");
-        $cropSection.css("display", "");
-        if(defaultbgStatue)loadingStop();
-
-        // 检测断网
-        window.addEventListener("offline", function(e){
-          $('.nextGuide .p1').empty().html('请检查网络链接')
-          $('.nextGuide').css('display','flex');
-        })
-
-        // 打开相机
-        document.querySelector('.openCamera').addEventListener(_touch,function(){
-          openCameraBefore()
-        },false)
-
-        // 打开相册
-        document.querySelector('.openGallery').addEventListener(_touch,function(){
-          openGalleryBefore()
-        },false)
-
-    },20)
-}
 var $upload = $('#upload'), //原始上传按钮
     $cropSection = $('#cropSection'), //第二步的section
     $defaultImgSet = $('#cropImg'), // 第二步的图片
@@ -278,7 +198,180 @@ var $upload = $('#upload'), //原始上传按钮
       img.src = obj.bg;
 
     },
-    zd_qrcode = null;
+    zd_qrcode = null,
+    getCameraS = false,
+    cropGesture = null,
+    defaultbgStatue = false;
+
+var getCameraImage = function(cb){
+
+      return window.cameraApi.getCameraImage(
+        function(result) {
+          if(window.isAndroid && !!result){
+            getCameraS = true;
+            cb(result)
+          }else if(window.isIos && !!result.base64Image){
+            getCameraS = true;
+             cb(result.base64Image);
+          }else{
+            return;
+          }
+
+
+
+        }
+      )
+    }
+
+window.indexPageReady = function(){
+
+    if(window.isAndroid){
+      window.cameraApi = B612Kaji.Native.android.Function.getInstance();
+    }else if(window.isIos){
+      window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
+    }
+
+    getCameraImage(function(res){
+      loadingStart();
+      $cropSection.css("visibility", "hidden");
+      $cropSection.css("display", "");
+      cropStart();
+      setTimeout(function(){
+        cropChanged(res)
+      },200)
+
+      $('.firstPage_choose').css('display','none');
+    })
+
+
+
+    document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
+      $('.firstPage_choose').css('display','flex');
+      cropStart();
+    },false)
+
+    window.setTimeout(function(){
+
+      !getCameraS && loadScript('./static/js/count.js',function(){
+        // alert(getCameraS + '--enter')
+        var s1 = '2018/01/25',
+            s2 = Date.now(),//当前日期：2017-04-24
+            mcs = s2 - new Date(s1).getTime(),
+            targNum = 0,
+            time = Math.floor(mcs / (1000 * 60 * 60 * 24)),
+            _days = Math.floor(mcs / (1000 * 60 * 60 * 24)),
+            _hours = Math.floor(mcs / (1000 * 60 * 60)) - (_days*24),
+            _mins = Math.floor(mcs / (1000 * 60)) - (_days*24*60) - _hours*60,
+            _secs = Math.floor(mcs / (1000)) - (_days*24*3600) - _hours*3600 - _mins *60;
+            // console.log(_mins);
+            // _secs = parseInt(days / (1000 * 60 * 60)) - (_days*24*60*60);
+        // console.log("time:",_days + '天'+_hours + '小时' + _mins + '分'+_secs + '秒');
+
+          if(_days < 2){
+            targNum = parseInt(_days*24*3600*80 + (_hours*3600*80) + (_mins*60*80) + (_secs*80))
+          }else if(_days >= 2 && _days < 4){
+            targNum = parseInt(2*24*3600*80 + (1*24*3600*50) + (_hours*3600*50) + (_mins*60*50) + (_secs*50))
+          }else if( _days >=4 && _days < 6){
+            targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (_hours*3600*30) + (_mins*60*30) + (_secs*30))
+          }else if( _days >=6 && _days < 8){
+            targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (_hours*3600*20) + (_mins*60*20) + (_secs*20))
+          }else{
+            targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (2*24*3600*20) + (_hours*3600*5) + (_mins*60*5) + (_secs*5))
+          }
+
+        document.querySelectorAll('.loadingDiv')[0].style.display='';
+        // 默认图片
+        var img = new Image();
+        img.onload = function(){
+          img.setAttribute('width','100%')
+          document.querySelectorAll('.guide')[0].appendChild(img);
+          defaultbgStatue = true;
+        }
+        img.src = './static/img/firstPic.jpg';
+        // number  开始运行
+        var joinNum = targNum,
+            targetNum = parseInt(joinNum*32),
+            count = new CountUp('targetNum', 0, targetNum, 0, 1.5),
+            join = new CountUp('joinNum', 0, joinNum, 0, 1),
+            f_t1 = document.querySelector('#firstPage .t1'),
+            f_t2 = document.querySelector('#firstPage .t2');
+
+        var timer = setInterval(function(){
+          if(defaultbgStatue){
+            clearInterval(timer);
+            timer = null;
+            if(loadingStop)loadingStop();
+
+            if(!document.querySelector('#app').classList.contains('full')){
+              var img = new Image();
+              img.onload = function(){
+                document.querySelector('#aside').src=this.src;
+                document.querySelector('#aside').style.opacity=1;
+              }
+              img.src="./static/img/aside.jpg";
+            }
+
+            // 首屏 标题
+            f_t1.classList.add('bounceInDown');
+            f_t2.classList.add('fadeIn');
+            join.start()
+            count.start(function(){
+              join = count = null;
+            });
+          }
+        },0)
+      })
+
+        // 选择相机/选择相册
+        $('.firstPage_choose').unbind(_touch);
+        $('.firstPage_choose').on(_touch,function(){
+          $('.firstPage_choose').css('display','none');
+        })
+        $('.firstPage_choose .wpr').unbind(_touch);
+        $('.firstPage_choose .wpr').on(_touch,function(e){
+          e.stopPropagation();
+        })
+
+        // 统一弹出框
+        $('.nextGuide .confirm').unbind(_touch);
+        $('.nextGuide .confirm').on(_touch,function(ev){
+          $('.nextGuide').css('display','none');
+          ev.stopPropagation();
+        })
+
+        //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
+        cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
+            targetMinWidth : 750,
+            targetMinHeight: 750
+        })
+        var $canvas = $("#cropCanvas");
+        canvasDom = $canvas[0];
+        canvasCtx = canvasDom.getContext("2d");
+        cropGesture.targetMinWidth = canvasDom.width;
+        cropGesture.targetMinHeight = canvasDom.height;
+
+        $cropSection.css("visibility", "hidden");
+        $cropSection.css("display", "");
+        if(defaultbgStatue)loadingStop();
+
+        // 检测断网
+        window.addEventListener("offline", function(e){
+          $('.nextGuide .p1').empty().html('请检查网络链接')
+          $('.nextGuide').css('display','flex');
+        })
+
+        // 打开相机
+        document.querySelector('.openCamera').addEventListener(_touch,function(){
+          openCameraBefore()
+        },false)
+
+        // 打开相册
+        document.querySelector('.openGallery').addEventListener(_touch,function(){
+          openGalleryBefore()
+        },false)
+
+    },20)
+}
 
 // 首屏弹层时 加载其余
 function cropStart(res){
