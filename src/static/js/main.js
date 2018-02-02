@@ -10,7 +10,7 @@ function loadingStop(){
 var lowSysVersion = function(){
 // 苹果机
   if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-    var iosLimitVersion = [10, 0, 1]; //"10_3_1", "9_2"; 业务原因ios最低支持到10_3_1版本
+    var iosLimitVersion = [10, 1, 1]; //"10_3_1", "9_2"; 业务原因ios最低支持到10_1_1版本
     var iosVersionArr = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/); // ["OS 10_3_2", "10", "3", "1"]
     //去除匹配的第一个下标的元素
     iosVersionArr.shift();
@@ -18,9 +18,9 @@ var lowSysVersion = function(){
       //防止undefined， 版本号为2位数时， 数组中最后一位是undefined
       var cur = parseInt(iosVersionArr[i], 10) || 0;
       var limit = parseInt(iosLimitVersion[i], 10) || 0;
+      // console.log(iosVersionArr[i],cur,iosLimitVersion[i],limit)
                 // cur<limit：当前版本低于限制版本； cur==limit:当前版本等于限制版本，继续比较小版本；cur>limit:当前版本高于限制版本
-      if(cur < limit){
-        // document.title = ("低版本模式");
+      if(cur <= limit){
         return true;
       } else if(cur > limit){
         return false;
