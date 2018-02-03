@@ -209,10 +209,8 @@ var getCameraImage = function(cb){
       }else if(window.isIos && !!result.base64Image){
         window.getCameraS = true;
         cb(result.base64Image);
-      }else{
-        return;
       }
-      document.title = window.getCameraS;
+      $('#testTxt').show().text(window.getCameraS);
     }
   )
 }
