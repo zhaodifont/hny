@@ -223,10 +223,27 @@ window.indexPageReady = function(){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
 
+    //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
+    cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
+        targetMinWidth : 750,
+        targetMinHeight: 750
+    })
+    var $canvas = $("#cropCanvas");
+    canvasDom = $canvas[0];
+    canvasCtx = canvasDom.getContext("2d");
+    cropGesture.targetMinWidth = canvasDom.width;
+    cropGesture.targetMinHeight = canvasDom.height;
+
+    $cropSection.css("visibility", "hidden");
+    $cropSection.css("display", "");
+    if(defaultbgStatue)loadingStop();
+
     getCameraImage(function(res){
       loadingStart();
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
+      $('#testTxt').show().text(window.getCameraS + '___ 0');
+
       cropStart();
       setTimeout(function(){
         cropChanged(res)
@@ -327,21 +344,6 @@ window.indexPageReady = function(){
           ev.stopPropagation();
         })
 
-        //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
-        cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-            targetMinWidth : 750,
-            targetMinHeight: 750
-        })
-        var $canvas = $("#cropCanvas");
-        canvasDom = $canvas[0];
-        canvasCtx = canvasDom.getContext("2d");
-        cropGesture.targetMinWidth = canvasDom.width;
-        cropGesture.targetMinHeight = canvasDom.height;
-
-        $cropSection.css("visibility", "hidden");
-        $cropSection.css("display", "");
-        if(defaultbgStatue)loadingStop();
-
         // 打开相机
         document.querySelector('.openCamera').addEventListener(_touch,function(){
           openCameraBefore()
@@ -393,6 +395,7 @@ function cropStart(res){
           changeTheme(themes[index]);
       })
   })
+  $('#testTxt').show().text(window.getCameraS + '___ 1');
 
   cropStartStatus = true;
 }
@@ -461,20 +464,25 @@ function cropChanged(res){
     $('#firstPage').css('display','none')
 
     loadingStart()
+    $('#testTxt').show().text(window.getCameraS + '___ 2.1' + res.length);
     var img = new Image();
+    img.src = res;
     img.onload = function(){
       cropLoaded(this);
       // $('#testTxt').text(this)
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
+      $('#testTxt').show().text(window.getCameraS + '___ 2');
+
     }
-    img.src = res;
+
 }
 
 // 安装给页面的 img 的src
 function cropLoaded(img){
 
+  $('#testTxt').show().text(window.getCameraS + '___ 3.1');
 
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
@@ -496,14 +504,20 @@ function cropLoaded(img){
     $defaultImgSet.height(cropGesture.targetMinHeight);
     $defaultImgSet.css("left", [imgOriginX, "px"].join(""));
     $defaultImgSet.css("top", [imgOriginY, "px"].join(""));
+    $('#testTxt').show().text(window.getCameraS + '___ 3.11');
 
     $defaultImgSet[0].src = img.src;
     $defaultImgSet[0].onload = function(){
       $cropSection.css("display", "");
       $cropSection.css("visibility", "visible");
-      loadingStop();
+      var timer = setInterval(function(){
+        if(initTheme){
+          clearInterval(timer);
+          loadingStop();
+        }
+      },10)
+      $('#testTxt').show().text(window.getCameraS + '___ 3.2');
     }
-    $('#testTxt').show().text(window.getCameraS);
 
     if(initTheme)loadingStop();
     cropGesture.unbindEvents();
