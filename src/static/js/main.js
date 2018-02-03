@@ -210,7 +210,7 @@ var getCameraImage = function(cb){
         window.getCameraS = true;
         cb(result.base64Image);
       }
-      $('#testTxt').show().text(window.getCameraS);
+
     }
   )
 }
@@ -225,9 +225,9 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       loadingStart();
-      cropStart();
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
+      cropStart();
       setTimeout(function(){
         cropChanged(res)
       },0)
@@ -342,12 +342,6 @@ window.indexPageReady = function(){
         $cropSection.css("display", "");
         if(defaultbgStatue)loadingStop();
 
-        // 检测断网
-        window.addEventListener("offline", function(e){
-          $('.nextGuide .p1').empty().html('请检查网络链接')
-          $('.nextGuide').css('display','flex');
-        })
-
         // 打开相机
         document.querySelector('.openCamera').addEventListener(_touch,function(){
           openCameraBefore()
@@ -357,6 +351,12 @@ window.indexPageReady = function(){
         document.querySelector('.openGallery').addEventListener(_touch,function(){
           openGalleryBefore()
         },false)
+
+        // 检测断网
+        window.addEventListener("offline", function(e){
+          $('.nextGuide .p1').empty().html('请检查网络链接')
+          $('.nextGuide').css('display','flex');
+        })
 
     },20)
 }
@@ -456,7 +456,7 @@ function openGalleryBefore(){
 function cropChanged(res){
 
     if(!initTheme){changeTheme(themes[0]);}
-    $cropSection.css('visibility','visible');
+    // $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
     $('#firstPage').css('display','none')
 
@@ -468,14 +468,13 @@ function cropChanged(res){
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
-      loadingStop()
     }
     img.src = res;
 }
 
 // 安装给页面的 img 的src
 function cropLoaded(img){
-    $cropSection.css("display", "");
+
 
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
@@ -500,8 +499,11 @@ function cropLoaded(img){
 
     $defaultImgSet[0].src = img.src;
     $defaultImgSet[0].onload = function(){
+      $cropSection.css("display", "");
+      $cropSection.css("visibility", "visible");
       loadingStop();
     }
+    $('#testTxt').show().text(window.getCameraS);
 
     if(initTheme)loadingStop();
     cropGesture.unbindEvents();
