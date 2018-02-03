@@ -196,7 +196,7 @@ function loadScript(_src,cb){
     }
     script.src=_src;document.getElementsByTagName('head')[0].appendChild(script);
 }
-
+window.getCameraS = false,
 !function(){
 // var cameraApi = B612Kaji.Native.android.Function.getInstance();
   var ua=navigator.userAgent;
@@ -238,8 +238,7 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      document.title = '1946';
-      loadScript('./static/js/main.js?v=1946',function(){
+      loadScript('./static/js/main.js?v=1441',function(){
           mainJsLoaded = true;
           checkAll('main');
 

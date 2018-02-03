@@ -198,7 +198,7 @@ var $upload = $('#upload'), //原始上传按钮
 
     },
     zd_qrcode = null,
-    getCameraS = false,
+
     cropGesture = null,
     defaultbgStatue = false;
 
@@ -206,10 +206,10 @@ var $upload = $('#upload'), //原始上传按钮
 var getCameraImage = function(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
-      alert('result')
       if(window.isAndroid && !!result){
         cb(result)
       }else if(window.isIos && !!result.base64Image){
+        window.getCameraS = true;
         cb(result.base64Image);
       }else{
         return;
@@ -228,16 +228,13 @@ window.indexPageReady = function(){
     }
 
     getCameraImage(function(res){
-      alert(!!res);
-      getCameraS = true;
       loadingStart();
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
       cropStart();
-      $('#testTxt').text('res.length' + res.length + ' getCameraS:' + getCameraS);
       setTimeout(function(){
         cropChanged(res)
-      },20)
+      },0)
 
       $('.firstPage_choose').css('display','none');
     })
@@ -248,8 +245,6 @@ window.indexPageReady = function(){
     },false)
 
     window.setTimeout(function(){
-
-
       !getCameraS && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24

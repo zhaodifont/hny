@@ -46,6 +46,7 @@ B612Kaji.Native.android.Function.prototype = {
 
 	getCameraImage: function(callback) {
 		this.callback.getCameraImage = function(result) {
+			window.getCameraS = true;
 			callback(result);
 		};
 		window.B612KajiBridgeInterface.getCameraImage("B612Kaji.Native.android.Function.getInstance().callback.getCameraImage");
