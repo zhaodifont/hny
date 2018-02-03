@@ -53,7 +53,6 @@ var openCamera = function(cb,option,a,b) {
   if(window.isAndroid){
     return window.cameraApi.eventCamera(
       function(result) {
-        // $('#testTxt').text(result);
         cb(result)
       },option
     );
@@ -198,7 +197,6 @@ var $upload = $('#upload'), //原始上传按钮
 
     },
     zd_qrcode = null,
-
     cropGesture = null,
     defaultbgStatue = false;
 
@@ -214,7 +212,7 @@ var getCameraImage = function(cb){
       }else{
         return;
       }
-
+      document.title = window.getCameraS;
     }
   )
 }
@@ -229,9 +227,9 @@ window.indexPageReady = function(){
 
     getCameraImage(function(res){
       loadingStart();
+      cropStart();
       $cropSection.css("visibility", "hidden");
       $cropSection.css("display", "");
-      cropStart();
       setTimeout(function(){
         cropChanged(res)
       },0)
