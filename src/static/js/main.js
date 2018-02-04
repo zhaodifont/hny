@@ -205,6 +205,7 @@ var getCameraImage = function(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
       if(window.isAndroid && !!result){
+        alert(2222)
         cb(result)
       }else if(window.isIos && !!result.base64Image){
         window.getCameraS = true;
