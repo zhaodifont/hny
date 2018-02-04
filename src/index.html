@@ -207,11 +207,15 @@ document.title='1224';
   if(/Android (\d+\.\d+)/.test(ua)){
     window.isAndroid=true;
     loadScript('./static/js/bridge_android.js',function(){
-      alert(0)
-      B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-        document.title='2233';
-        $('#testTxt').show().text(res);
-      })
+      document.title = 'bridge_android';
+      // alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
+      setTimeout(function(){
+        alert(B612Kaji.Native.android.Function.getInstance().getCameraImage) 
+        B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
+          document.title='22334';
+          $('#testTxt').show().text(res);
+        })
+      },100)
     });
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;

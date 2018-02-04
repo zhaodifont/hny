@@ -221,7 +221,7 @@ var $upload = $('#upload'), //原始上传按钮
 
 window.indexPageReady = function(){
   document.title='112112';
-  alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
+  // alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
   B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
     document.title='22334';
     $('#testTxt').show().text(res);
