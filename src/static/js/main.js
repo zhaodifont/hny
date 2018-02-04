@@ -242,7 +242,10 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
-
+    B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
+      document.title='22334';
+      $('#testTxt').show().text(res);
+    })
     // getCameraImage(function(res){
     //   loadingStart();
     //   $cropSection.css("visibility", "hidden");
