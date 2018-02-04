@@ -220,7 +220,7 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
-  document.title='112111';
+  document.title='112112';
   alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
   B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
     document.title='22334';
@@ -232,6 +232,11 @@ window.indexPageReady = function(){
     }else if(window.isIos){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
+
+    window.cameraApi.getCameraImage(function(res){
+      document.title='223342222';
+      $('#testTxt').show().text(res);
+    })
 
     //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
     cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
