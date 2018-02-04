@@ -207,14 +207,13 @@ window.getCameraS = false;
     window.isAndroid=true;
     loadScript('./static/js/bridge_android.js',function(){
       document.title = 'bridge_android 1419';
-      // alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
       setTimeout(function(){
-        document.title = 'bridge_android ok 1419';
+        document.title = !!(B612Kaji.Native.android.Function.getInstance().getCameraImage);
         B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-          document.title='load ok';
+          document.title = 'load ok';
           $('#testTxt').show().text(res);
         })
-      },100)
+      },0)
     });
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;
