@@ -210,9 +210,9 @@ document.title='1224';
       document.title = 'bridge_android';
       // alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
       setTimeout(function(){
-        alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
+        document.title = 'bridge_android ok';
         B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-          document.title='22334';
+          document.title='load ok';
           $('#testTxt').show().text(res);
         })
       },100)
@@ -235,7 +235,7 @@ document.title='1224';
           if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
             // console.log('ok 23333');
               setTimeout(function(){
-                indexPageReady();
+                // indexPageReady();
               },0)
               allJsloaded = true;
               checkAll = null;
