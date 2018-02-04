@@ -196,7 +196,6 @@ function loadScript(_src,cb){
     script.src=_src;document.getElementsByTagName('head')[0].appendChild(script);
 }
 window.getCameraS = false,
-alert(0);
 !function(){
 // var cameraApi = B612Kaji.Native.android.Function.getInstance();
   var ua=navigator.userAgent;
@@ -206,10 +205,7 @@ alert(0);
   if(/Android (\d+\.\d+)/.test(ua)){
     window.isAndroid=true;
     loadScript('./static/js/bridge_android.js',function(){
-      alert(0)
-      B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-        document.querySelector('#testTxt').innnerText(res)
-      })
+
     });
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;

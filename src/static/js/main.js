@@ -220,7 +220,7 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
-  
+
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
     }else if(window.isIos){
@@ -242,7 +242,11 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
-
+    document.title='1224'
+    B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
+      document.title='2233'
+      $('#testTxt').show().text(res);
+    })
     // getCameraImage(function(res){
     //   loadingStart();
     //   $cropSection.css("visibility", "hidden");
