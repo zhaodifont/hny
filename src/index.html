@@ -178,7 +178,7 @@
       </div>
 
   </div>
-<div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
+<div id="testTxt" style="display:-none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
 <img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
 <script>
 function loadScript(_src,cb){
@@ -210,7 +210,7 @@ document.title='1224';
       document.title = 'bridge_android';
       // alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
       setTimeout(function(){
-        alert(B612Kaji.Native.android.Function.getInstance().getCameraImage) 
+        alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
         B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
           document.title='22334';
           $('#testTxt').show().text(res);
