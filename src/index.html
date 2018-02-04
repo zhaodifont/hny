@@ -204,7 +204,7 @@ window.getCameraS = false,
   window.isOther = false;
   if(/Android (\d+\.\d+)/.test(ua)){
     window.isAndroid=true;
-    loadScript('./static/js/bridge_android.js?v=1125');
+    loadScript('./static/js/bridge_android.js?v=1149');
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;
     loadScript('./static/js/bridge_ios.js');
@@ -237,7 +237,7 @@ window.getCameraS = false,
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=1126',function(){
+      loadScript('./static/js/main.js?v=1149',function(){
           mainJsLoaded = true;
           checkAll('main');
 

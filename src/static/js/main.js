@@ -200,12 +200,12 @@ var $upload = $('#upload'), //原始上传按钮
     cropGesture = null,
     defaultbgStatue = false;
 
-
 var getCameraImage = function(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
+      $('#testTxt').show().text(window.getCameraS + '___ --00');
       if(window.isAndroid && !!result){
-        alert(2222)
+        alert(22222)
         cb(result)
       }else if(window.isIos && !!result.base64Image){
         window.getCameraS = true;
