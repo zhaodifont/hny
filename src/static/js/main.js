@@ -104,6 +104,24 @@ var shareImageWithCallback = function(cb1,cb2,imgBase64) {
 
 }
 
+var getCameraImage = function(cb){
+  document.title = (1111)
+  return window.cameraApi.getCameraImage(
+    function(result) {
+      $('#testTxt').show().text(window.getCameraS + '___ --00');
+      if(window.isAndroid && !!result){
+        alert(22222)
+        cb(result)
+      }else if(window.isIos && !!result.base64Image){
+        window.getCameraS = true;
+        cb(result.base64Image);
+      }
+
+    }
+  )
+}
+
+
 var $upload = $('#upload'), //原始上传按钮
     $cropSection = $('#cropSection'), //第二步的section
     $defaultImgSet = $('#cropImg'), // 第二步的图片
@@ -200,24 +218,12 @@ var $upload = $('#upload'), //原始上传按钮
     cropGesture = null,
     defaultbgStatue = false;
 
-var getCameraImage = function(cb){
-  return window.cameraApi.getCameraImage(
-    function(result) {
-      $('#testTxt').show().text(window.getCameraS + '___ --00');
-      if(window.isAndroid && !!result){
-        alert(22222)
-        cb(result)
-      }else if(window.isIos && !!result.base64Image){
-        window.getCameraS = true;
-        cb(result.base64Image);
-      }
-
-    }
-  )
-}
 
 window.indexPageReady = function(){
+  B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
+    alert(0)
 
+  })
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
     }else if(window.isIos){
@@ -239,19 +245,21 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
-    getCameraImage(function(res){
-      loadingStart();
-      $cropSection.css("visibility", "hidden");
-      $cropSection.css("display", "");
-      $('#testTxt').show().text(window.getCameraS + '___ 0');
 
-      cropStart();
-      setTimeout(function(){
-        cropChanged(res)
-      },0)
+    // getCameraImage(function(res){
+    //   loadingStart();
+    //   $cropSection.css("visibility", "hidden");
+    //   $cropSection.css("display", "");
+    //   $('#testTxt').show().text(window.getCameraS + '___ 0');
+    //
+    //   cropStart();
+    //   setTimeout(function(){
+    //     cropChanged(res)
+    //   },0)
+    //
+    //   $('.firstPage_choose').css('display','none');
+    // })
 
-      $('.firstPage_choose').css('display','none');
-    })
 
     document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
       $('.firstPage_choose').css('display','flex');
