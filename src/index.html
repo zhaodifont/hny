@@ -196,7 +196,7 @@ function loadScript(_src,cb){
     script.src=_src;document.getElementsByTagName('head')[0].appendChild(script);
 }
 window.getCameraS = false;
-document.title='1224'
+document.title='1224';
 
 !function(){
 // var cameraApi = B612Kaji.Native.android.Function.getInstance();
@@ -207,6 +207,7 @@ document.title='1224'
   if(/Android (\d+\.\d+)/.test(ua)){
     window.isAndroid=true;
     loadScript('./static/js/bridge_android.js',function(){
+      alert(0)
       B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
         document.title='2233'
         $('#testTxt').show().text(res);
