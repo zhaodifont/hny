@@ -46,6 +46,7 @@ B612Kaji.Native.android.Function.prototype = {
 
 	getCameraImage: function(callback) {
 		this.callback.getCameraImage = function(result) {
+			$('#testTxt').show().text(window.getCameraS + '___ -1');
 			window.getCameraS = true;
 			callback(result);
 		};
