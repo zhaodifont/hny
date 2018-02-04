@@ -220,10 +220,7 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
-  B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-    alert(0)
-
-  })
+  
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
     }else if(window.isIos){

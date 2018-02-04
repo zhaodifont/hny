@@ -204,7 +204,12 @@ window.getCameraS = false,
   window.isOther = false;
   if(/Android (\d+\.\d+)/.test(ua)){
     window.isAndroid=true;
-    loadScript('./static/js/bridge_android.js');
+    loadScript('./static/js/bridge_android.js',function(){
+      alert(0)
+      B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
+        document.querySelector('#testTxt').innnerText(res)
+      })
+    });
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;
     loadScript('./static/js/bridge_ios.js');
