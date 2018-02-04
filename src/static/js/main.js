@@ -220,6 +220,12 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
+  document.title='112111';
+  alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
+  B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
+    document.title='22334';
+    $('#testTxt').show().text(res);
+  })
 
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
@@ -242,10 +248,7 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
-    B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-      document.title='22334';
-      $('#testTxt').show().text(res);
-    })
+
     // getCameraImage(function(res){
     //   loadingStart();
     //   $cropSection.css("visibility", "hidden");
