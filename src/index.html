@@ -187,9 +187,11 @@
     <img src="./static/img/audio_Icon.png" alt="">
   </div>
 
-<div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
+<div id="testTxt" style="display:-none;position:fixed;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:11166666;bottom:0;left:0;">test</div>
 <img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
 <script>
+window.getCameraS = false;
+
 function loadScript(_src,cb){
     var script = document.createElement('script');
     script.type="text/javascript";
@@ -204,7 +206,6 @@ function loadScript(_src,cb){
     }
     script.src=_src;document.getElementsByTagName('head')[0].appendChild(script);
 }
-window.getCameraS = false;
 
 !function(){
 // var cameraApi = B612Kaji.Native.android.Function.getInstance();
@@ -247,7 +248,7 @@ window.getCameraS = false;
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=1802',function(){
+      loadScript('./static/js/main.js?v=1818',function(){
           mainJsLoaded = true;
           checkAll('main');
 

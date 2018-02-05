@@ -257,10 +257,11 @@ window.indexPageReady = function(){
       $('.firstPage_choose').css('display','flex');
       cropStart();
       $('#audio_control').css('opacity','.3')
-    },false)
+    },false);
 
+    $('#testTxt').show().text('1818--' + window.getCameraS);
     window.setTimeout(function(){
-      document.title = '1802--' + window.getCameraS;
+
       !(window.getCameraS) && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
