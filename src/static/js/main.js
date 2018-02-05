@@ -250,8 +250,8 @@ window.indexPageReady = function(){
       canvasDom = $canvas[0];
       canvasCtx = canvasDom.getContext("2d");
       cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-          targetMinWidth : 450,
-          targetMinHeight: 450
+          targetMinWidth : 560,
+          targetMinHeight: 560
       })
       // cropGesture.targetMinWidth = canvasDom.width;
       // cropGesture.targetMinHeight = canvasDom.height;
@@ -312,8 +312,8 @@ window.indexPageReady = function(){
             if(!document.querySelector('#app').classList.contains('full')){
               var img = new Image();
               img.onload = function(){
-                document.querySelector('#aside').src=this.src;
-                document.querySelector('#aside').style.opacity=1;
+                $('#aside img')[0].src=this.src;
+                $('#aside img')[0].style.opacity=1;
               }
               img.src="./static/img/aside.jpg";
             }
@@ -349,11 +349,13 @@ window.indexPageReady = function(){
         // 打开相机
         document.querySelector('.openCamera').addEventListener(_touch,function(){
           openCameraBefore()
+          _hmt.push(['_trackEvent', 'camera', 'click','打开相机']);
         },false)
 
         // 打开相册
         document.querySelector('.openGallery').addEventListener(_touch,function(){
           openGalleryBefore()
+          _hmt.push(['_trackEvent', 'gallery', 'click','打开相册']);
         },false)
 
         // 检测断网
@@ -635,6 +637,7 @@ function proSave(){
         saveImage(function(res){
           $('.nextGuide .p1').empty().html('保存好了~<br/>分享给亲朋好友领红包吧')
           $('.nextGuide').css('display','flex');
+          _hmt.push(['_trackEvent', 'video', 'play', 'Hey Jude']);
           $('.nextGuide .confirm').on(_touch,function(){
             $('#proSection .share').trigger('click')
           })
@@ -647,7 +650,6 @@ function proSave(){
             // 点击分享
           },
           function(res){
-            // 分享返回
           },
           img.src
         )
