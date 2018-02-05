@@ -216,7 +216,7 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
-    document.title = '1745';
+
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
     }else if(window.isIos){
@@ -259,7 +259,7 @@ window.indexPageReady = function(){
     },false)
 
     window.setTimeout(function(){
-
+      document.title = '1745--' + window.getCameraS;
       !(window.getCameraS) && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
