@@ -208,6 +208,14 @@ function loadScript(_src,cb){
 }
 
 !function(){
+  var params = document.location.search.substr(1).split('&'),
+      URLParams = {};
+  for (i=0; i < params.length ; i++){
+      var aParam = params[i].split('=');
+      URLParams[aParam[0]] = aParam[1];
+  }
+  var _from=URLParams["from"];
+  window.getCameraS = !!_from;
 // var cameraApi = B612Kaji.Native.android.Function.getInstance();
   var ua=navigator.userAgent;
   window.isAndroid=false;
@@ -223,6 +231,8 @@ function loadScript(_src,cb){
     window.isOther = true;
   }
 }()
+
+
 
   var zeptoJsLoaded = true,
       extJsLoad = false,
@@ -266,7 +276,7 @@ function loadScript(_src,cb){
       touchp = ("createTouch" in document)?"touchend":"click",
       zTop = $("#cropSection").scrollTop(),
       isPlaying = false;
-      audio_.src="./mus.mp3";
+      audio_.src="./mus.mp322";
       audio_.load();
 
       var _pause = function() {

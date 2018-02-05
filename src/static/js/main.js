@@ -102,22 +102,18 @@ var shareImageWithCallback = function(cb1,cb2,imgBase64) {
 
 }
 
-window.getCameraS = false;
 var getCameraImage = function(cb){
   return window.cameraApi.getCameraImage(
     function(result) {
       if(window.isAndroid && !!result){
-        window.getCameraS = true;
         cb(result)
       }else if(window.isIos && !!result.base64Image){
-        window.getCameraS = true;
         cb(result.base64Image);
       }
 
     }
   )
 }
-
 
 var $upload = $('#upload'), //原始上传按钮
     $cropSection = $('#cropSection'), //第二步的section
@@ -215,7 +211,6 @@ var $upload = $('#upload'), //原始上传按钮
     cropGesture = null,
     defaultbgStatue = false;
 
-
 window.indexPageReady = function(){
 
     if(window.isAndroid){
@@ -237,7 +232,6 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
-
     getCameraImage(function(res){
       loadingStart();
       $cropSection.css("visibility", "hidden");
@@ -253,15 +247,86 @@ window.indexPageReady = function(){
       $('#audio_control').css('opacity','1')
     })
 
-
     document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
       $('.firstPage_choose').css('display','flex');
       cropStart();
       $('#audio_control').css('opacity','.3')
     },false);
 
+    $('#testTxt').show().text('1847--' + window.getCameraS);
+    !(window.getCameraS) && loadScript('./static/js/count.js',function(){
+      var s1 = '2018/01/25',
+          s2 = Date.now(),//当前日期：2017-04-24
+          mcs = s2 - new Date(s1).getTime(),
+          targNum = 0,
+          time = Math.floor(mcs / (1000 * 60 * 60 * 24)),
+          _days = Math.floor(mcs / (1000 * 60 * 60 * 24)),
+          _hours = Math.floor(mcs / (1000 * 60 * 60)) - (_days*24),
+          _mins = Math.floor(mcs / (1000 * 60)) - (_days*24*60) - _hours*60,
+          _secs = Math.floor(mcs / (1000)) - (_days*24*3600) - _hours*3600 - _mins *60;
+          // console.log(_mins);
+          // _secs = parseInt(days / (1000 * 60 * 60)) - (_days*24*60*60);
+      // console.log("time:",_days + '天'+_hours + '小时' + _mins + '分'+_secs + '秒');
+
+        if(_days < 2){
+          targNum = parseInt(_days*24*3600*80 + (_hours*3600*80) + (_mins*60*80) + (_secs*80))
+        }else if(_days >= 2 && _days < 4){
+          targNum = parseInt(2*24*3600*80 + (1*24*3600*50) + (_hours*3600*50) + (_mins*60*50) + (_secs*50))
+        }else if( _days >=4 && _days < 6){
+          targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (_hours*3600*30) + (_mins*60*30) + (_secs*30))
+        }else if( _days >=6 && _days < 8){
+          targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (_hours*3600*20) + (_mins*60*20) + (_secs*20))
+        }else{
+          targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (2*24*3600*20) + (_hours*3600*5) + (_mins*60*5) + (_secs*5))
+        }
+
+      document.querySelectorAll('.loadingDiv')[0].style.display='';
+      // 默认图片
+      var img = new Image();
+      img.onload = function(){
+        img.setAttribute('width','100%')
+        document.querySelectorAll('.guide')[0].appendChild(img);
+        defaultbgStatue = true;
+      }
+      img.src = './static/img/firstPic.jpg';
+      // number  开始运行
+      var joinNum = targNum,
+          targetNum = parseInt(joinNum*32),
+          count = new CountUp('targetNum', 0, targetNum, 0, 1.5),
+          join = new CountUp('joinNum', 0, joinNum, 0, 1),
+          f_t1 = document.querySelector('#firstPage .t1'),
+          f_t2 = document.querySelector('#firstPage .t2');
+
+      var timer = setInterval(function(){
+        if(defaultbgStatue){
+          clearInterval(timer);
+          timer = null;
+          if(loadingStop)loadingStop();
+
+          if(!document.querySelector('#app').classList.contains('full')){
+            var img = new Image();
+            img.onload = function(){
+              $('#aside img')[0].src=this.src;
+              $('#aside img')[0].style.opacity=1;
+            }
+            img.src="./static/img/aside.jpg";
+          }
+
+          // 首屏 标题
+          f_t1.classList.add('bounceInDown');
+          f_t2.classList.add('fadeIn');
+          join.start()
+          count.start(function(){
+            join = count = null;
+          });
+        }
+      },0)
+    })
 
     window.setTimeout(function(){
+
+
+
         // 选择相机/选择相册
         $('.firstPage_choose').unbind(_touch);
         $('.firstPage_choose').on(_touch,function(){
@@ -301,77 +366,6 @@ window.indexPageReady = function(){
 
     },20)
 
-    window.setTimeout(function(){
-      $('#testTxt').show().text('1847--' + window.getCameraS);
-      !(window.getCameraS) && loadScript('./static/js/count.js',function(){
-        var s1 = '2018/01/25',
-            s2 = Date.now(),//当前日期：2017-04-24
-            mcs = s2 - new Date(s1).getTime(),
-            targNum = 0,
-            time = Math.floor(mcs / (1000 * 60 * 60 * 24)),
-            _days = Math.floor(mcs / (1000 * 60 * 60 * 24)),
-            _hours = Math.floor(mcs / (1000 * 60 * 60)) - (_days*24),
-            _mins = Math.floor(mcs / (1000 * 60)) - (_days*24*60) - _hours*60,
-            _secs = Math.floor(mcs / (1000)) - (_days*24*3600) - _hours*3600 - _mins *60;
-            // console.log(_mins);
-            // _secs = parseInt(days / (1000 * 60 * 60)) - (_days*24*60*60);
-        // console.log("time:",_days + '天'+_hours + '小时' + _mins + '分'+_secs + '秒');
-
-          if(_days < 2){
-            targNum = parseInt(_days*24*3600*80 + (_hours*3600*80) + (_mins*60*80) + (_secs*80))
-          }else if(_days >= 2 && _days < 4){
-            targNum = parseInt(2*24*3600*80 + (1*24*3600*50) + (_hours*3600*50) + (_mins*60*50) + (_secs*50))
-          }else if( _days >=4 && _days < 6){
-            targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (_hours*3600*30) + (_mins*60*30) + (_secs*30))
-          }else if( _days >=6 && _days < 8){
-            targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (_hours*3600*20) + (_mins*60*20) + (_secs*20))
-          }else{
-            targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (2*24*3600*20) + (_hours*3600*5) + (_mins*60*5) + (_secs*5))
-          }
-
-        document.querySelectorAll('.loadingDiv')[0].style.display='';
-        // 默认图片
-        var img = new Image();
-        img.onload = function(){
-          img.setAttribute('width','100%')
-          document.querySelectorAll('.guide')[0].appendChild(img);
-          defaultbgStatue = true;
-        }
-        img.src = './static/img/firstPic.jpg';
-        // number  开始运行
-        var joinNum = targNum,
-            targetNum = parseInt(joinNum*32),
-            count = new CountUp('targetNum', 0, targetNum, 0, 1.5),
-            join = new CountUp('joinNum', 0, joinNum, 0, 1),
-            f_t1 = document.querySelector('#firstPage .t1'),
-            f_t2 = document.querySelector('#firstPage .t2');
-
-        var timer = setInterval(function(){
-          if(defaultbgStatue){
-            clearInterval(timer);
-            timer = null;
-            if(loadingStop)loadingStop();
-
-            if(!document.querySelector('#app').classList.contains('full')){
-              var img = new Image();
-              img.onload = function(){
-                $('#aside img')[0].src=this.src;
-                $('#aside img')[0].style.opacity=1;
-              }
-              img.src="./static/img/aside.jpg";
-            }
-
-            // 首屏 标题
-            f_t1.classList.add('bounceInDown');
-            f_t2.classList.add('fadeIn');
-            join.start()
-            count.start(function(){
-              join = count = null;
-            });
-          }
-        },0)
-      })
-    },100)
 }
 
 // 首屏弹层时 加载其余
