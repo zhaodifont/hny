@@ -64,7 +64,6 @@ var openCamera = function(cb,option,a,b) {
           return;
         }
         result = result.base64Image;
-        // $('#testTxt').text(result);
         cb(result)
       },option.type,a,b
     );
@@ -105,12 +104,10 @@ var shareImageWithCallback = function(cb1,cb2,imgBase64) {
 }
 
 var getCameraImage = function(cb){
-  document.title = (1111)
   return window.cameraApi.getCameraImage(
     function(result) {
-      $('#testTxt').show().text(window.getCameraS + '___ --00');
       if(window.isAndroid && !!result){
-        alert(22222)
+        window.getCameraS = true;
         cb(result)
       }else if(window.isIos && !!result.base64Image){
         window.getCameraS = true;
@@ -220,22 +217,12 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
-  // alert(B612Kaji.Native.android.Function.getInstance().getCameraImage)
-  B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-    document.title='22334';
-    $('#testTxt').show().text(res);
-  })
 
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
     }else if(window.isIos){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
-
-    window.cameraApi.getCameraImage(function(res){
-      document.title='223342222';
-      $('#testTxt').show().text(res);
-    })
 
     //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
     cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
@@ -253,19 +240,18 @@ window.indexPageReady = function(){
     if(defaultbgStatue)loadingStop();
 
 
-    // getCameraImage(function(res){
-    //   loadingStart();
-    //   $cropSection.css("visibility", "hidden");
-    //   $cropSection.css("display", "");
-    //   $('#testTxt').show().text(window.getCameraS + '___ 0');
-    //
-    //   cropStart();
-    //   setTimeout(function(){
-    //     cropChanged(res)
-    //   },0)
-    //
-    //   $('.firstPage_choose').css('display','none');
-    // })
+    getCameraImage(function(res){
+      loadingStart();
+      $cropSection.css("visibility", "hidden");
+      $cropSection.css("display", "");
+
+      cropStart();
+      setTimeout(function(){
+        cropChanged(res)
+      },0)
+
+      $('.firstPage_choose').css('display','none');
+    })
 
 
     document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
@@ -449,7 +435,6 @@ if(lowVersion){
 function openCameraBefore(){
   loadingStart();
   openCamera(function(res){
-    // document.querySelector('#testTxt').innerText = JSON.stringify(res);
     if(res.length == 0){
       loadingStop();
       return false;
@@ -461,7 +446,6 @@ function openCameraBefore(){
 function openGalleryBefore(){
   loadingStart();
   openCamera(function(res,type){
-    // document.querySelector('#testTxt').innerText = res;
     if(res.length == 0){
       loadingStop();
       return false;
@@ -485,7 +469,6 @@ function cropChanged(res){
     img.src = res;
     img.onload = function(){
       cropLoaded(this);
-      // $('#testTxt').text(this)
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})

@@ -9,6 +9,16 @@
     <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1554">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
     </script>
+    <script>
+    // 百度统计
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?24e21cea6b8b6bcfa760f23db9581dfb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
   </head>
 <body>
 <script type="text/javascript">
@@ -178,7 +188,7 @@
       </div>
 
   </div>
-<div id="testTxt" style="display:-none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
+<div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
 <img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
 <script>
 function loadScript(_src,cb){
@@ -205,16 +215,7 @@ window.getCameraS = false;
   window.isOther = false;
   if(/Android (\d+\.\d+)/.test(ua)){
     window.isAndroid=true;
-    loadScript('./static/js/bridge_android.js',function(){
-      document.title = 'bridge_android 1419';
-      setTimeout(function(){
-        document.title = !!(B612Kaji.Native.android.Function.getInstance().getCameraImage);
-        B612Kaji.Native.android.Function.getInstance().getCameraImage(function(res){
-          document.title = 'load ok';
-          $('#testTxt').show().text(res);
-        })
-      },0)
-    });
+    loadScript('./static/js/bridge_android.js');
   }else if(/iPhone|iPad|iPod/i.test(ua)){
     window.isIos = true;
     loadScript('./static/js/bridge_ios.js');
