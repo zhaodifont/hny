@@ -209,7 +209,7 @@
   display: block;width:4.45rem;line-height: .96rem;border-radius: 2rem;text-align: center;background-color: #fff;color:#cf4440;font-size: .36rem;
   margin: .8rem auto .5rem;
 }
-#proSection{z-index:444;background-color:#fff;height:100%;box-sizing: border-box;overflow: hidden;overflow-x: scroll;}
+#proSection{z-index:444;background-color:#fff;height:100%;box-sizing: border-box;overflow-x: scroll;}
 #proSection .vwpr{transform-origin: 0% 0%;border:1px transparent solid;box-sizing: border-box;}
 #proSection .content{overflow: hidden;}
 #proSection .content .wpr{top:0;bottom:0;left:0;right:0;display: flex;justify-content: center;width:100%;}
