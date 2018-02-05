@@ -53,10 +53,10 @@
                 <img src="./static/img/first_t2.png" class="t2 animated" alt="">
               </div>
             </div>
-            <div class="guide">
+            <div class="guide p-r" style="z-index:1">
                 <!-- <img src="./static/img/firstPic.jpg" width="100%"> -->
             </div>
-            <div class="wpr p-a">
+            <div class="wpr p-a" style="z-index:9">
                 已有<var id="joinNum">0</var>人参加<br/>
                 收到红包总额已突破<var id="targetNum">0</var>元
                 <span class="chooseBtn"><img src="./static/img/chooseBtn.png" style="width:1.84rem" alt=""></span>
@@ -75,7 +75,8 @@
       <!--  转换图片时需要 -->
       <div id="megaPixImage"></div>
       <!-- 生成器 -->
-      <canvas id="cropCanvas" class="p-a" style="z-index:1;left:-999rem;background-color:rgba(0,0,0,0)" width="420" height="420"></canvas>
+      <canvas id="cropCanvas" width="420" height="420" style="z-index:8;left:99999rem;top:0;"></canvas>
+
       <div id="cropSection" style="display:none;z-index:222;" >
 
           <!-- 选择各种主题style -->
@@ -179,14 +180,12 @@
           </div>
       </div>
 
-      <!-- ./static/test.mp3 -->
-
   </div>
-
-<audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
-<div id="audio_control" class='p-a'>
-  <img src="./static/img/audio_Icon.png" alt="">
-</div>
+  <!-- mp3 -->
+  <audio src="" controls loop id='audio' style="position:absolute;right:-999rem;"></audio>
+  <div id="audio_control" class='p-a'>
+    <img src="./static/img/audio_Icon.png" alt="">
+  </div>
 
 <div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
 <img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
@@ -291,6 +290,7 @@ window.getCameraS = false;
       function musicHandler(ev) {
           _play()
           document.body.removeEventListener(touchp, musicHandler);
+          ev.stopPropagation();
       }
       document.body.addEventListener(touchp, musicHandler,false);
 

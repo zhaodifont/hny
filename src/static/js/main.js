@@ -247,18 +247,19 @@ window.indexPageReady = function(){
       },0)
 
       $('.firstPage_choose').css('display','none');
+      $('#audio_control').css('opacity','1')
     })
 
 
     document.querySelector('#firstPage .chooseBtn').addEventListener(_touch,function(){
       $('.firstPage_choose').css('display','flex');
       cropStart();
+      $('#audio_control').css('opacity','.3')
     },false)
 
     window.setTimeout(function(){
 
-
-      !getCameraS && loadScript('./static/js/count.js',function(){
+      !window.getCameraS && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
             mcs = s2 - new Date(s1).getTime(),
@@ -326,11 +327,11 @@ window.indexPageReady = function(){
           }
         },0)
       })
-
         // 选择相机/选择相册
         $('.firstPage_choose').unbind(_touch);
         $('.firstPage_choose').on(_touch,function(){
           $('.firstPage_choose').css('display','none');
+          $('#audio_control').css('opacity','1')
         })
         $('.firstPage_choose .wpr').unbind(_touch);
         $('.firstPage_choose .wpr').on(_touch,function(e){
@@ -346,14 +347,15 @@ window.indexPageReady = function(){
 
         // 打开相机
         document.querySelector('.openCamera').addEventListener(_touch,function(){
-          openCameraBefore()
           _hmt.push(['_trackEvent', 'camera', 'click','打开相机']);
+          openCameraBefore()
+
         },false)
 
         // 打开相册
         document.querySelector('.openGallery').addEventListener(_touch,function(){
-          openGalleryBefore()
           _hmt.push(['_trackEvent', 'gallery', 'click','打开相册']);
+          openGalleryBefore()
         },false)
 
         // 检测断网
@@ -440,6 +442,7 @@ function openCameraBefore(){
       return false;
     };
     $('.firstPage_choose').css('display','none');
+    $('#audio_control').css('opacity','1')
     cropChanged(res)
   },{type:"imageCamera"})
 }
@@ -451,6 +454,7 @@ function openGalleryBefore(){
       return false;
     };
     $('.firstPage_choose').css('display','none');
+    $('#audio_control').css('opacity','1')
     cropChanged(res)
   },{type:"imageAlbum"})
 }
@@ -550,6 +554,7 @@ function cropLoaded(img){
 
 function toReChoose(){
   $('.firstPage_choose').css('display','flex');
+  $('#audio_control').css('opacity','.3')
 }
 
 function cropStop(){
