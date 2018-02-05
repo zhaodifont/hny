@@ -132,7 +132,7 @@
           </div>
       </div>
 
-      <div class="toast">拜年红包图制作完成</div>
+      <div class="toast" style="display:none">拜年红包图制作完成</div>
 
       <!-- 文本提示 -->
       <div class="nextGuide" style="display:none">
@@ -182,12 +182,14 @@
       </div>
 
       <!-- ./static/test.mp3 -->
-      <audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
-      <div id="audio_control" class='p-a'>
-        <img src="./static/img/audio_Icon.png" alt="">
-      </div>
 
   </div>
+
+<audio src="" controls loop id='audio' style="position:absolute;left:-999rem;"></audio>
+<div id="audio_control" class='p-a'>
+  <img src="./static/img/audio_Icon.png" alt="">
+</div>
+
 <div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:66666;bottom:0;left:0;">test</div>
 <img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
 <script>
@@ -234,7 +236,7 @@ window.getCameraS = false;
           if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
             // console.log('ok 23333');
               setTimeout(function(){
-                // indexPageReady();
+                indexPageReady();
               },0)
               allJsloaded = true;
               checkAll = null;

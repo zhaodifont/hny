@@ -10,7 +10,7 @@ function loadingStop(){
 var lowSysVersion = function(){
 // 苹果机
   if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-    var iosLimitVersion = [10, 1, 1]; //"10_3_1", "9_2"; 业务原因ios最低支持到10_1_1版本
+    var iosLimitVersion = [10, 1, 1]; //
     var iosVersionArr = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/); // ["OS 10_3_2", "10", "3", "1"]
     //去除匹配的第一个下标的元素
     iosVersionArr.shift();
@@ -28,7 +28,7 @@ var lowSysVersion = function(){
     }
     return false;
   } else if (/(Android)/i.test(navigator.userAgent)){ //安卓机
-    var andrLimitVersion = [4, 5, 0]; //"5.0.2", "4.2";
+    var andrLimitVersion = [4, 5, 0]; //"4.2";
     var andrVersionArr = navigator.userAgent.match(/Android (\d+)\.(\d+)\.?(\d+)?/); //  ["Android 5.0.2","5","0","2"]
     //去除匹配的第一个下标的元素
     andrVersionArr.shift();
@@ -36,7 +36,6 @@ var lowSysVersion = function(){
       var cur = parseInt(andrVersionArr[i], 10) || 0;
       var limit = parseInt(andrLimitVersion[i], 10) || 0;
       if(cur <= limit){
-        // document.title = ("低版本模式");
         return true;
       } else if(cur > limit){
         return false;
@@ -65,7 +64,7 @@ var openCamera = function(cb,option,a,b) {
         }
         result = result.base64Image;
         cb(result)
-      },option.type,a,b
+      },option.type
     );
   }else{
     console.log('error')
@@ -224,21 +223,6 @@ window.indexPageReady = function(){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
 
-    //  targetMinWidth targetMinHeight 让宽和高 至少一项是正好满屏
-    cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-        targetMinWidth : 750,
-        targetMinHeight: 750
-    })
-    var $canvas = $("#cropCanvas");
-    canvasDom = $canvas[0];
-    canvasCtx = canvasDom.getContext("2d");
-    cropGesture.targetMinWidth = canvasDom.width;
-    cropGesture.targetMinHeight = canvasDom.height;
-
-    $cropSection.css("visibility", "hidden");
-    $cropSection.css("display", "");
-    if(defaultbgStatue)loadingStop();
-
 
     getCameraImage(function(res){
       loadingStart();
@@ -260,6 +244,22 @@ window.indexPageReady = function(){
     },false)
 
     window.setTimeout(function(){
+
+
+      var $canvas = $("#cropCanvas");
+      canvasDom = $canvas[0];
+      canvasCtx = canvasDom.getContext("2d");
+      cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
+          targetMinWidth : 450,
+          targetMinHeight: 450
+      })
+      // cropGesture.targetMinWidth = canvasDom.width;
+      // cropGesture.targetMinHeight = canvasDom.height;
+
+      $cropSection.css("visibility", "hidden");
+      $cropSection.css("display", "");
+      if(defaultbgStatue)loadingStop();
+
       !getCameraS && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
@@ -367,6 +367,7 @@ window.indexPageReady = function(){
 
 // 首屏弹层时 加载其余
 function cropStart(res){
+
   // 不管是否选择文件 都开始加载主题1
   if(!initTheme){changeTheme(themes[0])};
 
@@ -397,7 +398,6 @@ function cropStart(res){
           changeTheme(themes[index]);
       })
   })
-  $('#testTxt').show().text(window.getCameraS + '___ 1');
 
   cropStartStatus = true;
 }
@@ -464,31 +464,26 @@ function cropChanged(res){
     $('#firstPage').css('display','none')
 
     loadingStart()
-    $('#testTxt').show().text(window.getCameraS + '___ 2.1' + res.length);
     var img = new Image();
     img.src = res;
     img.onload = function(){
+
       cropLoaded(this);
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
-      $('#testTxt').show().text(window.getCameraS + '___ 2');
-
     }
-
 }
 
 // 安装给页面的 img 的src
 function cropLoaded(img){
-
-  $('#testTxt').show().text(window.getCameraS + '___ 3.1');
-
     // 将第一部中的图片 通过它的宽高 与 可触区域的宽高 协调大小
     var imgWidth = img.width;
     var imgHeight = img.height;
     var ratioWidth = $dropArea.width() / imgWidth; // 5 / 10
     var ratioHeight = $dropArea.height() / imgHeight; // 5 / 20
     var ratio = ratioWidth > ratioHeight ? ratioWidth : ratioHeight;
+
 
     cropGesture.targetMinWidth = imgWidth * ratio;
     cropGesture.targetMinHeight = imgHeight * ratio;
@@ -503,7 +498,6 @@ function cropLoaded(img){
     $defaultImgSet.height(cropGesture.targetMinHeight);
     $defaultImgSet.css("left", [imgOriginX, "px"].join(""));
     $defaultImgSet.css("top", [imgOriginY, "px"].join(""));
-    $('#testTxt').show().text(window.getCameraS + '___ 3.11');
 
     $defaultImgSet[0].src = img.src;
     $defaultImgSet[0].onload = function(){
@@ -515,7 +509,6 @@ function cropLoaded(img){
           loadingStop();
         }
       },10)
-      $('#testTxt').show().text(window.getCameraS + '___ 3.2');
     }
 
     if(initTheme)loadingStop();
@@ -630,7 +623,7 @@ function proSave(){
         $('#proSection').css('display','block')
         loadingStop();
         // $('.toast').addClass('run');
-        $('.toast').addClass('run');
+        $('.toast').show().addClass('run');
         setTimeout(function(){
           $('.toast').removeClass('run').hiden()
         },2100)
