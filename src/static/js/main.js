@@ -216,7 +216,7 @@ var $upload = $('#upload'), //原始上传按钮
 
 
 window.indexPageReady = function(){
-
+    document.title = '1745';
     if(window.isAndroid){
       window.cameraApi = B612Kaji.Native.android.Function.getInstance();
     }else if(window.isIos){
@@ -236,6 +236,7 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
+    window.getCameraS = false;
     getCameraImage(function(res){
       loadingStart();
       $cropSection.css("visibility", "hidden");
@@ -259,7 +260,7 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
-      !window.getCameraS && loadScript('./static/js/count.js',function(){
+      !(window.getCameraS) && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
             s2 = Date.now(),//当前日期：2017-04-24
             mcs = s2 - new Date(s1).getTime(),
