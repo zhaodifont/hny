@@ -223,6 +223,18 @@ window.indexPageReady = function(){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
 
+    var $canvas = $("#cropCanvas");
+    canvasDom = $canvas[0];
+    canvasCtx = canvasDom.getContext("2d");
+    cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
+        targetMinWidth : 460,
+        targetMinHeight: 460
+    })
+    cropGesture.targetMinWidth = canvasDom.width;
+    cropGesture.targetMinHeight = canvasDom.height;
+    $cropSection.css("visibility", "hidden");
+    $cropSection.css("display", "");
+    if(defaultbgStatue)loadingStop();
 
     getCameraImage(function(res){
       loadingStart();
@@ -245,20 +257,6 @@ window.indexPageReady = function(){
 
     window.setTimeout(function(){
 
-
-      var $canvas = $("#cropCanvas");
-      canvasDom = $canvas[0];
-      canvasCtx = canvasDom.getContext("2d");
-      cropGesture = new EZGesture($dropArea[0], $defaultImgSet[0], {
-          targetMinWidth : 560,
-          targetMinHeight: 560
-      })
-      // cropGesture.targetMinWidth = canvasDom.width;
-      // cropGesture.targetMinHeight = canvasDom.height;
-
-      $cropSection.css("visibility", "hidden");
-      $cropSection.css("display", "");
-      if(defaultbgStatue)loadingStop();
 
       !getCameraS && loadScript('./static/js/count.js',function(){
         var s1 = '2018/01/25',
