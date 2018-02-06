@@ -183,35 +183,35 @@ var $upload = $('#upload'), //原始上传按钮
       $themeFoot.find('img')[0].src = obj.foot;
 
 
+
       if(!!obj.eqpos){
         $('#eCode').css(obj.eqpos)
       }
-
-
       var img = new Image();
       img.onload = function(){
         themeBgImg.src = img.src;
         setTimeout(function(){
           // console.log('initTheme');
+          loadingStop();
+          initTheme = true;
 
           $('#cropLayer').css({
             height:$('#cropLayer').offset().width,
             left:($('#cropSection').width() - $('#cropLayer').width()) / 2
           })
-
           $('#dropArea').css({
             width:$('#cropLayer').width(),
-            height:$('#cropLayer').offset().width,
+            height:$('#cropLayer').height(),
             left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
             top:$('#cropLayer').offset().top + $cropSection.scrollTop()
           })
 
-          loadingStop();
-          initTheme = true;
-
         },160)
+
       };
       img.src = obj.bg;
+
+
 
     },
     zd_qrcode = null,
@@ -238,6 +238,18 @@ window.indexPageReady = function(){
     $cropSection.css("visibility", "hidden");
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
+
+    $('#cropLayer').css({
+      height:$('#cropLayer').offset().width,
+      left:($('#cropSection').width() - $('#cropLayer').width()) / 2
+    })
+    $('#dropArea').css({
+      width:$('#cropLayer').width(),
+      height:$('#cropLayer').height(),
+      left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
+      top:$('#cropLayer').offset().top + $cropSection.scrollTop()
+    })
+
 
     getCameraImage(function(res){
       loadingStart();
@@ -292,6 +304,7 @@ window.indexPageReady = function(){
           $('.nextGuide .p1').empty().html('请检查网络链接')
           $('.nextGuide').css('display','flex');
         })
+
 
     },20)
 
