@@ -232,8 +232,7 @@ function loadScript(_src,cb){
     window.isOther = true;
   }
 
-  setTimeout(function(){
-    $('#testTxt').show().text('261117' + window.getCameraS);
+    $('#testTxt').show().text('261127' + window.getCameraS);
     !(window.getCameraS) && loadScript('./static/js/count.js',function(){
       var s1 = '2018/01/25',
           s2 = Date.now(),//当前日期：2017-04-24
@@ -303,7 +302,6 @@ function loadScript(_src,cb){
       },0)
     })
 
-  },10)
 
 }()
 
@@ -333,7 +331,7 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=261117',function(){
+      loadScript('./static/js/main.js?v=261127',function(){
           mainJsLoaded = true;
           checkAll('main');
 
