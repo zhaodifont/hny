@@ -10,7 +10,7 @@ function loadingStop(){
 var lowSysVersion = function(){
 // 苹果机
   if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-    var iosLimitVersion = [10, 1, 3]; //
+    var iosLimitVersion = [10, 2, 2]; //
     var iosVersionArr = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/); // ["OS 10_3_2", "10", "3", "1"]
     //去除匹配的第一个下标的元素
     iosVersionArr.shift();
@@ -18,9 +18,7 @@ var lowSysVersion = function(){
       //防止undefined， 版本号为2位数时， 数组中最后一位是undefined
       var cur = parseInt(iosVersionArr[i], 10) || 0;
       var limit = parseInt(iosLimitVersion[i], 10) || 0;
-
-      // console.log(iosVersionArr[i],cur,iosLimitVersion[i],limit)
-                // cur<limit：当前版本低于限制版本； cur==limit:当前版本等于限制版本，继续比较小版本；cur>limit:当前版本高于限制版本
+      // cur<limit：当前版本低于限制版本； cur==limit:当前版本等于限制版本，继续比较小版本；cur>limit:当前版本高于限制版本
       if(cur < limit){
         return true;
       } else if(cur > limit){
@@ -46,7 +44,6 @@ var lowSysVersion = function(){
   }
 }
 var lowVersion = lowSysVersion();
-
 var _touch = window.supportTouch?"touchend":"click";
 // 相机
 var openCamera = function(cb,option,a,b) {
@@ -357,7 +354,6 @@ if(lowVersion){
           setTimeout(function(){
             $('#toNext').trigger('click');
           },0)
-
         }
         img.src=res;
       },0)
@@ -406,7 +402,6 @@ function cropChanged(res){
     var img = new Image();
     img.src = res;
     img.onload = function(){
-
       cropLoaded(this);
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
@@ -465,8 +460,6 @@ function cropLoaded(img){
       _hmt.push(['_trackEvent', 'smQrEnter', 'click', '上传二维码页面的PV'])
       if(!upqrStatue && !lowVersion){
         upqr()
-      }else{
-        return;
       }
     })
     $('#qrGuide .return').unbind(_touch);
@@ -503,7 +496,7 @@ function cropConfirm(evt) {
    var $cropImg = $defaultImgSet;
    var canvasScale =  canvasDom.height / $('#cropLayer .wpr').height();
    var megaPixImageScale = $('#megaPixImage').width() / $cropImg.width();
-   // var themeHeadScale = $('#megaPixImage').width() / $themeHead.width();
+
    var imgOrigin = {
        x: parseInt($cropImg.css('left')) || 0,
        y: parseInt($cropImg.css('top')) || 0
@@ -512,7 +505,6 @@ function cropConfirm(evt) {
        width: $cropImg.width(),
        height: $cropImg.height()
    };
-   // canvasCtx.clearRect(0, 0, canvasDom.width, canvasDom.height);
    // 画主题图片
    var sa = canvasDom.width/$themeBgImg.width(),
         as = $themeBgImg.width()/canvasDom.width;
@@ -533,8 +525,6 @@ function cropConfirm(evt) {
        'top': $('#testImg').attr('height')*ecodeS,
        'width': $('#testImg').attr('width')*.5266
      };
-     // canvasCtx.fillStyle="#fff";
-     // canvasCtx.fillRect($('#eCode').offset().left-2,$('#eCode').offset().top + $cropSection.scrollTop() - 2,$('#eCode').width()+1,$('#eCode').height()+1);
      canvasCtx.drawImage($('#testImg')[0], ecode.left, ecode.top, ecode.width, ecode.width, $('#eCode').offset().left,$('#eCode').offset().top + $cropSection.scrollTop(),$('#eCode').width(),$('#eCode').height());
    }else{
      canvasCtx.fillStyle="#fff";
@@ -657,7 +647,7 @@ var upqr = function(){
     }else if(a.indexOf('Failed') > -1){
       // $('.nextGuide .p1').empty().html('服务端')
       // $('.nextGuide').css('display','flex');
-      console.log('error 请联系技术人员')
+      alert('error 请联系技术人员')
       _hmt.push(['_trackEvent', 'qrcodeUpFail', 'click','不支持的机型 异常']);
     }else{
       setTimeout(function(){

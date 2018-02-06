@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>拜年红包</title>
     <meta name= "author" content="lzd" >
-    <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1554">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
@@ -23,13 +23,12 @@
 !function(e,t){var n=e.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,function(){var t=n.clientWidth;t&&(t>=750?(t=750,e.body.style.width="750px"):e.body.style.width=t+"px",n.style.fontSize=100*(t/750)+"px",n.dataset.width=t,n.dataset.percent=100*(t/750))});d(),e.documentElement.classList.add("iosx"+t.devicePixelRatio),e.addEventListener&&t.addEventListener(i,d,!1)}(document,window)
 </script>
 
-  <div id="app" class="p-r">
-
-    <div style="z-index:9999;position:absolute;left:-999rem;">
-    <div id="zd_qrcode"></div>
-    <canvas id="qr-canvas" width="40" height="30"></canvas>
-    <input type="file" id="handleQR"  accept="image/*" />
-  </div>
+  <div id="app">
+    <div style="z-index:9999;position:absolute;left:0;top:-999rem;overflow:hidden;">
+      <div id="zd_qrcode"></div>
+      <canvas id="qr-canvas" width="40" height="30"></canvas>
+      <input type="file" id="handleQR"  accept="image/*" />
+    </div>
       <!-- 默认上传input -->
       <!-- <input id="upload" class="p-a" type="file" accept="image/*" /> -->
 
@@ -73,9 +72,9 @@
       </div>
 
       <!--  转换图片时需要 -->
-      <div id="megaPixImage" style="position:absolute;z-index:8;left:99999rem;top:0;"></div>
+      <div id="megaPixImage" style="position:absolute;z-index:8;left:0;top:-999rem;"></div>
       <!-- 生成器 -->
-      <canvas id="cropCanvas" width="420" height="420" style="position:absolute;z-index:8;left:99999rem;top:0;"></canvas>
+      <canvas id="cropCanvas" width="420" height="420" style="position:absolute;z-index:8;left:0;top:-999rem;"></canvas>
 
       <div id="cropSection" style="display:none;z-index:222;" >
           <!-- 选择各种主题style -->
@@ -95,11 +94,10 @@
               <div id="dropArea" class="defaultPic p-a"></div>
           </div>
 
-
+          <a href="javascript:void(0)" id="toNext" style="position:absolute;left:0;top:-999rem;">下一步</a>
           <div class="styleChoose p-r" id="theme_foot">
             <img src="" alt="">
               <!-- <a href="javascript:void(0)" id="reChoose">重新选择</a> -->
-              <a href="javascript:void(0)" id="toNext" style="position:absolute;left:-999rem;">下一步</a>
               <div class="wpr p-a">
                 <div class="">
                     <div class="item" id="reChoose"><img src="./static/img/reChoose.png" style="width:.63rem;" alt=""> </div>
@@ -181,13 +179,13 @@
 
   </div>
   <!-- mp3 -->
-  <audio src="" controls loop id='audio' style="position:absolute;right:-999rem;"></audio>
+  <audio src="" controls loop id='audio'  style="position:absolute;top:0;top:-999rem;"></audio>
   <div id="audio_control" class='p-a'>
     <img src="./static/img/audio_Icon.png" alt="">
   </div>
 
-<div id="testTxt" style="display:none;position:fixed;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:11166666;bottom:0;left:0;">test</div>
-<img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
+<div id="testTxt" style="display:none;position:absolute;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:11166666;bottom:0;left:0;">test</div>
+<img id="testImg" src="" style="position:absolute;z-index:666;top:-999rem;left:0;" alt="">
 <script>
 window.getCameraS = false;
 function loadScript(_src,cb){
@@ -214,10 +212,7 @@ function loadScript(_src,cb){
   }
   var _from=URLParams["from"];
   window.getCameraS = !!_from;
-  // if(window.getCamera){
-  //   _hmt.push(['_trackEvent', 'cameraWithImgEnter', 'click','使用咔叽拍照进入页面']);
-  // }
-// var cameraApi = B612Kaji.Native.android.Function.getInstance();
+
   var ua=navigator.userAgent;
   window.isAndroid=false;
   window.isIos = false;
@@ -232,80 +227,7 @@ function loadScript(_src,cb){
     window.isOther = true;
   }
 
-    $('#testTxt').show().text('261127' + window.getCameraS);
-    !(window.getCameraS) && loadScript('./static/js/count.js',function(){
-      var s1 = '2018/01/25',
-          s2 = Date.now(),//当前日期：2017-04-24
-          mcs = s2 - new Date(s1).getTime(),
-          targNum = 0,
-          time = Math.floor(mcs / (1000 * 60 * 60 * 24)),
-          _days = Math.floor(mcs / (1000 * 60 * 60 * 24)),
-          _hours = Math.floor(mcs / (1000 * 60 * 60)) - (_days*24),
-          _mins = Math.floor(mcs / (1000 * 60)) - (_days*24*60) - _hours*60,
-          _secs = Math.floor(mcs / (1000)) - (_days*24*3600) - _hours*3600 - _mins *60;
-          // console.log(_mins);
-          // _secs = parseInt(days / (1000 * 60 * 60)) - (_days*24*60*60);
-      // console.log("time:",_days + '天'+_hours + '小时' + _mins + '分'+_secs + '秒');
-
-        if(_days < 2){
-          targNum = parseInt(_days*24*3600*80 + (_hours*3600*80) + (_mins*60*80) + (_secs*80))
-        }else if(_days >= 2 && _days < 4){
-          targNum = parseInt(2*24*3600*80 + (1*24*3600*50) + (_hours*3600*50) + (_mins*60*50) + (_secs*50))
-        }else if( _days >=4 && _days < 6){
-          targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (_hours*3600*30) + (_mins*60*30) + (_secs*30))
-        }else if( _days >=6 && _days < 8){
-          targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (_hours*3600*20) + (_mins*60*20) + (_secs*20))
-        }else{
-          targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (2*24*3600*20) + (_hours*3600*5) + (_mins*60*5) + (_secs*5))
-        }
-
-      document.querySelectorAll('.loadingDiv')[0].style.display='';
-      // 默认图片
-      var img = new Image();
-      img.onload = function(){
-        img.setAttribute('width','100%')
-        document.querySelectorAll('.guide')[0].appendChild(img);
-        defaultbgStatue = true;
-      }
-      img.src = './static/img/firstPic.jpg';
-      // number  开始运行
-      var joinNum = targNum,
-          targetNum = parseInt(joinNum*32),
-          count = new CountUp('targetNum', 0, targetNum, 0, 1.5),
-          join = new CountUp('joinNum', 0, joinNum, 0, 1),
-          f_t1 = document.querySelector('#firstPage .t1'),
-          f_t2 = document.querySelector('#firstPage .t2');
-
-      var timer = setInterval(function(){
-        if(defaultbgStatue){
-          clearInterval(timer);
-          timer = null;
-          if(loadingStop)loadingStop();
-
-          if(!document.querySelector('#app').classList.contains('full')){
-            var img = new Image();
-            img.onload = function(){
-              $('#aside img')[0].src=this.src;
-              $('#aside img')[0].style.opacity=1;
-            }
-            img.src="./static/img/aside.jpg";
-          }
-
-          // 首屏 标题
-          f_t1.classList.add('bounceInDown');
-          f_t2.classList.add('fadeIn');
-          join.start()
-          count.start(function(){
-            join = count = null;
-          });
-        }
-      },0)
-    })
-
-
 }()
-
-
 
   var zeptoJsLoaded = true,
       extJsLoad = false,
@@ -331,7 +253,7 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=261127',function(){
+      loadScript('./static/js/main.js?v=261356',function(){
           mainJsLoaded = true;
           checkAll('main');
 
@@ -399,6 +321,71 @@ function loadScript(_src,cb){
     _play()
 }()
 
+$('#testTxt').show().text('261356' + window.getCameraS);
+!(window.getCameraS) && loadScript('./static/js/count.js',function(){
+  var s1 = '2018/01/25',
+      s2 = Date.now(),//当前日期：2017-04-24
+      mcs = s2 - new Date(s1).getTime(),
+      targNum = 0,
+      time = Math.floor(mcs / (1000 * 60 * 60 * 24)),
+      _days = Math.floor(mcs / (1000 * 60 * 60 * 24)),
+      _hours = Math.floor(mcs / (1000 * 60 * 60)) - (_days*24),
+      _mins = Math.floor(mcs / (1000 * 60)) - (_days*24*60) - _hours*60,
+      _secs = Math.floor(mcs / (1000)) - (_days*24*3600) - _hours*3600 - _mins *60;
 
+    if(_days < 2){
+      targNum = parseInt(_days*24*3600*80 + (_hours*3600*80) + (_mins*60*80) + (_secs*80))
+    }else if(_days >= 2 && _days < 4){
+      targNum = parseInt(2*24*3600*80 + (1*24*3600*50) + (_hours*3600*50) + (_mins*60*50) + (_secs*50))
+    }else if( _days >=4 && _days < 6){
+      targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (_hours*3600*30) + (_mins*60*30) + (_secs*30))
+    }else if( _days >=6 && _days < 8){
+      targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (_hours*3600*20) + (_mins*60*20) + (_secs*20))
+    }else{
+      targNum = parseInt(2*24*3600*80 + (2*24*3600*50) + (2*24*3600*30) + (2*24*3600*20) + (_hours*3600*5) + (_mins*60*5) + (_secs*5))
+    }
+
+  document.querySelectorAll('.loadingDiv')[0].style.display='';
+  // 默认图片
+  var img = new Image();
+  img.onload = function(){
+    img.setAttribute('width','100%')
+    document.querySelectorAll('.guide')[0].appendChild(img);
+    defaultbgStatue = true;
+  }
+  img.src = './static/img/firstPic.jpg';
+  // number  开始运行
+  var joinNum = targNum,
+      targetNum = parseInt(joinNum*32),
+      count = new CountUp('targetNum', 0, targetNum, 0, 1.5),
+      join = new CountUp('joinNum', 0, joinNum, 0, 1),
+      f_t1 = document.querySelector('#firstPage .t1'),
+      f_t2 = document.querySelector('#firstPage .t2');
+
+  var timer = setInterval(function(){
+    if(defaultbgStatue){
+      clearInterval(timer);
+      timer = null;
+      if(loadingStop)loadingStop();
+
+      if(!document.querySelector('#app').classList.contains('full')){
+        var img = new Image();
+        img.onload = function(){
+          $('#aside img')[0].src=this.src;
+          $('#aside img')[0].style.opacity=1;
+        }
+        img.src="./static/img/aside.jpg";
+      }
+
+      // 首屏 标题
+      f_t1.classList.add('bounceInDown');
+      f_t2.classList.add('fadeIn');
+      join.start()
+      count.start(function(){
+        join = count = null;
+      });
+    }
+  },0)
+})
 </script>
 </html>
