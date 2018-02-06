@@ -52,8 +52,8 @@ var _hmt = _hmt || [];
       </div>
 
       <!-- 1 引导页 -->
-      <div id="firstPage" class="p-r" style="z-index:111;display:-none">
-          <div class="p-r" style="z-index:66;background-color:#d2453f;">
+      <div id="firstPage" class="p-r" style="z-index:223;display:-none">
+          <div class="p-r" style="z-index:66;background-color:#d2453f;overflow:hidden;">
             <div class="tit p-a">
               <div class="t1_wpr">
                 <img src="./static/img/first_t1.png" class="t1 animated" alt="">
@@ -86,7 +86,7 @@ var _hmt = _hmt || [];
       <!-- 生成器 -->
       <canvas id="cropCanvas" width="420" height="420" style="position:absolute;z-index:8;left:0;top:-999rem;"></canvas>
 
-      <div id="cropSection" style="z-index:222;display:none" >
+      <div id="cropSection" style="z-index:222;" >
           <!-- 选择各种主题style -->
           <div class="theme" style="z-index:2;">
             <!-- themebg -->
@@ -332,7 +332,7 @@ function loadScript(_src,cb){
     _play()
 }()
 
-// $('#testTxt').show().text('261749' + window.getCameraS);
+$('#testTxt').show().text('262023' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
