@@ -47,7 +47,7 @@ B612Kaji.Native.ios.Function.prototype = {
 	shareImage: function (imageUrl) {
 		this.callback.shareImage = function (result) {
 			var json = JSON.parse(result);
-			console.log("success : " + json.success + " errorMessage : " + json.errorMessage);
+			// console.log("success : " + json.success + " errorMessage : " + json.errorMessage);
 		};
 		var options = {"imageUrl" : imageUrl};
 		this.calliOSFunction("shareImage", options, "B612Kaji.Native.ios.Function.getInstance().callback.shareImage");
@@ -56,11 +56,11 @@ B612Kaji.Native.ios.Function.prototype = {
 	shareImageWithCallback: function(imageUrl, sCallback) {
 		this.callback.shareImage = function (result) {
 			var json = JSON.parse(result);
-			console.log("success : " + json.success + " errorMessage : " + json.errorMessage);
+			// console.log("success : " + json.success + " errorMessage : " + json.errorMessage);
 		};
 		this.callback.clickShareButton = function(result) {
 			var json = JSON.parse(result);
-			console.log("success : " + json.success + " errorMessage : " + json.errorMessage);
+			// console.log("success : " + json.success + " errorMessage : " + json.errorMessage);
 			sCallback(result);
 		};
 		var options = {};
