@@ -44,6 +44,7 @@ var lowSysVersion = function(){
   }
 }
 var lowVersion = lowSysVersion();
+alert(lowVersion)
 var _touch = window.supportTouch?"touchend":"click";
 // 相机
 var openCamera = function(cb,option,a,b) {
