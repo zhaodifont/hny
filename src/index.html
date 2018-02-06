@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 !function(e,t){var n=e.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,function(){var t=n.clientWidth;t&&(t>=750?(t=750,e.body.style.width="750px"):e.body.style.width=t+"px",n.style.fontSize=100*(t/750)+"px",n.dataset.width=t,n.dataset.percent=100*(t/750))});d(),e.documentElement.classList.add("iosx"+t.devicePixelRatio),e.addEventListener&&t.addEventListener(i,d,!1)}(document,window)
 </script>
 
-  <div id="app" class="full">
+  <div id="app">
     <div style="z-index:9999;position:absolute;left:0;top:-999rem;overflow:hidden;">
       <div id="zd_qrcode"></div>
       <canvas id="qr-canvas" width="40" height="30"></canvas>
@@ -86,7 +86,7 @@ var _hmt = _hmt || [];
       <!-- 生成器 -->
       <canvas id="cropCanvas" width="420" height="420" style="position:absolute;z-index:8;left:0;top:-999rem;"></canvas>
 
-      <div id="cropSection" style="z-index:222;" >
+      <div id="cropSection" style="z-index:222;display:none" >
           <!-- 选择各种主题style -->
           <div class="theme" style="z-index:2;">
             <!-- themebg -->

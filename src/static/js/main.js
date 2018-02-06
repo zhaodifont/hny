@@ -458,7 +458,7 @@ function cropLoaded(img){
     $('#eCode').unbind(_touch);
     $('#eCode').on(_touch,function(){
       $('#qrGuide').css('display','');
-      _hmt.push(['_trackEvent', 'smQrEnter', 'click', '上传二维码页面的PV'])
+      _hmt.push(['_trackEvent', 'smQrEnter', 'click', '上传二维码按钮的点击'])
       if(!upqrStatue && !lowVersion){
         upqr()
       }
