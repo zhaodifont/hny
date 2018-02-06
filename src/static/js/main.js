@@ -187,14 +187,21 @@ var $upload = $('#upload'), //原始上传按钮
         themeBgImg.src = img.src;
         setTimeout(function(){
           // console.log('initTheme');
+          var aWidth = $('#cropLayer').offset().width;
+          $('#cropLayer').css({
+            height:aWidth,
+          })
+          $('#dropArea').css({
+            width:aWidth,
+            height:aWidth,
+          })
           loadingStop();
+
           initTheme = true;
         },160)
 
       };
       img.src = obj.bg;
-
-
 
     },
     zd_qrcode = null,
@@ -209,6 +216,17 @@ window.indexPageReady = function(){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
 
+    $('#cropLayer').css({
+      // height:$('#cropLayer').offset().width,
+      left:($('#cropSection').width() - $('#cropLayer').width()) / 2
+    })
+    $('#dropArea').css({
+      // width:$('#cropLayer').width(),
+      // height:$('#cropLayer').height(),
+      left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
+      top:$('#cropLayer').offset().top + $cropSection.scrollTop()
+    })
+
     var $canvas = $("#cropCanvas");
     canvasDom = $canvas[0];
     canvasCtx = canvasDom.getContext("2d");
@@ -222,16 +240,7 @@ window.indexPageReady = function(){
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
 
-    $('#cropLayer').css({
-      height:$('#cropLayer').offset().width,
-      left:($('#cropSection').width() - $('#cropLayer').width()) / 2
-    })
-    $('#dropArea').css({
-      width:$('#cropLayer').width(),
-      height:$('#cropLayer').height(),
-      left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
-      top:$('#cropLayer').offset().top + $cropSection.scrollTop()
-    })
+
 
 
     getCameraImage(function(res){
@@ -254,6 +263,14 @@ window.indexPageReady = function(){
     },false);
 
     window.setTimeout(function(){
+      var aWidth = $('#cropLayer').offset().width;
+      $('#cropLayer').css({
+        height:aWidth,
+      })
+      $('#dropArea').css({
+        width:aWidth,
+        height:aWidth,
+      })
         // 选择相机/选择相册
         $('.firstPage_choose').unbind(_touch);
         $('.firstPage_choose').on(_touch,function(){
