@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>拜年红包</title>
     <meta name= "author" content="lzd" >
-    <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="./static/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=1554">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
@@ -73,12 +73,11 @@
       </div>
 
       <!--  转换图片时需要 -->
-      <div id="megaPixImage"></div>
+      <div id="megaPixImage" style="position:absolute;z-index:8;left:99999rem;top:0;"></div>
       <!-- 生成器 -->
-      <canvas id="cropCanvas" width="420" height="420" style="z-index:8;left:99999rem;top:0;"></canvas>
+      <canvas id="cropCanvas" width="420" height="420" style="position:absolute;z-index:8;left:99999rem;top:0;"></canvas>
 
       <div id="cropSection" style="display:none;z-index:222;" >
-
           <!-- 选择各种主题style -->
           <div class="theme" style="z-index:2;">
             <!-- themebg -->

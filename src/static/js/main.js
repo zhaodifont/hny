@@ -10,7 +10,7 @@ function loadingStop(){
 var lowSysVersion = function(){
 // 苹果机
   if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-    var iosLimitVersion = [10, 1, 1]; //
+    var iosLimitVersion = [10, 1, 3]; //
     var iosVersionArr = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/); // ["OS 10_3_2", "10", "3", "1"]
     //去除匹配的第一个下标的元素
     iosVersionArr.shift();
@@ -18,9 +18,10 @@ var lowSysVersion = function(){
       //防止undefined， 版本号为2位数时， 数组中最后一位是undefined
       var cur = parseInt(iosVersionArr[i], 10) || 0;
       var limit = parseInt(iosLimitVersion[i], 10) || 0;
+
       // console.log(iosVersionArr[i],cur,iosLimitVersion[i],limit)
                 // cur<limit：当前版本低于限制版本； cur==limit:当前版本等于限制版本，继续比较小版本；cur>limit:当前版本高于限制版本
-      if(cur <= limit){
+      if(cur < limit){
         return true;
       } else if(cur > limit){
         return false;
@@ -35,7 +36,7 @@ var lowSysVersion = function(){
     for(var i = 0; i< andrLimitVersion.length; i++){
       var cur = parseInt(andrVersionArr[i], 10) || 0;
       var limit = parseInt(andrLimitVersion[i], 10) || 0;
-      if(cur <= limit){
+      if(cur < limit){
         return true;
       } else if(cur > limit){
         return false;
@@ -202,6 +203,7 @@ var $upload = $('#upload'), //原始上传按钮
           // console.log('initTheme');
           loadingStop();
           initTheme = true;
+
         },260)
       };
       img.src = obj.bg;
