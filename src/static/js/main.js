@@ -181,30 +181,35 @@ var $upload = $('#upload'), //原始上传按钮
       loadingStart()
       $themeFoot.find('img')[0].style.width="100%";
       $themeFoot.find('img')[0].src = obj.foot;
-      $('#cropLayer').css({
-        height:$('#cropLayer').offset().width,
-        left:($('#cropSection').width() - $('#cropLayer').width()) / 2
-      })
+
 
       if(!!obj.eqpos){
         $('#eCode').css(obj.eqpos)
       }
 
-      $('#dropArea').css({
-        width:$('#cropLayer').width(),
-        height:$('#cropLayer').height(),
-        left:$('#cropLayer').offset().left,
-        top:$('#cropLayer').offset().top + $cropSection.scrollTop()
-      })
+
       var img = new Image();
       img.onload = function(){
         themeBgImg.src = img.src;
         setTimeout(function(){
           // console.log('initTheme');
+
+          $('#cropLayer').css({
+            height:$('#cropLayer').offset().width,
+            left:($('#cropSection').width() - $('#cropLayer').width()) / 2
+          })
+
+          $('#dropArea').css({
+            width:$('#cropLayer').width(),
+            height:$('#cropLayer').offset().width,
+            left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
+            top:$('#cropLayer').offset().top + $cropSection.scrollTop()
+          })
+
           loadingStop();
           initTheme = true;
 
-        },260)
+        },160)
       };
       img.src = obj.bg;
 
