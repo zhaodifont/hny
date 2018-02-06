@@ -182,8 +182,6 @@ var $upload = $('#upload'), //原始上传按钮
       $themeFoot.find('img')[0].style.width="100%";
       $themeFoot.find('img')[0].src = obj.foot;
 
-
-
       if(!!obj.eqpos){
         $('#eCode').css(obj.eqpos)
       }
@@ -194,18 +192,6 @@ var $upload = $('#upload'), //原始上传按钮
           // console.log('initTheme');
           loadingStop();
           initTheme = true;
-
-          $('#cropLayer').css({
-            height:$('#cropLayer').offset().width,
-            left:($('#cropSection').width() - $('#cropLayer').width()) / 2
-          })
-          $('#dropArea').css({
-            width:$('#cropLayer').width(),
-            height:$('#cropLayer').height(),
-            left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
-            top:$('#cropLayer').offset().top + $cropSection.scrollTop()
-          })
-
         },160)
 
       };

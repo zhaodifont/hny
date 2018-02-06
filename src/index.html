@@ -190,7 +190,6 @@
 <img id="testImg" src="" style="position:absolute;z-index:66666;left:-999rem;top:0" alt="">
 <script>
 window.getCameraS = false;
-
 function loadScript(_src,cb){
     var script = document.createElement('script');
     script.type="text/javascript";
@@ -215,9 +214,9 @@ function loadScript(_src,cb){
   }
   var _from=URLParams["from"];
   window.getCameraS = !!_from;
-  if(window.getCamera){
-    _hmt.push(['_trackEvent', 'cameraWithImgEnter', 'click','使用咔叽拍照进入页面']);
-  }
+  // if(window.getCamera){
+  //   _hmt.push(['_trackEvent', 'cameraWithImgEnter', 'click','使用咔叽拍照进入页面']);
+  // }
 // var cameraApi = B612Kaji.Native.android.Function.getInstance();
   var ua=navigator.userAgent;
   window.isAndroid=false;
@@ -234,7 +233,7 @@ function loadScript(_src,cb){
   }
 
   setTimeout(function(){
-    $('#testTxt').show().text('261105' + window.getCameraS);
+    $('#testTxt').show().text('261117' + window.getCameraS);
     !(window.getCameraS) && loadScript('./static/js/count.js',function(){
       var s1 = '2018/01/25',
           s2 = Date.now(),//当前日期：2017-04-24
@@ -304,7 +303,7 @@ function loadScript(_src,cb){
       },0)
     })
 
-  },0)
+  },10)
 
 }()
 
@@ -334,7 +333,7 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=261105',function(){
+      loadScript('./static/js/main.js?v=261117',function(){
           mainJsLoaded = true;
           checkAll('main');
 
