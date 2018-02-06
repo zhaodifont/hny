@@ -87,7 +87,7 @@
                <!-- themehead -->
               <div id="cropLayer" class="p-a" style="z-index:266">
                   <!-- <img src="" class="themeHead" data-width="0" alt=""> -->
-                  <div class="wpr p-a" style="">
+                  <div class="wpr p-a" style="width:100%;left:0;top:0;bottom:0;overflow: hidden;z-index:266;">
                       <img id="cropImg" class="p-a" style="top:0;width:100%" src="">
                   </div>
               </div>
@@ -254,7 +254,7 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=261636',function(){
+      loadScript('./static/js/main.js?v=261651',function(){
           mainJsLoaded = true;
           checkAll('main');
 
@@ -322,7 +322,7 @@ function loadScript(_src,cb){
     _play()
 }()
 
-$('#testTxt').show().text('261636' + window.getCameraS);
+$('#testTxt').show().text('261651' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24

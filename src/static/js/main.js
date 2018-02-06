@@ -187,18 +187,10 @@ var $upload = $('#upload'), //原始上传按钮
         themeBgImg.src = img.src;
         setTimeout(function(){
           // console.log('initTheme');
-          var aWidth = $('#cropLayer').offset().width;
-          $('#cropLayer').css({
-            height:aWidth,
-          })
-          $('#dropArea').css({
-            width:aWidth,
-            height:aWidth,
-          })
           loadingStop();
 
           initTheme = true;
-        },160)
+        },120)
 
       };
       img.src = obj.bg;
@@ -216,14 +208,15 @@ window.indexPageReady = function(){
       window.cameraApi = B612Kaji.Native.ios.Function.getInstance();
     }
 
+    var aWidth = $('#cropLayer').offset().width;
     $('#cropLayer').css({
-      // height:$('#cropLayer').offset().width,
-      left:($('#cropSection').width() - $('#cropLayer').width()) / 2
+      height:aWidth,
+      left:($('#cropSection').width() - aWidth) / 2
     })
     $('#dropArea').css({
-      // width:$('#cropLayer').width(),
-      // height:$('#cropLayer').height(),
-      left:($('#cropSection').width() - $('#cropLayer').width()) / 2,
+      width:aWidth,
+      height:aWidth,
+      left:($('#cropSection').width() - aWidth) / 2,
       top:$('#cropLayer').offset().top + $cropSection.scrollTop()
     })
 
@@ -239,8 +232,6 @@ window.indexPageReady = function(){
     $cropSection.css("visibility", "hidden");
     $cropSection.css("display", "");
     if(defaultbgStatue)loadingStop();
-
-
 
 
     getCameraImage(function(res){
@@ -263,14 +254,7 @@ window.indexPageReady = function(){
     },false);
 
     window.setTimeout(function(){
-      var aWidth = $('#cropLayer').offset().width;
-      $('#cropLayer').css({
-        height:aWidth,
-      })
-      $('#dropArea').css({
-        width:aWidth,
-        height:aWidth,
-      })
+
         // 选择相机/选择相册
         $('.firstPage_choose').unbind(_touch);
         $('.firstPage_choose').on(_touch,function(){
