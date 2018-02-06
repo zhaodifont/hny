@@ -18,6 +18,12 @@
   height:32%;box-sizing: border-box;
   padding-top:5%;
 }
+@media screen and (max-width: 400px){
+  #app.full #firstPage .p-r>.wpr{
+    height:28%;box-sizing: border-box;
+    padding-top:5%;
+  }
+}
 .loadingDiv,.loadingDiv .flex,.wrapper,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.firstPage_choose{
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
@@ -122,6 +128,8 @@
 }
 #firstPage .t1{width:6.69rem;}
 #firstPage .t2{width:3.97rem;margin-right:.96rem;}
+#firstPage .guide{margin-top:5%}
+
 .firstPage_choose{
   z-index:99996;width:100%;background-color: rgba(0,0,0,.6);
   display: flex;align-items: center;justify-content: center;

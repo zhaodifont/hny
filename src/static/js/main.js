@@ -44,7 +44,6 @@ var lowSysVersion = function(){
   }
 }
 var lowVersion = lowSysVersion();
-alert(lowVersion)
 var _touch = window.supportTouch?"touchend":"click";
 // 相机
 var openCamera = function(cb,option,a,b) {
@@ -568,7 +567,6 @@ function proSave(){
         saveImage(function(res){
           $('.nextGuide .p1').empty().html('保存好了~<br/>分享给亲朋好友领红包吧')
           $('.nextGuide').css('display','flex');
-          // alert($('#theme_foot span').find('.item.active').index())
           _hmt.push(['_trackEvent', 'saveImageWithTheme'+themeCount, 'save', '模板'+ themeCount + '的保存量']);
           $('.nextGuide .confirm').on(_touch,function(){
             $('#proSection .share').trigger('click')
@@ -648,7 +646,7 @@ var upqr = function(){
     }else if(a.indexOf('Failed') > -1){
       // $('.nextGuide .p1').empty().html('服务端')
       // $('.nextGuide').css('display','flex');
-      alert('error 请联系技术人员')
+      console.log('error 请联系技术人员')
       _hmt.push(['_trackEvent', 'qrcodeUpFail', 'click','不支持的机型 异常']);
     }else{
       setTimeout(function(){
