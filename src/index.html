@@ -258,7 +258,7 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=262113',function(){
+      loadScript('./static/js/main.js?v=262121',function(){
           mainJsLoaded = true;
           checkAll('main');
 
@@ -268,7 +268,7 @@ function loadScript(_src,cb){
 </body>
 <script>
 
-$('#testTxt').show().text('262113' + window.getCameraS);
+$('#testTxt').show().text('262121' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
@@ -312,9 +312,7 @@ $('#testTxt').show().text('262113' + window.getCameraS);
   var timer = setInterval(function(){
     if(defaultbgStatue){
       clearInterval(timer);
-      timer = null;
       if(loadingStop)loadingStop();
-
       if(!document.querySelector('#app').classList.contains('full')){
         var img = new Image();
         img.onload = function(){
@@ -332,6 +330,7 @@ $('#testTxt').show().text('262113' + window.getCameraS);
       count.start(function(){
         join = count = null;
       });
+      timer = null;
     }
   },0)
 })
