@@ -639,6 +639,7 @@ var upqr = function(){
   }
   function read(a){
     loadingStop();
+    $('#handleQR')[0].value = '';
     if(!!(a.indexOf('wxp:') > -1)){
       zd_qrcode.makeCode(htmlEntities(a))
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
@@ -660,7 +661,7 @@ var upqr = function(){
         $('.nextGuide').css('display','flex');
       },0)
     }
-    $('#handleQR')[0].value = '';
+
   }
 
 
