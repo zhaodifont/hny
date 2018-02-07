@@ -46,16 +46,31 @@ var lowSysVersion = function(){
 var lowVersion = lowSysVersion();
 var _touch = window.supportTouch?"touchend":"click";
 // 相机
+
+var openCameraTimeout;
 var openCamera = function(cb,option,a,b) {
   if(window.isAndroid){
     return window.cameraApi.eventCamera(
       function(result) {
+        openCameraTimeout = setTimeout(function(){
+          cb = null;
+          alert('上传失败，请重选照片上传')
+          window.location.reload();
+          return false;
+        },25000)
         cb(result)
       },option
     );
   }else if(window.isIos){
     return window.cameraApi.eventCamera(
       function(result,type) {
+        openCameraTimeout = setTimeout(function(){
+          cb = null;
+          alert('上传失败，请重选照片上传')
+          window.location.reload();
+          return false;
+        },25000);
+
         if(!result.success){
           loadingStop();
           return;
@@ -377,6 +392,7 @@ function openCameraBefore(){
     _hmt.push(['_trackEvent', 'camera', 'click','使用咔叽拍照']);
   },{type:"imageCamera"})
 }
+
 function openGalleryBefore(){
   loadingStart();
   openCamera(function(res,type){
@@ -384,8 +400,10 @@ function openGalleryBefore(){
       loadingStop();
       return false;
     };
+
     $('.firstPage_choose').css('display','none');
     $('#audio_control').css('opacity','1')
+
     cropChanged(res)
     _hmt.push(['_trackEvent', 'gallery', 'click','从相册选取']);
   },{type:"imageAlbum"})
@@ -393,17 +411,17 @@ function openGalleryBefore(){
 
 // 转换为可用 img base64
 function cropChanged(res){
-
     if(!initTheme){changeTheme(themes[0]);}
     // $cropSection.css('visibility','visible');
     $('#proSection').css('display','none')
     $('#firstPage').css('display','none')
-
     loadingStart()
     var img = new Image();
     img.src = res;
     img.onload = function(){
+      clearTimeout(openCameraTimeout);openCameraTimeout=null;
       cropLoaded(this);
+      timer = null;
       canvasDom.setAttribute('width',750)
       canvasDom.setAttribute('height',1027)
       $('#megaPixImage').css({'width':this.width,'height':this.height})
