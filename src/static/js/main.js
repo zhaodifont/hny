@@ -113,63 +113,7 @@ var getCameraImage = function(cb){
   )
 }
 
-!function(){
-  var auBtn = document.querySelector('#audio_control'),
-      myappd = document.querySelector('#app'),
-      audio_ = document.querySelector('#audio'),
-      icon = document.querySelectorAll('#audio_control img')[0],
-      image = auBtn.querySelector('img'),
-      touchp = ("createTouch" in document)?"touchend":"click",
-      zTop = $("#cropSection").scrollTop(),
-      isPlaying = false;
-      audio_.src="./mus.mp3";
-      audio_.load();
 
-      var _pause = function() {
-        isPlaying = false;
-        auBtn.classList.remove('run');
-        icon.style.animationName="";
-        icon.style.WebkitAnimationName="";
-        icon.style.animationPlayState="paused";
-        icon.style.WebkitAnimationPlayState="paused";
-        audio_.pause()
-      }
-      var _play = function() {
-        isPlaying = true;
-        auBtn.classList.add('run');
-        icon.style.animationName="audIconRun";
-        icon.style.WebkitAnimationName="audIconRun";
-        icon.style.animationPlayState="running";
-        icon.style.WebkitAnimationPlayState="running";
-        audio_.play()
-
-      }
-      function musicHandler(ev) {
-          _play()
-          document.body.removeEventListener(touchp, musicHandler);
-          ev.stopPropagation();
-      }
-      document.body.addEventListener(touchp, musicHandler,false);
-
-    document.querySelector('#audio_control').addEventListener(touchp, function(ev) {
-      isPlaying?_pause():_play();
-      ev.stopPropagation();
-    },false);
-
-    if(!!document.visibilityState){
-      document.addEventListener("visibilitychange", function () {
-        var status = isPlaying;
-        setTimeout(function(){
-          if(document.visibilityState == 'hidden'){
-              audio_.pause()
-          }else if(document.visibilityState == 'visible'){
-              status?_play():_pause();
-          }
-        },120)
-      }, false);
-    }
-    _play()
-}()
 
 var $upload = $('#upload'), //原始上传按钮
     $cropSection = $('#cropSection'), //第二步的section

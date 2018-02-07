@@ -9,22 +9,22 @@
     <link rel="stylesheet" type="text/css" href="./static/css/main.css?v=261749">
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
   </head>
-  <script type="text/javascript">
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?f160742a151816c25b3d081449831d86";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f160742a151816c25b3d081449831d86";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?42241a6fb0efc83b202557e29f8447de";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-  </script>
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?42241a6fb0efc83b202557e29f8447de";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 <body>
 <script type="text/javascript">
 !function(e,t){var n=e.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,function(){var t=n.clientWidth;t&&(t>=750?(t=750,e.body.style.width="750px"):e.body.style.width=t+"px",n.style.fontSize=100*(t/750)+"px",n.dataset.width=t,n.dataset.percent=100*(t/750))});d(),e.documentElement.classList.add("iosx"+t.devicePixelRatio),e.addEventListener&&t.addEventListener(i,d,!1)}(document,window)
@@ -192,6 +192,7 @@
 
 <div id="testTxt" style="display:none;position:fixed;white-space:nowrap;overflow:scroll;line-height:1;width:100%;z-index:11166666;bottom:0;left:0;">test</div>
 <img id="testImg" src="" style="position:absolute;z-index:666;top:-999rem;left:0;" alt="">
+</body>
 <script>
 window.getCameraS = false;
 // dcoument.title = document.documentElement.clientWidth;
@@ -233,8 +234,8 @@ function loadScript(_src,cb){
   }else{
     window.isOther = true;
   }
-
 }()
+
   var zeptoJsLoaded = true,
       extJsLoad = false,
       globalJsloaded = false,
@@ -244,9 +245,9 @@ function loadScript(_src,cb){
           if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
             // console.log('ok 23333');
               setTimeout(function(){
-                indexPageReady();
+                window.indexPageReady();
+                checkAll = null;
               },0)
-              checkAll = null;
           }else{}
       };
       loadScript('./static/js/global.js',function(){
@@ -263,11 +264,7 @@ function loadScript(_src,cb){
 
       })
 
-</script>
-</body>
-<script>
-
-// $('#testTxt').show().text('262121' + window.getCameraS);
+$('#testTxt').show().text('27r1122' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
@@ -321,19 +318,73 @@ function loadScript(_src,cb){
         img.src="./static/img/aside.jpg";
         _hmt.push(['_trackEvent', 'indexWithOutBanner', 'load','带人民网banner进入']);
       }
-
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
       f_t2.classList.add('fadeIn');
       join.start()
-      count.start(function(){
-        join = count = null;
-      });
+      // count.start(function(){
+      //   join = count = null;
+      // });
       timer = null;
     }
   },0)
 })
 
+!function(){
+  var auBtn = document.querySelector('#audio_control'),
+      myappd = document.querySelector('#app'),
+      audio_ = document.querySelector('#audio'),
+      icon = document.querySelectorAll('#audio_control img')[0],
+      image = auBtn.querySelector('img'),
+      touchp = ("createTouch" in document)?"touchend":"click",
+      isPlaying = false;
+      audio_.src="./mus.mp3";
+      audio_.load();
 
+      var _pause = function() {
+        isPlaying = false;
+        auBtn.classList.remove('run');
+        icon.style.animationName="";
+        icon.style.WebkitAnimationName="";
+        icon.style.animationPlayState="paused";
+        icon.style.WebkitAnimationPlayState="paused";
+        audio_.pause()
+      }
+      var _play = function() {
+        isPlaying = true;
+        auBtn.classList.add('run');
+        icon.style.animationName="audIconRun";
+        icon.style.WebkitAnimationName="audIconRun";
+        icon.style.animationPlayState="running";
+        icon.style.WebkitAnimationPlayState="running";
+        audio_.play()
+
+      }
+      function musicHandler(ev) {
+          _play()
+          document.body.removeEventListener(touchp, musicHandler);
+          ev.stopPropagation();
+      }
+      document.body.addEventListener(touchp, musicHandler,false);
+
+    document.querySelector('#audio_control').addEventListener(touchp, function(ev) {
+      isPlaying?_pause():_play();
+      ev.stopPropagation();
+    },false);
+
+    if(!!document.visibilityState){
+      document.addEventListener("visibilitychange", function () {
+        var status = isPlaying;
+        setTimeout(function(){
+          if(document.visibilityState == 'hidden'){
+              audio_.pause()
+          }else if(document.visibilityState == 'visible'){
+              status?_play():_pause();
+          }
+        },120)
+      }, false);
+    }
+    _play()
+}()
 </script>
 </html>
