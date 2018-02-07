@@ -188,11 +188,9 @@ var $upload = $('#upload'), //原始上传按钮
       img.onload = function(){
         themeBgImg.src = img.src;
         setTimeout(function(){
-          // console.log('initTheme');
           loadingStop();
-
           initTheme = true;
-        },120)
+        },100)
 
       };
       img.src = obj.bg;

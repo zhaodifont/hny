@@ -241,14 +241,13 @@ function loadScript(_src,cb){
       globalJsloaded = false,
       mainJsLoaded = false;
   var checkAll = function(val){
-          console.log("check js this time ok:",val,zeptoJsLoaded , extJsLoad , globalJsloaded , mainJsLoaded);
-          if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
-            // console.log('ok 23333');
-              setTimeout(function(){
-                window.indexPageReady();
-                checkAll = null;
-              },0)
-          }else{}
+        // console.log("check js this time ok:",val,zeptoJsLoaded , extJsLoad , globalJsloaded , mainJsLoaded);
+        if(zeptoJsLoaded && extJsLoad && globalJsloaded && mainJsLoaded){
+            setTimeout(function(){
+              window.indexPageReady();
+              // checkAll = null;
+            },0)
+        }
       };
       loadScript('./static/js/global.js',function(){
           globalJsloaded = true;
@@ -258,13 +257,13 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=262121',function(){
+      loadScript('./static/js/main.js?v=27r1146',function(){
           mainJsLoaded = true;
           checkAll('main');
 
       })
 
-$('#testTxt').show().text('27r1122' + window.getCameraS);
+$('#testTxt').show().text('27r1146' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
@@ -321,7 +320,8 @@ $('#testTxt').show().text('27r1122' + window.getCameraS);
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
       f_t2.classList.add('fadeIn');
-      join.start()
+      join.start();
+      count.start();
       // count.start(function(){
       //   join = count = null;
       // });
