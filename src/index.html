@@ -10,18 +10,17 @@
     <script type="text/javascript" src="./static/js/zepto.min.js"></script>
   </head>
   <script type="text/javascript">
-
   var _hmt = _hmt || [];
   (function() {
     var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?42241a6fb0efc83b202557e29f8447de";
+    hm.src = "https://hm.baidu.com/hm.js?f160742a151816c25b3d081449831d86";
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
 
   (function() {
     var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?f160742a151816c25b3d081449831d86";
+    hm.src = "https://hm.baidu.com/hm.js?42241a6fb0efc83b202557e29f8447de";
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
@@ -30,7 +29,7 @@
 <script type="text/javascript">
 !function(e,t){var n=e.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,function(){var t=n.clientWidth;t&&(t>=750?(t=750,e.body.style.width="750px"):e.body.style.width=t+"px",n.style.fontSize=100*(t/750)+"px",n.dataset.width=t,n.dataset.percent=100*(t/750))});d(),e.documentElement.classList.add("iosx"+t.devicePixelRatio),e.addEventListener&&t.addEventListener(i,d,!1)}(document,window)
 </script>
-  <div id="app">
+  <div id="app" class="full">
     <div style="z-index:9999;position:absolute;left:0;top:-999rem;overflow:hidden;">
       <div id="zd_qrcode"></div>
       <canvas id="qr-canvas" width="40" height="30"></canvas>
@@ -268,7 +267,7 @@ function loadScript(_src,cb){
 </body>
 <script>
 
-$('#testTxt').show().text('262121' + window.getCameraS);
+// $('#testTxt').show().text('262121' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
