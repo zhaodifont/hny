@@ -47,30 +47,16 @@ var lowVersion = lowSysVersion();
 var _touch = window.supportTouch?"touchend":"click";
 // 相机
 
-var openCameraTimeout;
 var openCamera = function(cb,option,a,b) {
   if(window.isAndroid){
     return window.cameraApi.eventCamera(
       function(result) {
-        openCameraTimeout = setTimeout(function(){
-          cb = null;
-          alert('上传失败，请重选照片上传')
-          window.location.reload();
-          return false;
-        },25000)
         cb(result)
       },option
     );
   }else if(window.isIos){
     return window.cameraApi.eventCamera(
       function(result,type) {
-        openCameraTimeout = setTimeout(function(){
-          cb = null;
-          alert('上传失败，请重选照片上传')
-          window.location.reload();
-          return false;
-        },25000);
-
         if(!result.success){
           loadingStop();
           return;
@@ -193,8 +179,8 @@ var $upload = $('#upload'), //原始上传按钮
     ],
     changeTheme=function(obj){
       loadingStart()
-      $themeFoot.find('img')[0].style.width="100%";
-      $themeFoot.find('img')[0].src = obj.foot;
+      // $themeFoot.find('img')[0].style.width="100%";
+      // $themeFoot.find('img')[0].src = obj.foot;
 
       if(!!obj.eqpos){
         $('#eCode').css(obj.eqpos)
@@ -366,7 +352,7 @@ if(lowVersion){
           $('#testImg').attr({width:this.width,height:this.height})
           // $('#testImg').attr(height,this.height)
           // $('#eCode')[0].src = this.src;
-          $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
+          // $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
           setTimeout(function(){
             $('#toNext').trigger('click');
           },0)
@@ -419,7 +405,6 @@ function cropChanged(res){
     var img = new Image();
     img.src = res;
     img.onload = function(){
-      clearTimeout(openCameraTimeout);openCameraTimeout=null;
       cropLoaded(this);
       timer = null;
       canvasDom.setAttribute('width',750)
@@ -656,7 +641,7 @@ var upqr = function(){
       zd_qrcode.makeCode(htmlEntities(a))
       $('#eCode')[0].src = $('#zd_qrcode img')[0].src;
       $('#qrGuide').css('display','none');
-      $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
+      // $('#proSection img')[1].src="./static/img/theme1-foot.jpg";
       loadingStart();
       setTimeout(function(){
         _hmt.push(['_trackEvent', 'qrcodeUpSuc', 'click','二维码上传成功量']);

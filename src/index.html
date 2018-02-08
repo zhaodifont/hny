@@ -67,7 +67,8 @@ var _hmt = _hmt || [];
                 <span class="chooseBtn" onclick="_hmt.push(['_trackEvent', 'wantMoneyBtn', 'click', '我要红包的点击量'])" ><img src="./static/img/chooseBtn.png" style="width:1.84rem" alt=""></span>
             </div>
           </div>
-          <a onclick="_hmt.push(['_trackEvent', 'rmwSmBanner', 'click', '小banner的点击量'])" href="https://b612kaji-pstatic.snowcam.cn/static/event/vi/chunjie/renminwang/app.html" id="aside"><img src="" width="100%" style="margin-top:.1rem;transition:all .4s;-webkit-transition:all .4s;opacity:0;" alt=""></a>
+          <a onclick="_hmt.push(['_trackEvent', 'rmwSmBanner', 'click', '人民网banner的点击量'])" href="https://b612kaji-pstatic.snowcam.cn/static/event/vi/chunjie/renminwang/app.html" id="aside"><img src="" width="100%" style="margin-top:.1rem;transition:all .4s;-webkit-transition:all .4s;opacity:0;" alt=""></a>
+          <a onclick="_hmt.push(['_trackEvent', 'hnySmBanner', 'click', '玩转过年贴纸banner的点击量'])" href="https://www.b612kaji.com/event/weibo_index" id="aside2"><img src="" width="100%" style="margin-top:.1rem;transition:all .4s;-webkit-transition:all .4s;opacity:0;" alt=""></a>
       </div>
 
       <div class="firstPage_choose" style="display:none;">
@@ -102,9 +103,9 @@ var _hmt = _hmt || [];
 
           <a href="javascript:void(0)" id="toNext" style="position:absolute;left:0;top:-999rem;">下一步</a>
           <div class="styleChoose p-r" id="theme_foot">
-            <img src="" alt="">
+            <!-- <img src="" alt=""> -->
               <!-- <a href="javascript:void(0)" id="reChoose">重新选择</a> -->
-              <div class="wpr p-a">
+              <div class="wpr">
                 <div class="">
                     <div class="item" id="reChoose"><img src="./static/img/reChoose.png" style="width:.63rem;" alt=""> </div>
                     <span>
@@ -125,8 +126,7 @@ var _hmt = _hmt || [];
               </div>
             </div>
             <div class="content p-r">
-                <img src="" width="100%" alt="">
-                <div class="wpr p-a">
+                <div class="wpr">
                   <div><span class="save">保存</span></div>
                   <div><span class="share">分享</span></div>
                 </div>
@@ -195,6 +195,7 @@ var _hmt = _hmt || [];
 </body>
 <script>
 window.getCameraS = false;
+// document.title = document.body.scrollHeight ;
 // dcoument.title = document.documentElement.clientWidth;
 function loadScript(_src,cb){
     var script = document.createElement('script');
@@ -257,13 +258,13 @@ function loadScript(_src,cb){
           extJsLoad = true;
           checkAll('ext');
       })
-      loadScript('./static/js/main.js?v=27r1945',function(){
+      loadScript('./static/js/main.js?v=28r1553',function(){
           mainJsLoaded = true;
           checkAll('main');
 
       })
 
-$('#testTxt').show().text('27r1945' + window.getCameraS);
+// $('#testTxt').show().text('28r1532' + window.getCameraS);
 !(window.getCameraS) && loadScript('./static/js/count.js',function(){
   var s1 = '2018/01/25',
       s2 = Date.now(),//当前日期：2017-04-24
@@ -315,7 +316,14 @@ $('#testTxt').show().text('27r1945' + window.getCameraS);
           $('#aside img')[0].style.opacity=1;
         }
         img.src="./static/img/aside.jpg";
-        _hmt.push(['_trackEvent', 'indexWithOutBanner', 'load','带人民网banner进入']);
+
+        var img2 = new Image();
+        img2.onload = function(){
+          $('#aside2 img')[0].src=this.src;
+          $('#aside2 img')[0].style.opacity=1;
+        }
+        img2.src="./static/img/aside2.jpg";
+
       }
       // 首屏 标题
       f_t1.classList.add('bounceInDown');
