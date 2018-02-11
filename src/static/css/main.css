@@ -9,6 +9,8 @@
 }
 #app.full #firstPage>.p-r{
   height:100%;overflow: hidden;
+}
+#app #firstPage>.p-r{
   background:url('../img/qr_guide_bg.jpg') 0 0 repeat;background-size:.84rem .49rem;
 }
 #app.full #firstPage .chooseBtn{
