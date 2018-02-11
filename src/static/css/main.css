@@ -18,7 +18,7 @@
   height:32%;box-sizing: border-box;
   padding-top:5%;
 }
-
+#aside,#aside2{display: block;overflow: hidden;}
 .loadingDiv,.loadingDiv .flex,.wrapper,#firstPage,#cropSection,#proSection,#qrGuide,.nextGuide,.firstPage_choose{
 	position: absolute;left:0;right:0;bottom:0;top:0;
 }
